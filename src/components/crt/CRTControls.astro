@@ -1,0 +1,67 @@
+---
+// Interruptores diegéticos: efectos CRT (scanlines, flicker, halo) y sonido.
+// El estado inicial lo fija el script en línea de TerminalLayout antes de pintar.
+---
+
+<div class="controls" role="group" aria-label="Preferencias de pantalla">
+  <button type="button" class="toggle" data-pref="crt" aria-pressed="true">
+    CRT: <span class="state" data-for="crt"></span>
+  </button>
+  <button type="button" class="toggle" data-pref="sound" aria-pressed="false">
+    SONIDO: <span class="state" data-for="sound"></span>
+  </button>
+</div>
+
+<style>
+  .controls {
+    display: flex;
+    gap: 0.25rem;
+  }
+  .toggle {
+    min-height: 44px;
+    padding: 0 0.75rem;
+    color: var(--phosphor-soft);
+  }
+  .toggle:hover,
+  .toggle:focus-visible {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+  .state {
+    color: var(--phosphor);
+  }
+  .toggle:hover .state,
+  .toggle:focus-visible .state {
+    color: var(--void);
+  }
+  .state::after {
+    content: 'OFF';
+  }
+  :global(:root[data-crt='on']) .state[data-for='crt']::after,
+  :global(:root[data-sound='on']) .state[data-for='sound']::after {
+    content: 'ON';
+  }
+</style>
+
+<script>
+  import { readPref, writePref, beep, type Pref } from '@lib/terminal';
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.toggle[data-pref]');
+
+  const sync = () =>
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(readPref(button.dataset.pref as Pref) === 'on'));
+    });
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const pref = button.dataset.pref as Pref;
+      writePref(pref, readPref(pref) === 'on' ? 'off' : 'on');
+      sync();
+      beep(880, 0.05);
+    });
+  });
+
+  sync();
+</script>

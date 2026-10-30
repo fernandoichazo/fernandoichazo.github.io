@@ -1,0 +1,63 @@
+---
+// Texto de fósforo con su escala, tono y halo. El halo respeta el interruptor CRT.
+import type { HTMLTag } from 'astro/types';
+
+interface Props {
+  as?: HTMLTag;
+  size?: 'display' | 'large' | 'body' | 'small';
+  tone?: 'core' | 'soft' | 'warning';
+  glow?: 'normal' | 'strong';
+  class?: string;
+  [attr: string]: unknown;
+}
+
+const {
+  as: Tag = 'p',
+  size = 'body',
+  tone = 'core',
+  glow = 'normal',
+  class: className,
+  ...attrs
+} = Astro.props;
+---
+
+<Tag class:list={['phosphor', `phosphor--${size}`, `phosphor--${tone}`, `phosphor--glow-${glow}`, className]} {...attrs}>
+  <slot />
+</Tag>
+
+<style>
+  .phosphor {
+    font-weight: 400;
+  }
+  .phosphor--display {
+    font-family: var(--font-display);
+    font-size: var(--step-display);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+  }
+  .phosphor--large {
+    font-size: var(--step-1);
+  }
+  .phosphor--body {
+    font-size: var(--step-0);
+  }
+  .phosphor--small {
+    font-size: var(--step--1);
+  }
+  .phosphor--core {
+    color: var(--phosphor);
+  }
+  .phosphor--soft {
+    color: var(--phosphor-soft);
+  }
+  .phosphor--warning {
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  .phosphor--glow-strong {
+    text-shadow: var(--glow-strong);
+  }
+  :global(:root[data-crt='off']) .phosphor--warning {
+    text-shadow: none;
+  }
+</style>

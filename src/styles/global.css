@@ -1,0 +1,179 @@
+@import '@fontsource/vt323/latin-400.css';
+@import '@fontsource/share-tech-mono/latin-400.css';
+
+/* ── Tokens: fósforo verde RobCo ─────────────────────────────── */
+:root {
+  --phosphor: #1bff80;
+  --phosphor-glow: #1bff8044;
+  --phosphor-soft: #2fb36c; /* texto secundario: ≥6:1 sobre la superficie */
+  --phosphor-dim: #0f7740; /* solo líneas y elementos no textuales */
+  --phosphor-deep: #0c5c32;
+  --surface: #0a110d;
+  --surface-lift: #0f1d14;
+  --void: #020503;
+  --warning: #ffb000;
+  --warning-glow: #ffb00055;
+
+  --font-display: 'VT323', ui-monospace, monospace;
+  --font-text: 'Share Tech Mono', ui-monospace, monospace;
+  --tracking: 0.08em;
+
+  --step--1: clamp(0.875rem, 0.82rem + 0.2vw, 1rem);
+  --step-0: clamp(1rem, 0.94rem + 0.3vw, 1.25rem);
+  --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
+  --step-2: clamp(1.625rem, 1.3rem + 1.2vw, 2rem);
+  --step-display: clamp(2.75rem, min(1.2rem + 5.6vw, 11vh), 6rem);
+
+  --gutter: clamp(1rem, 0.4rem + 3vw, 6rem);
+  --glow: 0 0 6px var(--phosphor-glow);
+  --glow-strong: 0 0 16px var(--phosphor-glow), 0 0 2px var(--phosphor);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --boot-duration: 1.15s;
+
+  color-scheme: dark;
+  accent-color: var(--phosphor);
+}
+
+/* Interruptor CRT apagado o contraste aumentado: sin halo. */
+:root[data-crt='off'] {
+  --glow: none;
+  --glow-strong: none;
+}
+@media (prefers-contrast: more) {
+  :root {
+    --glow: none;
+    --glow-strong: none;
+  }
+}
+
+/* ── Reset mínimo ───────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--phosphor-dim) var(--void);
+}
+body {
+  min-height: 100dvh;
+  background: var(--void);
+  color: var(--phosphor);
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  letter-spacing: var(--tracking);
+  text-transform: uppercase;
+  text-shadow: var(--glow);
+  -webkit-font-smoothing: antialiased;
+}
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ── Superficies del navegador ──────────────────────────────── */
+::selection {
+  background: var(--phosphor);
+  color: var(--void);
+  text-shadow: none;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--phosphor-dim);
+}
+:focus-visible {
+  outline: 2px solid var(--warning);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: 0.5rem;
+  z-index: 50;
+  padding: 0.5rem 1rem;
+  background: var(--phosphor);
+  color: var(--void);
+  text-shadow: none;
+  transform: translateY(-200%);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* Cursor de terminal compartido. */
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  vertical-align: -0.15em;
+  background: var(--phosphor);
+  box-shadow: var(--glow);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Impresión de la pantalla tras el encendido del tubo ─────── */
+:root[data-boot='run'] .reveal {
+  opacity: 0;
+  animation: print-line 0.14s linear forwards;
+  animation-delay: calc(var(--boot-duration) + var(--i, 0) * 70ms);
+}
+@keyframes print-line {
+  to {
+    opacity: 1;
+  }
+}

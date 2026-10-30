@@ -1,38 +1,17 @@
 ---
-const name = "Fernando Ichazo Cisneros"
-const title = "Home Page"
-const currentDate = new Date().toLocaleTimeString()
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import HeroIntro from '@components/hero/HeroIntro.astro';
+import NavTabs from '@components/terminal/NavTabs.astro';
+import { profile } from '@data/site';
 ---
-<html lang="en">
-  <head>
-    <title>{title}</title>
-  </head>
-  <body>
 
-    <nav>
-      <a href="/">Index Page</a>
-      <a href="/contact">Contact Page</a>
-      <a href="/about">About Page</a>
-    </nav>
-
-    <h1>{name}</h1>
-
-    <p>Momento Actual: { currentDate }</p>
-    <p id="current-time">Momento Actual Real: </p>
-
-    <footer>Año: 2023</footer>
-
-    <script>
-
-      //! CLIENT SIDE RENDERING
-      const footer = document.querySelector("footer") as HTMLElement;
-      const currentTimeParagraph = document.querySelector("#current-time") as HTMLParagraphElement;
-
-      const currentYear: number = new Date().getFullYear();
-      footer.innerText = `Current Year: ${ currentYear }`;
-
-
-      currentTimeParagraph.innerText = `Momento Actual Real: ${ new Date().toLocaleTimeString() }`
-    </script>
-  </body>
-</html>
+<TerminalLayout
+  title={`${profile.name} · ${profile.role}`}
+  description={`Portafolio de ${profile.name}, ${profile.role}. Proyectos, certificaciones y perfil profesional.`}
+  boot
+>
+  <TerminalHeader />
+  <HeroIntro />
+  <NavTabs />
+</TerminalLayout>

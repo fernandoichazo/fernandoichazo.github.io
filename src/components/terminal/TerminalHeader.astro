@@ -1,0 +1,58 @@
+---
+// Cabecera diegética de RobCo y, opcionalmente, el log de arranque.
+import PhosphorText from '@components/crt/PhosphorText.astro';
+import { system } from '@data/site';
+
+interface Props {
+  showLog?: boolean;
+}
+
+const { showLog = true } = Astro.props;
+---
+
+<header class="header">
+  <PhosphorText size="body" class="reveal title" style="--i:0">
+    <span class="os-long">{system.os}<br />{system.copyright}</span>
+    <span class="os-short">{system.osShort}</span>
+  </PhosphorText>
+  {
+    showLog && (
+      <ul class="log" aria-label="Diagnóstico del sistema">
+        {system.bootLog.map((line, i) => (
+          <li class="reveal" style={`--i:${i + 1}`}>
+            <span class="prefix" aria-hidden="true">[&gt;]</span> {line.text} <span class="ok">{line.result}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</header>
+
+<style>
+  .header :global(.title) {
+    line-height: 1.5;
+  }
+  .log {
+    margin-top: clamp(0.75rem, 2.5vh, 1.25rem);
+    font-size: var(--step--1);
+    line-height: 1.65;
+    color: var(--phosphor-soft);
+  }
+  .ok {
+    color: var(--phosphor);
+  }
+  .os-short {
+    display: none;
+  }
+
+  /* Pantalla de Pip-Boy: cabecera corta y sin log, para que el menú quepa. */
+  @media (max-width: 640px) {
+    .os-long,
+    .log {
+      display: none;
+    }
+    .os-short {
+      display: inline;
+    }
+  }
+</style>

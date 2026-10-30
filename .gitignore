@@ -24,6 +24,8 @@ pnpm-debug.log*
 .idea/
 
 *.md 
+.impeccable
+.taste-skill
 !README.md
 !.rules/**
 !CLAUDE.md

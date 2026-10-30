@@ -1,0 +1,219 @@
+---
+// Menú de directivas estilo prompt RobCo. La fila resaltada es la recomendada hasta
+// que el cursor o el foco se mueven a otra; resaltar = invertir el fósforo.
+// Teclado: [1]-[4] abren la directiva, flechas/Inicio/Fin mueven la selección.
+import { directives, guide } from '@data/site';
+---
+
+<nav class="nav reveal" style="--i:7" aria-labelledby="nav-prompt">
+  <p id="nav-prompt" class="prompt">SELECCIONE UNA DIRECTIVA DE NAVEGACIÓN CON EL TECLADO O EL CURSOR:</p>
+  <ol class="list">
+    {
+      directives.map((item) => (
+        <li class:list={['item', { 'item--guided': item.recommended }]}>
+          <a
+            class:list={['row', { 'is-recommended': item.recommended }]}
+            href={`/${item.slug}`}
+            data-key={item.key}
+            data-file={item.file}
+            aria-keyshortcuts={item.key}
+            aria-describedby={item.recommended ? 'vats-guide' : undefined}
+          >
+            <span class="key">[{item.key}]</span>
+            <span class="label">
+              <span aria-hidden="true">&gt; </span>
+              {item.label}
+            </span>
+            <span class="file">{item.file}</span>
+          </a>
+          {item.recommended && (
+            <p id="vats-guide" class="vats">
+              {guide.title}
+              <br />
+              {guide.text}
+            </p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+  <p class="echo" aria-hidden="true">&gt; <span data-echo></span><span class="caret"></span></p>
+</nav>
+
+<style>
+  .nav {
+    margin-top: clamp(1rem, 3.5vh, 2rem);
+  }
+
+  .prompt {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+
+  .list {
+    margin-top: 0.75rem;
+    width: min(54rem, 100%);
+  }
+
+  .item {
+    position: relative;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    align-items: baseline;
+    gap: 1rem;
+    min-height: 48px;
+    padding: 0.4rem 0.875rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 1.2rem + 1vw, 2rem);
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+  }
+
+  .file {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+
+  /* Inversión de fósforo: una sola fila resaltada a la vez. */
+  .row:hover,
+  .row:focus-visible,
+  .row.is-recommended {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+    box-shadow: 0 0 18px var(--phosphor-glow);
+  }
+  .row:hover .file,
+  .row:focus-visible .file,
+  .row.is-recommended .file {
+    color: var(--void);
+  }
+  .list:has(.row:hover, .row:focus-visible) .row.is-recommended:not(:hover, :focus-visible) {
+    background: none;
+    color: var(--phosphor);
+    text-shadow: var(--glow);
+    box-shadow: none;
+  }
+  .list:has(.row:hover, .row:focus-visible) .row.is-recommended:not(:hover, :focus-visible) .file {
+    color: var(--phosphor-soft);
+  }
+  .row:active {
+    transform: translateX(4px);
+  }
+  :global(:root[data-crt='off']) .row {
+    box-shadow: none;
+  }
+
+  /* Guía V.A.T.S. junto a la fila recomendada. */
+  .vats {
+    position: absolute;
+    top: 0.25rem;
+    left: calc(100% + 2.5rem);
+    width: 19rem;
+    padding-left: 1.75rem;
+    font-size: var(--step--1);
+    line-height: 1.45;
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  /* Corchete de mira V.A.T.S. */
+  .vats::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -0.2rem;
+    bottom: -0.2rem;
+    width: 0.75rem;
+    border: 2px solid var(--warning);
+    border-right: 0;
+  }
+
+  .echo {
+    margin-top: 1.25rem;
+    min-height: 1.5em;
+    font-size: var(--step-0);
+    color: var(--phosphor-soft);
+  }
+  .echo [data-echo] {
+    color: var(--phosphor);
+  }
+
+  @media (max-width: 1240px) {
+    .vats {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: auto;
+      margin: 0.75rem 0 0.75rem 0.875rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .row {
+      grid-template-columns: 3rem 1fr;
+      row-gap: 0;
+      padding-block: 0.6rem;
+    }
+    .file {
+      grid-column: 2;
+    }
+  }
+</style>
+
+<script>
+  import { beep } from '@lib/terminal';
+
+  const rows = [...document.querySelectorAll<HTMLAnchorElement>('.row[data-key]')];
+  const echo = document.querySelector<HTMLElement>('[data-echo]');
+
+  const announce = (row?: HTMLAnchorElement) => {
+    if (echo) echo.textContent = row ? `RUN ${row.dataset.file}` : '';
+  };
+
+  rows.forEach((row) => {
+    row.addEventListener('pointerenter', () => {
+      beep();
+      announce(row);
+    });
+    row.addEventListener('pointerleave', () => announce());
+    row.addEventListener('focus', () => {
+      beep();
+      announce(row);
+    });
+    row.addEventListener('blur', () => announce());
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+    const target = event.target as HTMLElement;
+    if (target.closest('input, textarea, select, [contenteditable]')) return;
+
+    const byKey = rows.find((row) => row.dataset.key === event.key);
+    if (byKey) {
+      event.preventDefault();
+      beep(1480, 0.06);
+      announce(byKey);
+      byKey.focus();
+      window.location.assign(byKey.href);
+      return;
+    }
+
+    const current = rows.indexOf(document.activeElement as HTMLAnchorElement);
+    const recommended = rows.findIndex((row) => row.classList.contains('is-recommended'));
+    const from = current === -1 ? recommended : current;
+    const moves: Record<string, number> = {
+      ArrowDown: (from + 1) % rows.length,
+      ArrowUp: (from - 1 + rows.length) % rows.length,
+      Home: 0,
+      End: rows.length - 1,
+    };
+    if (event.key in moves) {
+      event.preventDefault();
+      rows[current === -1 ? from : moves[event.key]].focus();
+    }
+  });
+</script>

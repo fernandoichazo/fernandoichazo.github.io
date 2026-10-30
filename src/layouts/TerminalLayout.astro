@@ -1,0 +1,72 @@
+---
+// Layout base Pip-OS: documento, preferencias CRT antes de pintar, tubo y barra de estado.
+import '@styles/global.css';
+import CRTScreen from '@components/crt/CRTScreen.astro';
+import BootSequence from '@components/terminal/BootSequence.astro';
+import SystemStatus from '@components/hero/SystemStatus.astro';
+import vt323 from '@fontsource/vt323/files/vt323-latin-400-normal.woff2?url';
+import shareTechMono from '@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+  boot?: boolean;
+  statusMessage?: string;
+}
+
+const { title, description, boot = false, statusMessage } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" data-crt="on" data-sound="off" data-boot={boot ? 'pending' : 'off'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#020503" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preload" href={vt323} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={shareTechMono} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        var read = function (key) {
+          try {
+            return localStorage.getItem(key);
+          } catch (e) {
+            return null;
+          }
+        };
+        if (read('pipos:crt') === 'off') root.dataset.crt = 'off';
+        if (read('pipos:sound') === 'on') root.dataset.sound = 'on';
+        if (root.dataset.boot === 'pending') {
+          var booted = null;
+          try {
+            booted = sessionStorage.getItem('pipos:booted');
+          } catch (e) {}
+          var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          root.dataset.boot = booted || still ? 'off' : 'run';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    {boot && <BootSequence />}
+    <CRTScreen>
+      <main id="contenido" class="main">
+        <slot />
+      </main>
+      <SystemStatus message={statusMessage} />
+    </CRTScreen>
+  </body>
+</html>
+
+<style>
+  .main {
+    min-width: 0;
+    padding-bottom: 1.5rem;
+  }
+</style>

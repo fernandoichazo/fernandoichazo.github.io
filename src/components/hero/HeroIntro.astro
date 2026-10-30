@@ -1,0 +1,120 @@
+---
+// Bienvenida con efecto typewriter, nombre, rol y disponibilidad.
+// El texto completo está en el HTML; el script solo lo re-escribe tras el arranque.
+import PhosphorText from '@components/crt/PhosphorText.astro';
+import { profile } from '@data/site';
+
+const rule = '='.repeat(120);
+---
+
+<section class="hero" aria-labelledby="welcome">
+  <p class="rule reveal" style="--i:4" aria-hidden="true">{rule}</p>
+  <PhosphorText as="h1" id="welcome" size="display" glow="strong" class="welcome" data-typewriter>
+    BIENVENIDO A MI PORTAFOLIO
+  </PhosphorText>
+  <p class="who reveal" style="--i:5">
+    <span class="name">{profile.name}</span>
+    <span class="sep" aria-hidden="true">//</span>
+    <span>{profile.role}</span>
+    <span class="sep" aria-hidden="true">//</span>
+    <span>STATUS: <span class="status">{profile.status}</span></span>
+  </p>
+  <p class="rule reveal" style="--i:6" aria-hidden="true">{rule}</p>
+</section>
+
+<style>
+  .hero {
+    margin-top: clamp(1rem, 3.5vh, 2rem);
+  }
+
+  .rule {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    color: var(--phosphor-dim);
+    white-space: nowrap;
+    overflow: hidden;
+    width: min(70rem, 100%);
+    max-width: 100%;
+  }
+
+  .welcome {
+    margin: 0.75rem 0 0.5rem;
+    text-wrap: balance;
+  }
+
+  .who {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.75em;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .sep {
+    color: var(--phosphor-soft);
+  }
+
+  /* Caracteres del typewriter (creados por el script). */
+  .welcome :global(.tw--caret) {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+  :global(:root[data-boot='run']) .welcome :global(.tw:not(.is-on)) {
+    visibility: hidden;
+  }
+
+  @media (max-width: 640px) {
+    .who {
+      flex-direction: column;
+    }
+    .sep {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { prefersReducedMotion } from '@lib/terminal';
+
+  const root = document.documentElement;
+  const heading = document.querySelector<HTMLElement>('[data-typewriter]');
+
+  if (heading && root.dataset.boot === 'run' && !prefersReducedMotion()) {
+    const text = heading.textContent?.trim() ?? '';
+    const accessible = document.createElement('span');
+    accessible.className = 'sr-only';
+    accessible.textContent = text;
+    const visual = document.createElement('span');
+    visual.setAttribute('aria-hidden', 'true');
+    const chars = [...text].map((char) => {
+      const span = document.createElement('span');
+      span.className = 'tw';
+      span.textContent = char;
+      visual.append(span);
+      return span;
+    });
+    heading.replaceChildren(accessible, visual);
+
+    const revealAll = () => chars.forEach((span) => span.classList.add('is-on'));
+
+    document.addEventListener(
+      'pipos:boot-done',
+      (event) => {
+        if ((event as CustomEvent).detail?.skipped) return revealAll();
+        let i = 0;
+        const tick = () => {
+          chars[i - 1]?.classList.remove('tw--caret');
+          if (i >= chars.length) return;
+          chars[i].classList.add('is-on', 'tw--caret');
+          i += 1;
+          window.setTimeout(tick, 32);
+        };
+        tick();
+      },
+      { once: true },
+    );
+  }
+</script>

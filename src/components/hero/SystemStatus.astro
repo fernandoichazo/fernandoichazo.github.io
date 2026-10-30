@@ -1,0 +1,59 @@
+---
+// Barra de estado al pie del terminal: mensaje para el reclutador y los interruptores CRT.
+import CRTControls from '@components/crt/CRTControls.astro';
+
+interface Props {
+  message?: string;
+}
+
+const { message = 'LISTO PARA INSPECCIÓN DEL RECLUTADOR · PULSA [TAB] O CLIC EN UNA OPCIÓN' } = Astro.props;
+---
+
+<footer class="status reveal" style="--i:8">
+  <p class="message"><span class="tag">[STATUS]</span> <span class="text">{message}</span><span class="text-short">LISTO</span></p>
+  <CRTControls />
+</footer>
+
+<style>
+  .status {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 2rem;
+    padding: 0.75rem 0 clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+    border-top: 2px solid var(--phosphor-deep);
+    background: #050a07;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .tag {
+    color: var(--phosphor);
+  }
+  .message {
+    padding-block: 0.5rem;
+  }
+
+  .text-short {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .status {
+      position: static;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      padding-block: 0.25rem 0.5rem;
+    }
+    .text {
+      display: none;
+    }
+    .text-short {
+      display: inline;
+    }
+  }
+</style>
