@@ -13,18 +13,16 @@ const rule = '='.repeat(120);
     BIENVENIDO A MI PORTAFOLIO
   </PhosphorText>
   <p class="who reveal" style="--i:5">
-    <span class="name">{profile.name}</span>
-    <span class="sep" aria-hidden="true">//</span>
-    <span>{profile.role}</span>
-    <span class="sep" aria-hidden="true">//</span>
-    <span>STATUS: <span class="status">{profile.status}</span></span>
+    <span class="seg">{profile.name}</span>
+    <span class="seg"><span class="sep" aria-hidden="true">// </span>{profile.role}</span>
+    <span class="seg"><span class="sep" aria-hidden="true">// </span>STATUS: {profile.status}</span>
   </p>
   <p class="rule reveal" style="--i:6" aria-hidden="true">{rule}</p>
 </section>
 
 <style>
   .hero {
-    margin-top: clamp(1rem, 3.5vh, 2rem);
+    margin-top: clamp(1rem, 5vh, 3rem);
   }
 
   .rule {
@@ -40,27 +38,36 @@ const rule = '='.repeat(120);
   }
 
   .welcome {
+    position: relative;
     margin: 0.75rem 0 0.5rem;
     text-wrap: balance;
   }
 
+  /* Identidad en una línea; cada "//" va unido a lo que sigue. */
   .who {
     display: flex;
     flex-wrap: wrap;
     column-gap: 0.75em;
-    font-size: var(--step-1);
+    font-size: clamp(1rem, 0.85rem + 0.6vw, 1.375rem);
     line-height: 1.5;
-    margin-bottom: 1rem;
+    margin-bottom: clamp(0.75rem, 2.5vh, 1.5rem);
+  }
+  .seg {
+    white-space: nowrap;
   }
   .sep {
     color: var(--phosphor-soft);
   }
 
-  /* Caracteres del typewriter (creados por el script). */
-  .welcome :global(.tw--caret) {
+  /* Cursor del typewriter: bloque propio, movido con transform (sin CLS). */
+  .welcome :global(.tw-caret) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0.5em;
+    height: 0.8em;
     background: var(--phosphor);
-    color: var(--void);
-    text-shadow: none;
+    box-shadow: var(--glow);
   }
   :global(:root[data-boot='run']) .welcome :global(.tw:not(.is-on)) {
     visibility: hidden;
@@ -69,6 +76,9 @@ const rule = '='.repeat(120);
   @media (max-width: 640px) {
     .who {
       flex-direction: column;
+    }
+    .seg {
+      white-space: normal;
     }
     .sep {
       display: none;
@@ -104,11 +114,20 @@ const rule = '='.repeat(120);
       'pipos:boot-done',
       (event) => {
         if ((event as CustomEvent).detail?.skipped) return revealAll();
+        const caret = document.createElement('span');
+        caret.className = 'tw-caret';
+        caret.setAttribute('aria-hidden', 'true');
+        heading.append(caret);
+        const lineOffset = (span: HTMLElement) => span.offsetHeight * 0.1;
+
         let i = 0;
         const tick = () => {
-          chars[i - 1]?.classList.remove('tw--caret');
-          if (i >= chars.length) return;
-          chars[i].classList.add('is-on', 'tw--caret');
+          if (i >= chars.length) return caret.remove();
+          const span = chars[i];
+          span.classList.add('is-on');
+          const x = span.offsetLeft + span.offsetWidth;
+          const y = span.offsetTop + lineOffset(span);
+          caret.style.transform = `translate(${x}px, ${y}px)`;
           i += 1;
           window.setTimeout(tick, 32);
         };

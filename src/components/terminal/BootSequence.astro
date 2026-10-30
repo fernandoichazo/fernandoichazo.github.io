@@ -20,13 +20,17 @@ import { system } from '@data/site';
 
   :global(:root[data-boot='run']) .boot {
     position: fixed;
-    inset: 0;
+    inset: var(--tube-top) var(--tube-inset) var(--tube-inset);
     z-index: 40;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: var(--gutter);
-    background: var(--void);
+    border-radius: var(--tube-radius);
+    overflow: hidden;
+    /* El cristal apagado, un tono sobre el vacío: se lee el borde redondeado del tubo. */
+    background: var(--surface);
+    box-shadow: 0 0 0 100vmax var(--void);
     cursor: pointer;
     animation: boot-fade 0.2s var(--ease-out) 0.95s forwards;
   }
@@ -37,12 +41,12 @@ import { system } from '@data/site';
     right: 0;
     top: 50%;
     height: 2px;
-    background: #d9ffe9;
+    background: var(--phosphor);
     box-shadow: 0 0 24px var(--phosphor);
     transform: scaleX(0);
     animation:
-      beam-open 0.16s var(--ease-out) forwards,
-      beam-fill 0.22s ease-in 0.16s forwards;
+      beam-open 0.18s var(--ease-out) forwards,
+      beam-fill 0.34s ease-in 0.18s forwards;
   }
 
   .boot__log {
@@ -69,7 +73,7 @@ import { system } from '@data/site';
     to { transform: scaleX(1); }
   }
   @keyframes beam-fill {
-    from { transform: scaleX(1) scaleY(1); opacity: 1; }
+    from { transform: scaleX(1) scaleY(1); opacity: 0.9; }
     to { transform: scaleX(1) scaleY(420); opacity: 0; }
   }
   @keyframes line-on {

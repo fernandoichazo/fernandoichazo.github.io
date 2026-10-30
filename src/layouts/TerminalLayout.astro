@@ -12,9 +12,11 @@ interface Props {
   description: string;
   boot?: boolean;
   statusMessage?: string;
+  statusMessageMid?: string;
+  statusMessageShort?: string;
 }
 
-const { title, description, boot = false, statusMessage } = Astro.props;
+const { title, description, boot = false, statusMessage, statusMessageMid, statusMessageShort } = Astro.props;
 ---
 
 <!doctype html>
@@ -59,7 +61,7 @@ const { title, description, boot = false, statusMessage } = Astro.props;
       <main id="contenido" class="main">
         <slot />
       </main>
-      <SystemStatus message={statusMessage} />
+      <SystemStatus message={statusMessage} messageMid={statusMessageMid} messageShort={statusMessageShort} />
     </CRTScreen>
   </body>
 </html>
@@ -67,6 +69,6 @@ const { title, description, boot = false, statusMessage } = Astro.props;
 <style>
   .main {
     min-width: 0;
-    padding-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
   }
 </style>

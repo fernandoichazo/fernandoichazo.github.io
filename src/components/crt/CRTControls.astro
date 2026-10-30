@@ -13,9 +13,12 @@
 </div>
 
 <style>
+  /* El relleno de los botones sobresale del texto; se compensa para alinear con la columna. */
   .controls {
     display: flex;
+    flex-shrink: 0;
     gap: 0.25rem;
+    margin-right: -0.75rem;
   }
   .toggle {
     min-height: 44px;

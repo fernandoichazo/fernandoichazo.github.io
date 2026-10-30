@@ -8,8 +8,8 @@
   --phosphor-soft: #2fb36c; /* texto secundario: ≥6:1 sobre la superficie */
   --phosphor-dim: #0f7740; /* solo líneas y elementos no textuales */
   --phosphor-deep: #0c5c32;
-  --surface: #0a110d;
-  --surface-lift: #0f1d14;
+  --surface: #060c08;
+  --surface-lift: #0a110d;
   --void: #020503;
   --warning: #ffb000;
   --warning-glow: #ffb00055;
@@ -31,8 +31,22 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --boot-duration: 1.15s;
 
+  /* Geometría del tubo, compartida por CRTScreen y BootSequence. */
+  --tube-inset: 18px;
+  --tube-top: 18px;
+  --tube-radius: 34px;
+
   color-scheme: dark;
   accent-color: var(--phosphor);
+}
+
+/* Pantalla de Pip-Boy: tubo más ceñido bajo la franja de la carcasa. */
+@media (max-width: 720px) {
+  :root {
+    --tube-inset: 10px;
+    --tube-top: 34px;
+    --tube-radius: 22px;
+  }
 }
 
 /* Interruptor CRT apagado o contraste aumentado: sin halo. */

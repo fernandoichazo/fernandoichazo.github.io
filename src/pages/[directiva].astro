@@ -18,6 +18,8 @@ const { directive } = Astro.props as { directive: Directive };
   title={`${directive.label} · ${profile.name}`}
   description={`${directive.label}: sección del portafolio de ${profile.name}.`}
   statusMessage={`${directive.file} · PULSA [ESC] PARA VOLVER`}
+  statusMessageMid={`${directive.file} · [ESC] VOLVER`}
+  statusMessageShort="[ESC] VOLVER"
 >
   <TerminalHeader showLog={false} />
   <ModulePending directive={directive} />

@@ -15,21 +15,19 @@
 
 <style>
   .crt {
-    --inset: 18px;
-    --radius: 34px;
     position: relative;
     min-height: 100dvh;
-    padding: var(--inset);
+    padding: var(--tube-top) var(--tube-inset) var(--tube-inset);
     background: var(--void);
   }
 
   .crt__content {
     position: relative;
-    min-height: calc(100dvh - 2 * var(--inset));
+    min-height: calc(100dvh - var(--tube-top) - var(--tube-inset));
     display: flex;
     flex-direction: column;
-    padding: clamp(1.5rem, 1rem + 2vw, 2.75rem) var(--gutter) 0;
-    border-radius: var(--radius);
+    padding: clamp(1.25rem, 4vh, 2.75rem) var(--gutter) 0;
+    border-radius: var(--tube-radius);
     background: radial-gradient(
       ellipse 80% 75% at 50% 46%,
       var(--surface-lift) 0%,
@@ -42,14 +40,15 @@
   .crt__layer,
   .crt__bezel {
     position: fixed;
-    inset: var(--inset);
-    border-radius: var(--radius);
+    inset: var(--tube-top) var(--tube-inset) var(--tube-inset);
+    border-radius: var(--tube-radius);
     pointer-events: none;
     z-index: 20;
   }
 
+  /* Elipse con la forma del tubo: oscurece las esquinas, no el borde de la columna. */
   .crt__vignette {
-    background: radial-gradient(circle, transparent 65%, rgb(0 0 0 / 0.85) 100%);
+    background: radial-gradient(ellipse farthest-corner, transparent 78%, rgb(0 0 0 / 0.7) 100%);
   }
 
   .crt__scanlines {
@@ -97,17 +96,7 @@
   /* Móvil: pantalla vertical de Pip-Boy dentro de su carcasa. */
   @media (max-width: 720px) {
     .crt {
-      --inset: 10px;
-      --radius: 22px;
-      padding-top: 34px;
       background: #121810;
-    }
-    .crt__content {
-      min-height: calc(100dvh - 34px - var(--inset));
-    }
-    .crt__layer,
-    .crt__bezel {
-      top: 34px;
     }
     .crt__bezel {
       box-shadow: 0 0 0 100vmax #121810;

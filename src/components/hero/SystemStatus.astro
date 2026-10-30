@@ -1,16 +1,28 @@
 ---
 // Barra de estado al pie del terminal: mensaje para el reclutador y los interruptores CRT.
+// El mensaje tiene tres longitudes para que la barra quepa siempre en una línea.
 import CRTControls from '@components/crt/CRTControls.astro';
 
 interface Props {
   message?: string;
+  messageMid?: string;
+  messageShort?: string;
 }
 
-const { message = 'LISTO PARA INSPECCIÓN DEL RECLUTADOR · PULSA [TAB] O CLIC EN UNA OPCIÓN' } = Astro.props;
+const {
+  message = 'LISTO PARA INSPECCIÓN DEL RECLUTADOR · PULSA [TAB] O CLIC EN UNA OPCIÓN',
+  messageMid = 'LISTO PARA INSPECCIÓN',
+  messageShort = 'LISTO',
+} = Astro.props;
 ---
 
 <footer class="status reveal" style="--i:8">
-  <p class="message"><span class="tag">[STATUS]</span> <span class="text">{message}</span><span class="text-short">LISTO</span></p>
+  <p class="message">
+    <span class="tag">[STATUS]</span>
+    <span class="text text--full">{message}</span>
+    <span class="text text--mid">{messageMid}</span>
+    <span class="text text--short">{messageShort}</span>
+  </p>
   <CRTControls />
 </footer>
 
@@ -21,38 +33,48 @@ const { message = 'LISTO PARA INSPECCIÓN DEL RECLUTADOR · PULSA [TAB] O CLIC E
     z-index: 5;
     margin-top: auto;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.25rem 2rem;
-    padding: 0.75rem 0 clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+    gap: 1rem;
+    padding: 0.5rem 0 clamp(0.5rem, 0.25rem + 1vw, 1.25rem);
     border-top: 2px solid var(--phosphor-deep);
-    background: #050a07;
+    background: #040805;
     font-size: var(--step--1);
     color: var(--phosphor-soft);
   }
   .tag {
+    margin-right: 0.6em;
     color: var(--phosphor);
   }
   .message {
     padding-block: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .text--mid,
+  .text--short {
+    display: none;
   }
 
-  .text-short {
-    display: none;
+  @media (max-width: 1100px) {
+    .text--full {
+      display: none;
+    }
+    .text--mid {
+      display: inline;
+    }
   }
 
   @media (max-width: 640px) {
     .status {
       position: static;
-      flex-wrap: nowrap;
       gap: 0.5rem;
-      padding-block: 0.25rem 0.5rem;
     }
-    .text {
+    .text--mid {
       display: none;
     }
-    .text-short {
+    .text--short {
       display: inline;
     }
   }
