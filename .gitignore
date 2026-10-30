@@ -26,3 +26,5 @@ pnpm-debug.log*
 *.md 
 !README.md
 !.rules/**
+!CLAUDE.md
+!.claude/**
