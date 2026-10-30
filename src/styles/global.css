@@ -22,30 +22,54 @@
   --step-0: clamp(1rem, 0.94rem + 0.3vw, 1.25rem);
   --step-1: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem);
   --step-2: clamp(1.625rem, 1.3rem + 1.2vw, 2rem);
-  --step-display: clamp(2.75rem, min(1.2rem + 5.6vw, 11vh), 6rem);
+  --step-display: clamp(2.75rem, min(1.2rem + 5.6vw, var(--screen-h) * 0.11), 6rem);
 
   --gutter: clamp(1rem, 0.4rem + 3vw, 6rem);
   --glow: 0 0 6px var(--phosphor-glow);
   --glow-strong: 0 0 16px var(--phosphor-glow), 0 0 2px var(--phosphor);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --boot-duration: 1.15s;
+  --boot-duration: 2.3s; /* intro del Pip-Boy hasta que el terminal empieza a imprimir */
 
-  /* Geometría del tubo, compartida por CRTScreen y BootSequence. */
-  --tube-inset: 18px;
-  --tube-top: 18px;
-  --tube-radius: 34px;
+  /* Carcasa del Pip-Boy 3000. */
+  --casing: #4a4b33;
+  --casing-hi: #6e6c4b;
+  --casing-lo: #2a2b1d;
+  --casing-metal: #8c8a66;
+  --casing-rubber: #0b0c08;
+  --casing-lip: #34352a;
+  --casing-recess: #1f2016;
+  --casing-edge: #5d5c40;
+  --casing-socket: #1c1d14;
+  --casing-knurl: #24251a;
+  --casing-cap: #5b5a40;
+  --casing-cap-lo: #2e2f21;
+  --casing-button: #77754f;
+  --casing-shine: #c4c1a0;
+  --casing-shine-dim: #9a987a;
+  --casing-plate-ink: #9a987a; /* placa impresa sobre --casing-lo */
+  --led-core: #c8ffdf;
+
+  /* Ventana de la pantalla dentro del marco: la comparten CRTScreen, PipBoyFrame y PipBoyIntro. */
+  --win-top: 56px;
+  --win-right: clamp(72px, 10.3vw, 148px);
+  --win-bottom: 64px;
+  --win-left: 56px;
+  --tube-radius: 30px;
+  --screen-h: calc(100dvh - var(--win-top) - var(--win-bottom));
 
   color-scheme: dark;
   accent-color: var(--phosphor);
 }
 
-/* Pantalla de Pip-Boy: tubo más ceñido bajo la franja de la carcasa. */
+/* Pip-Boy girado 90°: perillas arriba, LED y placa abajo, botones a la derecha. */
 @media (max-width: 720px) {
   :root {
-    --tube-inset: 10px;
-    --tube-top: 34px;
-    --tube-radius: 22px;
+    --win-top: 86px;
+    --win-right: 22px;
+    --win-bottom: 48px;
+    --win-left: 14px;
+    --tube-radius: 20px;
   }
 }
 

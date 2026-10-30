@@ -1,8 +1,10 @@
 ---
-// Layout base Pip-OS: documento, preferencias CRT antes de pintar, tubo y barra de estado.
+// Layout base Pip-OS: documento, preferencias CRT antes de pintar, intro del Pip-Boy,
+// tubo, marco y barra de estado.
 import '@styles/global.css';
 import CRTScreen from '@components/crt/CRTScreen.astro';
-import BootSequence from '@components/terminal/BootSequence.astro';
+import PipBoyFrame from '@components/pipboy/PipBoyFrame.astro';
+import PipBoyIntro from '@components/pipboy/PipBoyIntro.astro';
 import SystemStatus from '@components/hero/SystemStatus.astro';
 import vt323 from '@fontsource/vt323/files/vt323-latin-400-normal.woff2?url';
 import shareTechMono from '@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2?url';
@@ -26,7 +28,7 @@ const { title, description, boot = false, statusMessage, statusMessageMid, statu
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#020503" />
+    <meta name="theme-color" content="#4a4b33" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="preload" href={vt323} as="font" type="font/woff2" crossorigin />
@@ -56,19 +58,20 @@ const { title, description, boot = false, statusMessage, statusMessageMid, statu
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
-    {boot && <BootSequence />}
+    {boot && <PipBoyIntro />}
     <CRTScreen>
       <main id="contenido" class="main">
         <slot />
       </main>
       <SystemStatus message={statusMessage} messageMid={statusMessageMid} messageShort={statusMessageShort} />
     </CRTScreen>
+    <PipBoyFrame />
   </body>
 </html>
 
 <style>
   .main {
     min-width: 0;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0;
   }
 </style>

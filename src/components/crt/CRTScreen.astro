@@ -1,6 +1,7 @@
 ---
 // Cristal del tubo: superficie abombada, viñeta, scanlines y flicker.
-// El contenido se desplaza bajo un marco fijo que recorta las esquinas del tubo.
+// Ocupa la ventana que deja libre el marco del Pip-Boy (tokens --win-*); el contenido
+// se desplaza bajo el marco fijo, que recorta las esquinas del tubo.
 ---
 
 <div class="crt">
@@ -10,23 +11,28 @@
   <div class="crt__layer crt__scanlines" aria-hidden="true"></div>
   <div class="crt__layer crt__flicker" aria-hidden="true"></div>
   <div class="crt__layer crt__vignette" aria-hidden="true"></div>
-  <div class="crt__bezel" aria-hidden="true"></div>
 </div>
 
 <style>
+  /* La página no se desplaza: la pantalla es el contenedor de scroll, dentro del cristal. */
   .crt {
     position: relative;
-    min-height: 100dvh;
-    padding: var(--tube-top) var(--tube-inset) var(--tube-inset);
-    background: var(--void);
+    height: 100dvh;
+    overflow: hidden;
+    padding: var(--win-top) var(--win-right) var(--win-bottom) var(--win-left);
+    background: var(--casing);
   }
 
   .crt__content {
     position: relative;
-    min-height: calc(100dvh - var(--tube-top) - var(--tube-inset));
+    height: var(--screen-h);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--phosphor-dim) transparent;
     display: flex;
     flex-direction: column;
-    padding: clamp(1.25rem, 4vh, 2.75rem) var(--gutter) 0;
+    padding: clamp(1.25rem, var(--screen-h) * 0.04, 2.75rem) var(--gutter) 0;
     border-radius: var(--tube-radius);
     background: radial-gradient(
       ellipse 80% 75% at 50% 46%,
@@ -36,11 +42,13 @@
     );
     background-attachment: fixed;
   }
+  .crt__content > :global(*) {
+    flex-shrink: 0;
+  }
 
-  .crt__layer,
-  .crt__bezel {
+  .crt__layer {
     position: fixed;
-    inset: var(--tube-top) var(--tube-inset) var(--tube-inset);
+    inset: var(--win-top) var(--win-right) var(--win-bottom) var(--win-left);
     border-radius: var(--tube-radius);
     pointer-events: none;
     z-index: 20;
@@ -65,12 +73,6 @@
     animation: flicker 6s steps(1) infinite;
   }
 
-  /* Marco que tapa lo que se desplaza fuera del cristal redondeado. */
-  .crt__bezel {
-    box-shadow: 0 0 0 100vmax var(--void);
-    z-index: 21;
-  }
-
   @keyframes flicker {
     0%, 100% { opacity: 0; }
     12% { opacity: 0.018; }
@@ -90,29 +92,6 @@
   @media (prefers-reduced-motion: reduce) {
     .crt__flicker {
       display: none;
-    }
-  }
-
-  /* Móvil: pantalla vertical de Pip-Boy dentro de su carcasa. */
-  @media (max-width: 720px) {
-    .crt {
-      background: #121810;
-    }
-    .crt__bezel {
-      box-shadow: 0 0 0 100vmax #121810;
-    }
-    .crt::before {
-      content: 'ROBCO IND. · PIP-BOY 3000';
-      position: fixed;
-      top: 9px;
-      left: 0;
-      right: 0;
-      z-index: 22;
-      text-align: center;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
-      color: #7d8f73;
-      text-shadow: none;
     }
   }
 </style>

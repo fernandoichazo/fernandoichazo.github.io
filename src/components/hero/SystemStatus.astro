@@ -36,7 +36,7 @@ const {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.5rem 0 clamp(0.5rem, 0.25rem + 1vw, 1.25rem);
+    padding: 0.375rem 0 clamp(0.375rem, 0.125rem + 0.75vw, 0.875rem);
     border-top: 2px solid var(--phosphor-deep);
     background: #040805;
     font-size: var(--step--1);
@@ -47,7 +47,7 @@ const {
     color: var(--phosphor);
   }
   .message {
-    padding-block: 0.5rem;
+    padding-block: 0.25rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -66,6 +66,7 @@ const {
     }
   }
 
+  /* En el teléfono el menú no cabe en una pantalla: la barra va al final, sin tapar nada. */
   @media (max-width: 640px) {
     .status {
       position: static;

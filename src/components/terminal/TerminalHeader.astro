@@ -8,11 +8,17 @@ interface Props {
 }
 
 const { showLog = true } = Astro.props;
+
+// Cada palabra en una pieza: el salto de línea solo cae en los espacios, nunca en un guion.
+const words = (text: string) => text.split(' ');
 ---
 
 <header class="header">
   <PhosphorText size="body" class="reveal title" style="--i:0">
-    <span class="os-long">{system.os}<br />{system.copyright}</span>
+    <span class="os-long">
+      {words(system.os).map((word) => <span class="word">{word}</span>)}
+      <br />{system.copyright}
+    </span>
     <span class="os-short">{system.osShort}</span>
   </PhosphorText>
   {
@@ -33,7 +39,7 @@ const { showLog = true } = Astro.props;
     line-height: 1.5;
   }
   .log {
-    margin-top: clamp(0.75rem, 2.5vh, 1.25rem);
+    margin-top: clamp(0.75rem, var(--screen-h) * 0.025, 1.25rem);
     font-size: var(--step--1);
     line-height: 1.65;
     color: var(--phosphor-soft);
@@ -44,6 +50,13 @@ const { showLog = true } = Astro.props;
   .os-short {
     display: none;
   }
+  .word {
+    white-space: nowrap;
+  }
+  .word:not(:last-child)::after {
+    content: ' ';
+    white-space: normal;
+  }
 
   /* Pantalla de Pip-Boy: cabecera corta y sin log, para que el menú quepa. */
   @media (max-width: 640px) {
@@ -53,6 +66,13 @@ const { showLog = true } = Astro.props;
     }
     .os-short {
       display: inline;
+    }
+  }
+
+  /* Pantallas bajas: el log de arranque cede su sitio al menú. */
+  @media (min-width: 641px) and (max-height: 820px) {
+    .log {
+      display: none;
     }
   }
 </style>

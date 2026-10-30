@@ -17,12 +17,6 @@ export const system = {
     { text: 'MEMORIA: 64KB OK | PROTOCOLO PIP-BOY:', result: 'ACTIVO' },
     { text: 'VERIFICANDO ACCESO DE RECLUTADOR...', result: 'CONCEDIDO' },
   ],
-  // Líneas del encendido del tubo (BootSequence).
-  diagnostics: [
-    'ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL',
-    'CARGANDO MÓDULOS DE INGENIERÍA... [OK]',
-    'VERIFICANDO ACCESO DE RECLUTADOR... CONCEDIDO.',
-  ],
 } as const;
 
 export interface Directive {
