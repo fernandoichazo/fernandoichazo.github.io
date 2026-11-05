@@ -1,25 +1,13 @@
 ---
-// Marco del Pip-Boy 3000 (dibujo original) alrededor de la pantalla: la cámara ya se acercó
-// y solo quedan el bisel, la carcasa y lo que asoma de perillas y botones.
-// En pantallas estrechas es el mismo dispositivo girado 90°, como lo deja la intro.
+// Marco del Pip-Boy 3000 alrededor de la pantalla, tras el acercamiento de la intro: la cámara
+// queda tan cerca que solo asoma un filo del bisel y de la carcasa, y el tubo ocupa casi toda
+// la ventana. Los colores siguen al dispositivo vectorizado (PipBoyDevice).
 // Todo es decorativo y no intercepta el puntero.
 ---
 
 <div class="frame" aria-hidden="true">
   <div class="frame__shade"></div>
   <div class="frame__bezel"></div>
-  <span class="screw screw--tl"></span>
-  <span class="screw screw--tr"></span>
-  <span class="screw screw--bl"></span>
-  <span class="screw screw--br"></span>
-  <span class="led"></span>
-  <span class="label">PIP-BOY 3000</span>
-  <span class="knob knob--big"></span>
-  <span class="grille"><i></i><i></i><i></i></span>
-  <span class="knob knob--small"></span>
-  <span class="btn btn--1"></span>
-  <span class="btn btn--2"></span>
-  <span class="btn btn--3"></span>
 </div>
 
 <style>
@@ -29,221 +17,29 @@
     pointer-events: none;
   }
 
-  /* Bisel: anillos de goma y hueco que siguen el radio del tubo; el último pinta la carcasa. */
+  /* Bisel: goma, hueco oscuro y canto claro que siguen el radio del tubo; el último pinta la carcasa. */
   .frame__bezel {
     inset: var(--win-top) var(--win-right) var(--win-bottom) var(--win-left);
     border-radius: var(--tube-radius);
     box-shadow:
       inset 0 0 18px 6px rgb(0 0 0 / 0.65),
-      0 0 0 10px var(--casing-rubber),
-      0 0 0 12px var(--casing-lip),
-      0 0 0 30px var(--casing-recess),
-      0 0 0 32px var(--casing-edge),
+      0 0 0 var(--bezel-rubber) var(--casing-rubber),
+      0 0 0 var(--bezel-recess) var(--casing-recess),
+      0 0 0 var(--bezel-edge) var(--casing-edge),
       0 0 0 100vmax var(--casing);
   }
 
-  /* Luz y desgaste de la carcasa, con un hueco alrededor del bisel. */
+  /* Luz rasante y desgaste de la carcasa, con un hueco alrededor del bisel. */
   .frame__shade {
     inset: 0;
     z-index: 31;
-    padding: calc(var(--win-top) - 34px) calc(var(--win-right) - 34px) calc(var(--win-bottom) - 34px)
-      calc(var(--win-left) - 34px);
+    padding: calc(var(--win-top) - var(--bezel-edge)) calc(var(--win-right) - var(--bezel-edge))
+      calc(var(--win-bottom) - var(--bezel-edge)) calc(var(--win-left) - var(--bezel-edge));
     background:
-      linear-gradient(180deg, rgb(255 250 210 / 0.14) 0, transparent 6%, transparent 82%, rgb(0 0 0 / 0.38) 100%),
-      linear-gradient(90deg, rgb(0 0 0 / 0.3) 0, transparent 5%, transparent 90%, rgb(0 0 0 / 0.32) 100%),
+      linear-gradient(180deg, rgb(255 250 210 / 0.16) 0, transparent 30%, transparent 70%, rgb(0 0 0 / 0.35) 100%),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
     -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) content-box;
     -webkit-mask-composite: xor;
     mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0) content-box;
-  }
-
-  .frame > .screw,
-  .frame > .led,
-  .frame > .label,
-  .frame > .knob,
-  .frame > .grille,
-  .frame > .btn {
-    z-index: 32;
-  }
-
-  .screw {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, var(--casing-shine), var(--casing-metal) 45%, var(--casing));
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.6);
-  }
-  .screw::after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    right: 4px;
-    top: 10px;
-    height: 3px;
-    background: var(--casing-lo);
-    transform: rotate(var(--rot));
-  }
-  .screw--tl { left: 14px; top: 14px; --rot: 30deg; }
-  .screw--tr { right: calc(var(--win-right) - 52px); top: 14px; --rot: -15deg; }
-  .screw--bl { left: 14px; bottom: 18px; --rot: 70deg; }
-  .screw--br { right: calc(var(--win-right) - 52px); bottom: 18px; --rot: 5deg; }
-
-  /* LED de encendido: una fuente de luz real del dispositivo. */
-  .led {
-    left: 96px;
-    top: 18px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, var(--led-core), var(--phosphor) 45%, var(--phosphor-dim));
-    box-shadow: 0 0 0 4px var(--casing-socket), 0 0 14px 2px #1bff8088;
-  }
-
-  /* Placa impresa, la misma que se lee en la intro. */
-  .label {
-    top: 16px;
-    left: calc(50% - (var(--win-right) - var(--win-left)) / 2);
-    transform: translateX(-50%);
-    padding: 3px 12px;
-    border-radius: 3px;
-    background: var(--casing-lo);
-    font: 400 14px var(--font-text);
-    letter-spacing: 0.3em;
-    color: var(--casing-plate-ink);
-    text-shadow: none;
-  }
-
-  /* Lo que asoma del módulo de sintonía: perilla grande con su aro estriado, rejilla y perilla menor. */
-  .knob {
-    border-radius: 50%;
-    background:
-      radial-gradient(circle closest-side, var(--casing-shine-dim) 0, var(--casing-cap) 55%, var(--casing-cap-lo) 76%, transparent 77%),
-      repeating-conic-gradient(var(--casing-hi) 0 3deg, var(--casing-knurl) 3deg 6deg);
-  }
-  .knob--big {
-    width: 360px;
-    height: 360px;
-    right: calc(var(--win-right) - 400px);
-    top: 70px;
-    box-shadow: 0 0 0 10px var(--casing-knurl), -6px 8px 18px rgb(0 0 0 / 0.5);
-  }
-  .knob--small {
-    width: 170px;
-    height: 170px;
-    right: calc(var(--win-right) - 248px);
-    bottom: 110px;
-    box-shadow: 0 0 0 8px var(--casing-knurl), -4px 6px 14px rgb(0 0 0 / 0.5);
-  }
-  .grille {
-    right: -10px;
-    top: 55%;
-    width: calc(var(--win-right) - 42px);
-    display: grid;
-    gap: 10px;
-  }
-  .grille i {
-    height: 10px;
-    border-radius: 5px;
-    background: var(--casing-socket);
-    box-shadow: 0 1px 0 var(--casing-hi);
-  }
-
-  /* Botones bajo la pantalla, cortados por el encuadre y repartidos con el ancho. */
-  .btn {
-    bottom: -26px;
-    width: 13.9vw;
-    height: 52px;
-    border-radius: 10px;
-    background: linear-gradient(var(--casing-button), var(--casing-cap));
-    box-shadow: 0 -1px 0 var(--casing-shine-dim) inset, 0 4px 0 var(--casing-lo);
-  }
-  .btn--1 { left: 10.4vw; }
-  .btn--2 { left: 29.2vw; }
-  .btn--3 { left: 48vw; }
-
-  /* Pip-Boy girado 90°: perillas y rejilla arriba, LED y placa abajo, botones en el borde derecho. */
-  @media (max-width: 720px) {
-    .frame__bezel {
-      box-shadow:
-        inset 0 0 14px 4px rgb(0 0 0 / 0.65),
-        0 0 0 5px var(--casing-rubber),
-        0 0 0 6px var(--casing-lip),
-        0 0 0 12px var(--casing-recess),
-        0 0 0 13px var(--casing-edge),
-        0 0 0 100vmax var(--casing);
-    }
-    .frame__shade {
-      padding: calc(var(--win-top) - 14px) 0 calc(var(--win-bottom) - 14px) 0;
-    }
-    .screw {
-      width: 16px;
-      height: 16px;
-    }
-    .screw::after {
-      left: 3px;
-      right: 3px;
-      top: 7px;
-      height: 2px;
-    }
-    .screw--tl,
-    .screw--tr {
-      display: none;
-    }
-    .screw--bl { left: 10px; bottom: 16px; }
-    .screw--br { right: 10px; bottom: 16px; }
-    .led {
-      left: 40px;
-      top: auto;
-      bottom: 15px;
-      width: 16px;
-      height: 16px;
-      box-shadow: 0 0 0 3px var(--casing-socket), 0 0 12px 2px #1bff8088;
-    }
-    .label {
-      top: auto;
-      bottom: 13px;
-      left: 50%;
-      font-size: 13px;
-      letter-spacing: 0.24em;
-    }
-    .knob--big {
-      width: 300px;
-      height: 300px;
-      left: -60px;
-      right: auto;
-      top: -226px;
-      box-shadow: 0 0 0 8px var(--casing-knurl), 0 6px 16px rgb(0 0 0 / 0.5);
-    }
-    .knob--small {
-      width: 150px;
-      height: 150px;
-      right: 8px;
-      bottom: auto;
-      top: -92px;
-      box-shadow: 0 0 0 6px var(--casing-knurl), 0 4px 12px rgb(0 0 0 / 0.5);
-    }
-    .grille {
-      right: auto;
-      left: 59%;
-      top: 14px;
-      width: auto;
-      display: flex;
-      gap: 8px;
-    }
-    .grille i {
-      width: 8px;
-      height: 44px;
-      border-radius: 4px;
-    }
-    .btn {
-      left: auto;
-      bottom: auto;
-      right: -30px;
-      width: 40px;
-      height: 15vh;
-    }
-    .btn--1 { top: 22vh; }
-    .btn--2 { top: 41vh; }
-    .btn--3 { top: 60vh; }
   }
 </style>

@@ -31,45 +31,39 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --boot-duration: 2.3s; /* intro del Pip-Boy hasta que el terminal empieza a imprimir */
 
-  /* Carcasa del Pip-Boy 3000. */
-  --casing: #4a4b33;
-  --casing-hi: #6e6c4b;
-  --casing-lo: #2a2b1d;
-  --casing-metal: #8c8a66;
-  --casing-rubber: #0b0c08;
-  --casing-lip: #34352a;
-  --casing-recess: #1f2016;
-  --casing-edge: #5d5c40;
-  --casing-socket: #1c1d14;
-  --casing-knurl: #24251a;
-  --casing-cap: #5b5a40;
-  --casing-cap-lo: #2e2f21;
-  --casing-button: #77754f;
-  --casing-shine: #c4c1a0;
-  --casing-shine-dim: #9a987a;
-  --casing-plate-ink: #9a987a; /* placa impresa sobre --casing-lo */
-  --led-core: #c8ffdf;
+  /* Carcasa del Pip-Boy 3000 (misma paleta que el dispositivo vectorizado). */
+  --casing: #615f42;
+  --casing-rubber: #141510;
+  --casing-recess: #3e3f2d;
+  --casing-edge: #8a8461;
 
-  /* Ventana de la pantalla dentro del marco: la comparten CRTScreen, PipBoyFrame y PipBoyIntro. */
-  --win-top: 56px;
-  --win-right: clamp(72px, 10.3vw, 148px);
-  --win-bottom: 64px;
-  --win-left: 56px;
-  --tube-radius: 30px;
+  /* Ventana de la pantalla dentro del marco: la comparten CRTScreen, PipBoyFrame y PipBoyIntro.
+     El marco es apenas un filo para que la pantalla ocupe casi todo el viewport. */
+  --win-top: 18px;
+  --win-right: 18px;
+  --win-bottom: 18px;
+  --win-left: 18px;
+  --tube-radius: 26px;
+  --bezel-rubber: 3px;
+  --bezel-recess: 9px;
+  --bezel-edge: 12px;
   --screen-h: calc(100dvh - var(--win-top) - var(--win-bottom));
 
   color-scheme: dark;
   accent-color: var(--phosphor);
 }
 
-/* Pip-Boy girado 90°: perillas arriba, LED y placa abajo, botones a la derecha. */
+/* Pantallas estrechas: el filo se adelgaza todavía más. */
 @media (max-width: 720px) {
   :root {
-    --win-top: 86px;
-    --win-right: 22px;
-    --win-bottom: 48px;
-    --win-left: 14px;
-    --tube-radius: 20px;
+    --win-top: 10px;
+    --win-right: 10px;
+    --win-bottom: 10px;
+    --win-left: 10px;
+    --tube-radius: 16px;
+    --bezel-rubber: 2px;
+    --bezel-recess: 5px;
+    --bezel-edge: 7px;
   }
 }
 

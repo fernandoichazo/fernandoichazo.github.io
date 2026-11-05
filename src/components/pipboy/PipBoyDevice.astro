@@ -1,0 +1,257 @@
+---
+// Pip-Boy 3000 vectorizado a partir de pibboy3000.png (lienzo 2400×1792).
+// Se incrusta como <svg> anidado dentro de otra escena SVG; x, y y width lo colocan ahí.
+// Clases de animación que usa PipBoyIntro: pb-glass (cristal, referencia del acercamiento),
+// pb-glow (encendido de la pantalla), pb-beam (haz de fósforo) y pb-led (halo de los botones).
+interface Props {
+  x?: number;
+  y?: number;
+  width?: number;
+}
+
+const { x = 0, y = 0, width = 2400 } = Astro.props;
+const height = (width * 1792) / 2400;
+---
+
+<svg class="pb-device" x={x} y={y} width={width} height={height} viewBox="0 0 2400 1792" overflow="visible" style="text-transform: none; letter-spacing: normal">
+    <defs>
+      <linearGradient id="pd-shell" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7d7553"/>
+        <stop offset="0.45" stop-color="#6b6747"/>
+        <stop offset="1" stop-color="#55533b"/>
+      </linearGradient>
+      <linearGradient id="pd-shell-h" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#5a583e"/>
+        <stop offset="0.35" stop-color="#6e6b4a"/>
+        <stop offset="1" stop-color="#4c4a35"/>
+      </linearGradient>
+      <linearGradient id="pd-panel" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6a6646"/>
+        <stop offset="0.6" stop-color="#5f5c40"/>
+        <stop offset="1" stop-color="#47452f"/>
+      </linearGradient>
+      <linearGradient id="pd-panel-r" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#4f4c36"/>
+        <stop offset="0.5" stop-color="#6e6b4a"/>
+        <stop offset="1" stop-color="#7b7553"/>
+      </linearGradient>
+      <linearGradient id="pd-cuff" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#5c5a3f"/>
+        <stop offset="0.5" stop-color="#77714f"/>
+        <stop offset="1" stop-color="#6a6646"/>
+      </linearGradient>
+      <linearGradient id="pd-lower" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4a4833"/>
+        <stop offset="1" stop-color="#5c5a3f"/>
+      </linearGradient>
+      <linearGradient id="pd-btnpanel" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#77714f"/>
+        <stop offset="1" stop-color="#615f42"/>
+      </linearGradient>
+      <radialGradient id="pd-glass" cx="0.5" cy="0.5" r="0.62">
+        <stop offset="0" stop-color="#16301f"/>
+        <stop offset="0.55" stop-color="#0c1810"/>
+        <stop offset="1" stop-color="#050906"/>
+      </radialGradient>
+      <radialGradient id="pd-glass-on" cx="0.5" cy="0.48" r="0.62">
+        <stop offset="0" stop-color="#1bff80" stop-opacity="0.55"/>
+        <stop offset="0.55" stop-color="#0f7740" stop-opacity="0.35"/>
+        <stop offset="1" stop-color="#020503" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="pd-beam" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#1bff80" stop-opacity="0"/>
+        <stop offset="0.5" stop-color="#1bff80"/>
+        <stop offset="1" stop-color="#1bff80" stop-opacity="0"/>
+      </linearGradient>
+      <radialGradient id="pd-btn" cx="0.42" cy="0.38" r="0.65">
+        <stop offset="0" stop-color="#f9a23c"/>
+        <stop offset="0.6" stop-color="#f47d2b"/>
+        <stop offset="1" stop-color="#e85a25"/>
+      </radialGradient>
+      <radialGradient id="pd-btn-halo" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0.6" stop-color="#f47d2b" stop-opacity="0.55"/>
+        <stop offset="1" stop-color="#f47d2b" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="pd-dial" cx="0.5" cy="0.5" r="0.5">
+        <stop offset="0" stop-color="#e3dcb4"/>
+        <stop offset="1" stop-color="#c9c196"/>
+      </radialGradient>
+      <radialGradient id="pd-screw" cx="0.4" cy="0.35" r="0.7">
+        <stop offset="0" stop-color="#b9b6a6"/>
+        <stop offset="1" stop-color="#8d8b7c"/>
+      </radialGradient>
+      <g id="pd-screw-g">
+        <circle r="44" fill="#2a2b1e"/>
+        <circle r="31" fill="url(#pd-screw)"/>
+        <path d="M-22 -22 L22 22" stroke="#3e3f2d" stroke-width="9" stroke-linecap="round"/>
+      </g>
+    </defs>
+
+    <!-- Abrazadera derecha (detrás) -->
+    <path d="M2150 440 H2190 V1690 H2150 Z" fill="#2a2b1e"/>
+    <path d="M2185 452 L2214 394 Q2222 388 2232 394 L2236 432 L2302 446 Q2318 450 2321 470 L2328 538 L2319 552 L2332 566 L2356 1000 L2348 1630 Q2344 1670 2316 1688 L2242 1746 Q2226 1752 2214 1740 L2182 1700 Z" fill="url(#pd-cuff)"/>
+    <path d="M2185 452 L2214 394 L2214 1740 L2182 1700 Z" fill="#3b3b29"/>
+    <path d="M2214 394 Q2222 388 2232 394 L2236 1740 Q2226 1752 2214 1740 Z" fill="#8a8461"/>
+    <g fill="#2a2b1e">
+      <path d="M2232 1420 L2335 1398 L2335 1412 L2246 1430 Z"/>
+      <path d="M2232 1520 L2335 1490 L2335 1504 L2246 1532 Z"/>
+    </g>
+
+    <!-- Abrazadera izquierda -->
+    <path d="M76 360 L134 307 Q148 302 154 318 L172 362 L205 362 L205 1690 L160 1702 L146 1718 Q134 1728 124 1716 L72 1645 Q44 1500 44 1010 Q44 600 76 360 Z" fill="url(#pd-cuff)"/>
+    <path d="M118 330 L134 307 Q148 302 154 318 L172 362 L172 1690 L146 1718 L118 1700 Z" fill="#3b3b29"/>
+    <path d="M154 318 L172 362 L172 1690 L160 1702 Z" fill="#2a2b1e"/>
+
+    <!-- Cuerpo izquierdo: cúpula del medidor -->
+    <path d="M150 500 V470 L252 252 Q292 160 400 142 Q505 136 582 214 L600 228 L700 228 L700 1700 L150 1700 Z" fill="url(#pd-shell-h)"/>
+    <path d="M158 468 L255 258 Q295 170 400 152 Q500 146 575 220" fill="none" stroke="#9a9370" stroke-width="10" opacity="0.7"/>
+    <path d="M158 470 L255 260 Q300 180 400 162 Q500 158 572 226 L600 238 L640 238 L640 500 L158 500 Z" fill="#7b744f" opacity="0.55"/>
+
+    <!-- Medidor -->
+    <circle cx="417" cy="338" r="120" fill="#2e2f21"/>
+    <circle cx="417" cy="338" r="102" fill="#8f8a66"/>
+    <path d="M405 243 A95 95 0 0 1 405 433 Z" fill="url(#pd-dial)"/>
+    <path d="M405 280 A58 58 0 0 1 463 338" fill="none" stroke="#2e2f21" stroke-width="12"/>
+    <path d="M405 274 V338" stroke="#2e2f21" stroke-width="6"/>
+    <g stroke="#2e2f21" stroke-width="6" stroke-linecap="round">
+      <path d="M440 284 L452 266"/><path d="M466 312 L486 304"/><path d="M468 368 L488 376"/><path d="M444 394 L456 412"/><path d="M418 404 L420 424"/>
+    </g>
+    <path d="M405 336 L485 340 L405 344 Z" fill="#2e2f21"/>
+    <circle cx="410" cy="340" r="9" fill="#2e2f21"/>
+    <circle cx="371" cy="384" r="12" fill="#5c5a3f"/>
+    <path d="M362 393 L380 375" stroke="#2e2f21" stroke-width="4"/>
+    <rect x="362" y="278" width="16" height="22" rx="5" fill="#5c5a3f"/>
+
+    <!-- Placa con rejilla y logotipo -->
+    <path d="M158 500 H578 V900 H158 Z" fill="url(#pd-panel)"/>
+    <path d="M158 500 H578" stroke="#3e3f2d" stroke-width="8"/>
+    <g fill="#2c2d1f">
+      <rect x="165" y="600" width="390" height="17" rx="8.5"/>
+      <rect x="165" y="665" width="390" height="17" rx="8.5"/>
+      <rect x="165" y="730" width="390" height="17" rx="8.5"/>
+      <rect x="165" y="795" width="390" height="17" rx="8.5"/>
+    </g>
+    <text x="375" y="577" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-weight="700" font-size="56" letter-spacing="2" fill="#f8de8a" textLength="280" lengthAdjust="spacingAndGlyphs" transform="skewX(-8) translate(80 0)">Pip-Boy</text>
+    <rect x="262" y="824" width="232" height="58" rx="10" fill="#3e3f2d"/>
+    <text x="378" y="868" text-anchor="middle" font-family="'Arial Narrow', 'Roboto Condensed', Arial, sans-serif" font-stretch="condensed" font-size="42" fill="#f8de8a" textLength="190" lengthAdjust="spacingAndGlyphs">Model 3000</text>
+
+    <!-- Placa inferior izquierda con perilla -->
+    <path d="M158 935 Q158 900 190 900 H700 V1700 H158 Z" fill="#6a6646"/>
+    <path d="M165 1150 L215 1150 L440 1650 L480 1700 L165 1700 Z" fill="#4c4a35"/>
+    <path d="M215 1150 L440 1650 L480 1700" fill="none" stroke="#2c2d1f" stroke-width="16" stroke-linejoin="round"/>
+    <path d="M330 1452 L760 1318 M440 1650 L760 1545" stroke="#2c2d1f" stroke-width="14"/>
+    <g stroke="#2c2d1f" stroke-width="12"><path d="M168 1270 H215 M168 1452 H330 M168 1590 H410"/></g>
+    <g stroke="#7d7756" stroke-width="6"><path d="M168 1285 H222 M168 1466 H335 M168 1604 H416"/></g>
+    <path d="M410 1480 Q430 1468 446 1490 L485 1675 Q478 1690 465 1680 Z" fill="#77714f"/>
+    <path d="M578 1430 Q598 1420 612 1445 L660 1625 Q652 1640 640 1630 Z" fill="#77714f"/>
+
+    <!-- Perilla de sintonía -->
+    <path d="M420 919 A148 148 0 1 1 201 1103 L252 1079 A92 92 0 1 0 388 965 Z" fill="#706b4b" stroke="#8a8461" stroke-width="10" stroke-linejoin="round"/>
+    <circle cx="335" cy="1042" r="76" fill="#2c2d1f"/>
+    <circle cx="335" cy="1042" r="54" fill="#3e3f2d"/>
+    <path d="M262 975 L290 968 L296 990 Z" fill="#2c2d1f"/>
+    <path d="M395 1085 L405 1118 L380 1110 Z" fill="#2c2d1f"/>
+    <g stroke="#c9c196" stroke-width="7" stroke-linecap="round">
+      <path d="M440 1002 L470 994"/><path d="M445 1060 L482 1066"/><path d="M420 1112 L446 1136"/><path d="M372 1146 L380 1176"/><path d="M306 1144 L298 1176"/>
+    </g>
+
+    <!-- Cuerpo derecho -->
+    <path d="M1960 232 Q2080 240 2140 340 Q2168 400 2166 520 V1280 H1960 Z" fill="url(#pd-panel-r)"/>
+    <path d="M1960 242 Q2075 252 2130 345 Q2155 400 2156 520" fill="none" stroke="#9a9370" stroke-width="10" opacity="0.7"/>
+    <rect x="1990" y="524" width="160" height="364" rx="12" fill="url(#pd-panel)"/>
+    <g fill="#2c2d1f">
+      <rect x="2015" y="600" width="140" height="17" rx="8.5"/>
+      <rect x="2015" y="667" width="140" height="17" rx="8.5"/>
+      <rect x="2015" y="734" width="140" height="17" rx="8.5"/>
+      <rect x="2015" y="800" width="140" height="17" rx="8.5"/>
+    </g>
+    <rect x="1975" y="890" width="192" height="380" rx="14" fill="#6a6646"/>
+    <path d="M1840 1270 H2180 V1585 H2060 V1535 H1840 Z" fill="#2e2f21"/>
+    <path d="M2060 1270 H2140 V1585 H2060 Z" fill="#3b3b29"/>
+    <path d="M2060 1460 L2180 1540 L2180 1560 L2060 1480 Z M2100 1300 L2180 1350 L2180 1370 L2100 1320 Z" fill="#55533b"/>
+    <ellipse cx="2135" cy="1435" rx="33" ry="21" fill="#8f8d80"/>
+    <ellipse cx="2135" cy="1515" rx="30" ry="17" fill="#8f8d80"/>
+
+    <!-- Cuerpo inferior bajo la pantalla -->
+    <path d="M700 1300 H1900 V1535 L1860 1540 L1745 1690 H700 Z" fill="url(#pd-lower)"/>
+    <rect x="1675" y="1350" width="100" height="185" fill="#2c2d1f"/>
+    <ellipse cx="1748" cy="1405" rx="22" ry="32" fill="#8f8d80"/>
+    <path d="M1675 1535 L1860 1460 L1860 1490 L1700 1540 Z" fill="#77714f"/>
+    <path d="M1900 1270 V1535" stroke="#2c2d1f" stroke-width="10"/>
+
+    <!-- Correa vertical inferior izquierda -->
+    <path d="M750 1290 H950 V1720 Q950 1745 925 1745 H775 Q750 1745 750 1720 Z" fill="#6a6646"/>
+    <path d="M930 1290 H950 V1720 Q950 1745 930 1745 Z" fill="#4c4a35"/>
+
+    <!-- Carcasa de la pantalla -->
+    <path d="M640 330 Q640 245 700 205 L760 165 L1872 162 Q1930 165 1960 220 Q1978 260 1978 330 V1270 Q1978 1300 1950 1300 H1530 V1345 H1000 V1335 H780 Q650 1330 640 1180 Z" fill="url(#pd-shell)"/>
+    <path d="M650 330 Q650 252 706 214 L764 175 L1868 172 Q1925 175 1952 226 Q1968 262 1968 330" fill="none" stroke="#9a9370" stroke-width="12" opacity="0.8"/>
+    <path d="M692 300 Q692 236 744 226 L1060 222 L1100 198 L1460 196 L1500 224 L1800 226 Q1900 230 1915 320 V1200 Q1910 1268 1840 1272 H780 Q700 1272 692 1180 Z" fill="#3e3f2d"/>
+    <path d="M735 340 Q738 270 800 262 L1060 256 L1092 236 L1470 236 L1500 260 L1780 266 Q1866 272 1872 350 V1150 Q1866 1226 1790 1230 H820 Q740 1226 735 1150 Z" fill="#232419"/>
+    <path class="pb-glass" d="M880 296 Q1320 270 1760 300 Q1850 306 1856 400 Q1870 720 1856 1062 Q1850 1150 1760 1160 Q1320 1180 880 1160 Q796 1154 790 1062 Q776 720 790 400 Q796 302 880 296 Z" fill="url(#pd-glass)"/>
+    <path class="pb-glow" d="M880 296 Q1320 270 1760 300 Q1850 306 1856 400 Q1870 720 1856 1062 Q1850 1150 1760 1160 Q1320 1180 880 1160 Q796 1154 790 1062 Q776 720 790 400 Q796 302 880 296 Z" fill="url(#pd-glass-on)"/>
+    <rect class="pb-beam" x="790" y="716" width="1066" height="18" fill="url(#pd-beam)"/>
+
+    <!-- Soporte superior -->
+    <path d="M888 166 V130 L962 72 H1686 Q1700 72 1712 86 L1766 142 V166 Z" fill="url(#pd-shell)"/>
+    <path d="M890 132 L962 76 H1686" fill="none" stroke="#9a9370" stroke-width="8" opacity="0.7"/>
+    <rect x="1065" y="70" width="122" height="70" rx="10" fill="#3e3f2d"/>
+    <rect x="1445" y="70" width="132" height="70" rx="10" fill="#3e3f2d"/>
+
+    <!-- Ranura lateral izquierda -->
+    <rect x="584" y="468" width="116" height="422" rx="18" fill="#55533b"/>
+    <rect x="598" y="522" width="88" height="362" rx="14" fill="#3e3f2d"/>
+    <rect x="611" y="540" width="62" height="330" rx="10" fill="#14231a"/>
+    <circle cx="643" cy="500" r="12" fill="#2c2d1f"/>
+    <circle cx="643" cy="910" r="12" fill="#2c2d1f"/>
+
+    <!-- Riel de la carcasa hacia el módulo de botones -->
+    <path d="M650 920 V1180 Q650 1320 790 1322 H975" fill="none" stroke="#8a8461" stroke-width="34" stroke-linejoin="round"/>
+    <path d="M1968 1100 V1180 Q1968 1300 1840 1300 H1660" fill="none" stroke="#8a8461" stroke-width="30"/>
+    <path d="M530 1290 Q530 1240 600 1220 L690 1196" fill="none" stroke="#8a8461" stroke-width="22" stroke-linecap="round"/>
+
+    <!-- Módulo de botones -->
+    <rect x="1000" y="1085" width="625" height="262" fill="url(#pd-btnpanel)"/>
+    <path d="M1000 1345 H1625 V1690 H1000 Z" fill="#55533b"/>
+    <path d="M1000 1345 H1625" stroke="#3e3f2d" stroke-width="8"/>
+    <g fill="#2c2d1f">
+      <rect x="1104" y="1370" width="46" height="272" rx="23"/>
+      <rect x="1238" y="1370" width="46" height="272" rx="23"/>
+      <rect x="1366" y="1370" width="46" height="272" rx="23"/>
+      <rect x="1494" y="1370" width="46" height="272" rx="23"/>
+    </g>
+    <g fill="#8a8461">
+      <path d="M970 1074 Q970 1066 978 1066 H1002 Q1010 1066 1010 1074 V1365 L1032 1700 Q1032 1706 1024 1706 H996 Q990 1706 990 1700 L970 1365 Z"/>
+      <path d="M1620 1074 Q1620 1066 1628 1066 H1652 Q1660 1066 1660 1074 V1700 Q1660 1706 1652 1706 H1628 Q1620 1706 1620 1700 Z"/>
+    </g>
+    <g font-family="'Arial Narrow', 'Roboto Condensed', Arial, sans-serif" font-stretch="condensed" font-weight="700" font-size="46" fill="#f8de8a" text-anchor="middle">
+      <text x="1163" y="1145" textLength="94" lengthAdjust="spacingAndGlyphs">STATS</text>
+      <text x="1313" y="1145" textLength="92" lengthAdjust="spacingAndGlyphs">ITEMS</text>
+      <text x="1462" y="1145" textLength="86" lengthAdjust="spacingAndGlyphs">DATA</text>
+    </g>
+    <g class="pb-led">
+      <circle cx="1163" cy="1222" r="80" fill="url(#pd-btn-halo)"/>
+      <circle cx="1313" cy="1222" r="80" fill="url(#pd-btn-halo)"/>
+      <circle cx="1465" cy="1222" r="80" fill="url(#pd-btn-halo)"/>
+    </g>
+    <g>
+      <circle cx="1163" cy="1222" r="62" fill="#3e3a28"/>
+      <circle cx="1163" cy="1222" r="49" fill="url(#pd-btn)"/>
+      <circle cx="1158" cy="1215" r="33" fill="#f99b36" opacity="0.7"/>
+      <circle cx="1313" cy="1222" r="62" fill="#3e3a28"/>
+      <circle cx="1313" cy="1222" r="49" fill="url(#pd-btn)"/>
+      <circle cx="1308" cy="1215" r="33" fill="#f99b36" opacity="0.7"/>
+      <circle cx="1465" cy="1222" r="62" fill="#3e3a28"/>
+      <circle cx="1465" cy="1222" r="49" fill="url(#pd-btn)"/>
+      <circle cx="1460" cy="1215" r="33" fill="#f99b36" opacity="0.7"/>
+    </g>
+
+    <!-- Tornillos -->
+    <circle cx="640" cy="355" r="52" fill="#77714f"/>
+    <circle cx="597" cy="1228" r="52" fill="#77714f"/>
+    <use href="#pd-screw-g" transform="translate(640 355) scale(0.85)"/>
+    <use href="#pd-screw-g" transform="translate(2040 453)"/>
+    <use href="#pd-screw-g" transform="translate(2040 1200)"/>
+    <use href="#pd-screw-g" transform="translate(327 1260)"/>
+    <use href="#pd-screw-g" transform="translate(597 1228) scale(0.85)"/>
+</svg>

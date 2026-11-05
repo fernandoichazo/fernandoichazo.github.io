@@ -1,40 +1,11 @@
 ---
-// Escena de la intro: antebrazo con el Pip-Boy 3000 (ilustración original) y mano enguantada.
+// Escena de la intro: antebrazo con el Pip-Boy 3000 y mano enguantada.
 // Las clases pb-* son los puntos de animación que usa PipBoyIntro.
+import PipBoyDevice from '@components/pipboy/PipBoyDevice.astro';
 ---
 
 <svg class="pb-scene" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="pb-casing" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6e6c4b"/>
-      <stop offset="0.18" stop-color="#55553b"/>
-      <stop offset="0.75" stop-color="#3f402c"/>
-      <stop offset="1" stop-color="#2a2b1d"/>
-    </linearGradient>
-    <linearGradient id="pb-casing-side" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#2a2b1d"/>
-      <stop offset="0.5" stop-color="#46472f"/>
-      <stop offset="1" stop-color="#2a2b1d"/>
-    </linearGradient>
-    <linearGradient id="pb-recess" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1c1d14"/>
-      <stop offset="1" stop-color="#34352a"/>
-    </linearGradient>
-    <radialGradient id="pb-glass" cx="0.5" cy="0.48" r="0.62">
-      <stop offset="0" stop-color="#0f2416"/>
-      <stop offset="0.6" stop-color="#08130c"/>
-      <stop offset="1" stop-color="#020503"/>
-    </radialGradient>
-    <radialGradient id="pb-glass-on" cx="0.5" cy="0.48" r="0.62">
-      <stop offset="0" stop-color="#1bff80" stop-opacity="0.55"/>
-      <stop offset="0.55" stop-color="#0f7740" stop-opacity="0.35"/>
-      <stop offset="1" stop-color="#020503" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="pb-knob-cap" cx="0.38" cy="0.32" r="0.8">
-      <stop offset="0" stop-color="#8c8a66"/>
-      <stop offset="0.5" stop-color="#5b5a40"/>
-      <stop offset="1" stop-color="#2e2f21"/>
-    </radialGradient>
     <linearGradient id="pb-sleeve" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#2c4a7e"/>
       <stop offset="0.55" stop-color="#1d335a"/>
@@ -49,16 +20,11 @@
       <stop offset="0" stop-color="#1bff80" stop-opacity="0.22"/>
       <stop offset="1" stop-color="#1bff80" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="pb-beam" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#1bff80" stop-opacity="0"/>
-      <stop offset="0.5" stop-color="#1bff80"/>
-      <stop offset="1" stop-color="#1bff80" stop-opacity="0"/>
-    </linearGradient>
   </defs>
 
   <g transform="translate(-60 0)">
   <!-- Luz de la pantalla derramada sobre la escena -->
-  <ellipse class="pb-spill" cx="700" cy="460" rx="620" ry="420" fill="url(#pb-spill)"/>
+  <ellipse class="pb-spill" cx="880" cy="450" rx="620" ry="420" fill="url(#pb-spill)"/>
 
   <g class="pb-rig">
   <!-- Brazo izquierdo: manga del traje de refugio -->
@@ -96,63 +62,8 @@
     <path d="M1292 412 L 1350 398" stroke="#3fae6c" stroke-width="3" opacity="0.6"/>
   </g>
 
-  <!-- Pip-Boy 3000 (dibujo original) -->
-  <g transform="translate(380 190)">
-    <!-- Abrazaderas laterales donde pasa el brazo -->
-    <rect x="-34" y="150" width="70" height="320" rx="22" fill="url(#pb-casing-side)"/>
-    <rect x="864" y="150" width="70" height="320" rx="22" fill="url(#pb-casing-side)"/>
-    <!-- Contador Geiger sobre la carcasa -->
-    <rect x="230" y="-34" width="320" height="52" rx="26" fill="#4d4d35"/>
-    <path d="M262 -30 v44 M294 -30 v44 M326 -30 v44 M358 -30 v44 M390 -30 v44 M422 -30 v44 M454 -30 v44 M486 -30 v44 M518 -30 v44" stroke="#2a2b1d" stroke-width="5"/>
-    <rect x="230" y="-34" width="320" height="12" rx="6" fill="#77754f" opacity="0.6"/>
-    <!-- Cuerpo -->
-    <rect x="0" y="0" width="900" height="600" rx="72" fill="url(#pb-casing)"/>
-    <rect x="0" y="0" width="900" height="600" rx="72" fill="none" stroke="#8c8a66" stroke-width="4" opacity="0.55"/>
-    <path d="M72 6 H 828" stroke="#a3a07a" stroke-width="5" opacity="0.5"/>
-    <!-- Luz de encendido -->
-    <circle cx="112" cy="52" r="16" fill="#1c1d14"/>
-    <circle cx="112" cy="52" r="10" fill="#28331f"/>
-    <circle class="pb-led" cx="112" cy="52" r="10" fill="#1bff80"/>
-    <!-- Bisel de la pantalla -->
-    <rect x="58" y="92" width="534" height="404" rx="40" fill="url(#pb-recess)"/>
-    <rect x="80" y="114" width="490" height="360" rx="30" fill="#0d0e0a"/>
-    <rect class="pb-glass" x="94" y="128" width="462" height="332" rx="24" fill="url(#pb-glass)"/>
-    <rect class="pb-glow" x="94" y="128" width="462" height="332" rx="24" fill="url(#pb-glass-on)"/>
-    <rect class="pb-beam" x="94" y="288" width="462" height="12" fill="url(#pb-beam)"/>
-    <!-- Tornillos -->
-    <g fill="#9a987a" stroke="#2a2b1d" stroke-width="3">
-      <circle cx="40" cy="78" r="12"/><circle cx="610" cy="78" r="12"/>
-      <circle cx="40" cy="512" r="12"/><circle cx="610" cy="512" r="12"/>
-    </g>
-    <g stroke="#2a2b1d" stroke-width="4">
-      <path d="M32 78 h16 M602 78 h16 M32 512 h16 M602 512 h16"/>
-    </g>
-    <!-- Botones bajo la pantalla -->
-    <g>
-      <rect x="110" y="518" width="118" height="46" rx="10" fill="#2a2b1d"/>
-      <rect x="110" y="514" width="118" height="40" rx="10" fill="#6a6948"/>
-      <rect x="266" y="518" width="118" height="46" rx="10" fill="#2a2b1d"/>
-      <rect x="266" y="514" width="118" height="40" rx="10" fill="#6a6948"/>
-      <rect x="422" y="518" width="118" height="46" rx="10" fill="#2a2b1d"/>
-      <rect x="422" y="514" width="118" height="40" rx="10" fill="#6a6948"/>
-    </g>
-    <!-- Módulo derecho: perilla de sintonía, rejilla y perilla menor -->
-    <circle cx="752" cy="196" r="116" fill="#24251a"/>
-    <circle cx="752" cy="196" r="106" fill="none" stroke="#6e6c4b" stroke-width="16" stroke-dasharray="5 7"/>
-    <circle cx="752" cy="196" r="86" fill="url(#pb-knob-cap)"/>
-    <path d="M752 196 L 752 124" stroke="#d8d4a8" stroke-width="8" stroke-linecap="round"/>
-    <g fill="#1c1d14">
-      <rect x="664" y="334" width="176" height="12" rx="6"/>
-      <rect x="664" y="356" width="176" height="12" rx="6"/>
-      <rect x="664" y="378" width="176" height="12" rx="6"/>
-    </g>
-    <circle cx="752" cy="474" r="58" fill="#24251a"/>
-    <circle cx="752" cy="474" r="44" fill="url(#pb-knob-cap)"/>
-    <path d="M752 474 L 782 448" stroke="#d8d4a8" stroke-width="6" stroke-linecap="round"/>
-    <!-- Placa grabada -->
-    <rect x="224" y="572" width="200" height="22" rx="4" fill="#2a2b1d" opacity="0.6"/>
-    <text x="324" y="589" text-anchor="middle" font-family="Share Tech Mono, monospace" font-size="16" letter-spacing="3" fill="#9a987a">PIP-BOY 3000</text>
-  </g>
+  <!-- Pip-Boy 3000 vectorizado (PipBoyDevice): las abrazaderas cubren el final de la manga y el puño -->
+  <PipBoyDevice x={350} y={160} width={960} />
   </g>
 </g>
 </svg>
