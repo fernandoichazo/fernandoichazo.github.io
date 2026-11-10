@@ -1,10 +1,8 @@
 // Contenido centralizado de la Fase 1.
 // Todo lo marcado como PLACEHOLDER se reemplaza por información real antes de publicar.
 
-export const profile = {
-  name: 'Fernando Ichazo Cisneros',
-  role: 'Full-Stack Web Developer',
-  scope: 'Frontend · Backend · Datos',
+// Nombre y cargo viven en src/data/perfil/personal.json (vía PersonalService).
+export const availability = {
   status: 'OPEN FOR RECRUITMENT',
 } as const;
 
@@ -25,12 +23,14 @@ export interface Directive {
   label: string;
   file: string;
   recommended?: boolean;
+  /** true cuando la directiva ya tiene su propia página en src/pages/; si no, muestra ModulePending. */
+  implemented?: boolean;
 }
 
 // Las 4 directivas de navegación. Cada slug genera su ruta en src/pages/[directiva].astro,
-// lista para recibir el contenido de la Fase 2.
+// salvo las que ya tienen página propia (implemented).
 export const directives: Directive[] = [
-  { key: '1', slug: 'perfil', label: 'PERFIL', file: 'PROFILE_DATA.EXE' },
+  { key: '1', slug: 'perfil', label: 'PERFIL', file: 'PROFILE_DATA.EXE', implemented: true },
   { key: '2', slug: 'proyectos', label: 'MIS PROYECTOS', file: 'PROJECTS_ARCHIVE.DAT', recommended: true },
   { key: '3', slug: 'certificaciones', label: 'MIS CERTIFICACIONES', file: 'VERIFIED_CREDS.LOG' },
   { key: '4', slug: 'acerca-de-mi', label: 'ACERCA DE MÍ', file: 'BIOGRAPHY_STREAM.TXT' },

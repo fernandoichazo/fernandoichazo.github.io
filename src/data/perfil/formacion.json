@@ -1,0 +1,26 @@
+[
+  {
+    "id": "maestria-software-avanzado",
+    "titulo": "Maestría en Desarrollo de Software Avanzado",
+    "institucion": "Universidad Católica Boliviana \"San Pablo\"",
+    "ubicacion": "Tarija",
+    "inicio": "2024",
+    "fin": null
+  },
+  {
+    "id": "ingenieria-sistemas",
+    "titulo": "Ingeniero de Sistemas",
+    "institucion": "Universidad Católica Boliviana \"San Pablo\"",
+    "ubicacion": "Tarija",
+    "inicio": null,
+    "fin": "2024"
+  },
+  {
+    "id": "bachiller-humanidades",
+    "titulo": "Bachiller en Humanidades",
+    "institucion": "Unidad Educativa Narciso Campero",
+    "ubicacion": "Tarija",
+    "inicio": null,
+    "fin": "2019"
+  }
+]

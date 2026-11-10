@@ -1,0 +1,26 @@
+[
+  {
+    "id": "icpc-south-finals-2022",
+    "titulo": "ICPC South America/South Finals",
+    "anio": "2022",
+    "tipo": "Competencia de Programación",
+    "url": null,
+    "imagen": null
+  },
+  {
+    "id": "icpc-bolivia-2021",
+    "titulo": "ICPC Bolivia Preliminary Contest",
+    "anio": "2021",
+    "tipo": "Competencia de Programación",
+    "url": null,
+    "imagen": null
+  },
+  {
+    "id": "certificacion-machine-learning",
+    "titulo": "Certificación Machine Learning",
+    "anio": null,
+    "tipo": "Certificación Técnica",
+    "url": null,
+    "imagen": null
+  }
+]

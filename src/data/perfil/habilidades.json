@@ -1,0 +1,15 @@
+[
+  { "id": "javascript", "nombre": "JavaScript", "categoriaId": "lenguajes" },
+  { "id": "typescript", "nombre": "TypeScript", "categoriaId": "lenguajes" },
+  { "id": "python", "nombre": "Python", "categoriaId": "lenguajes" },
+  { "id": "sql", "nombre": "SQL", "categoriaId": "lenguajes" },
+  { "id": "spring-boot", "nombre": "Spring Boot", "categoriaId": "frameworks" },
+  { "id": "nestjs", "nombre": "NestJS", "categoriaId": "frameworks" },
+  { "id": "react", "nombre": "React", "categoriaId": "frameworks" },
+  { "id": "nodejs", "nombre": "Node.js", "categoriaId": "frameworks" },
+  { "id": "arquitectura-limpia", "nombre": "Arquitectura Limpia", "categoriaId": "metodologias" },
+  { "id": "tecnologias-reactivas", "nombre": "Tecnologías Reactivas", "categoriaId": "metodologias" },
+  { "id": "diseno-bd-sql", "nombre": "Diseño de Bases de Datos SQL", "categoriaId": "metodologias" },
+  { "id": "roles-permisos", "nombre": "Control de Roles y Permisos", "categoriaId": "metodologias" },
+  { "id": "facturacion-inventarios", "nombre": "Sistemas de Facturación e Inventarios", "categoriaId": "metodologias" }
+]

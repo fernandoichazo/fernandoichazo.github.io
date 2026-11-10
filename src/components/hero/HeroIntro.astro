@@ -2,7 +2,14 @@
 // Bienvenida con efecto typewriter, nombre, rol y disponibilidad.
 // El texto completo está en el HTML; el script solo lo re-escribe tras el arranque.
 import PhosphorText from '@components/crt/PhosphorText.astro';
-import { profile } from '@data/site';
+import { availability } from '@data/site';
+import type { Personal } from '@interfaces/perfil';
+
+interface Props {
+  personal: Personal;
+}
+
+const { personal } = Astro.props;
 
 const rule = '='.repeat(120);
 ---
@@ -13,9 +20,9 @@ const rule = '='.repeat(120);
     BIENVENIDO A MI PORTAFOLIO
   </PhosphorText>
   <p class="who reveal" style="--i:5">
-    <span class="seg">{profile.name}</span>
-    <span class="seg"><span class="sep" aria-hidden="true">// </span>{profile.role}</span>
-    <span class="seg"><span class="sep" aria-hidden="true">// </span>STATUS: {profile.status}</span>
+    <span class="seg">{personal.nombreCompleto}</span>
+    <span class="seg"><span class="sep" aria-hidden="true">// </span>{personal.titular}</span>
+    <span class="seg"><span class="sep" aria-hidden="true">// </span>STATUS: {availability.status}</span>
   </p>
   <p class="rule reveal" style="--i:6" aria-hidden="true">{rule}</p>
 </section>

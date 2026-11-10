@@ -1,0 +1,68 @@
+---
+// Volcado de habilidades: una fila por categoría, habilidades separadas por "//".
+import type { HabilidadesPorCategoria } from '@interfaces/perfil';
+
+interface Props {
+  groups: HabilidadesPorCategoria[];
+}
+
+const { groups } = Astro.props;
+---
+
+<div class="wrap">
+  <dl class="matrix">
+    {
+      groups.map(({ categoria, habilidades }) => (
+        <div class="row">
+          <dt class="category">{categoria.nombre}</dt>
+          <dd>
+            <ul class="skills">
+              {habilidades.map((habilidad) => (
+                <li class="skill">{habilidad.nombre}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) 1fr;
+    gap: 1.5rem;
+    padding-block: 0.5rem;
+  }
+  .category {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+    padding-top: 0.15em;
+  }
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.75em;
+  }
+  .skill {
+    white-space: nowrap;
+  }
+  .skill:not(:last-child)::after {
+    content: ' //';
+    color: var(--phosphor-soft);
+  }
+
+  @container (max-width: 34rem) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+    .skill {
+      white-space: normal;
+    }
+  }
+</style>

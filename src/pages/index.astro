@@ -3,15 +3,17 @@ import TerminalLayout from '@layouts/TerminalLayout.astro';
 import TerminalHeader from '@components/terminal/TerminalHeader.astro';
 import HeroIntro from '@components/hero/HeroIntro.astro';
 import NavTabs from '@components/terminal/NavTabs.astro';
-import { profile } from '@data/site';
+import { PersonalService } from '@services/perfil';
+
+const personal = await PersonalService.getPersonal();
 ---
 
 <TerminalLayout
-  title={`${profile.name} · ${profile.role}`}
-  description={`Portafolio de ${profile.name}, ${profile.role}. Proyectos, certificaciones y perfil profesional.`}
+  title={`${personal.nombreCompleto} · ${personal.titular}`}
+  description={`Portafolio de ${personal.nombreCompleto}, ${personal.titular}. Proyectos, certificaciones y perfil profesional.`}
   boot
 >
   <TerminalHeader />
-  <HeroIntro />
+  <HeroIntro personal={personal} />
   <NavTabs />
 </TerminalLayout>

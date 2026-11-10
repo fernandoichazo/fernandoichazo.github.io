@@ -2,21 +2,25 @@
 import TerminalLayout from '@layouts/TerminalLayout.astro';
 import TerminalHeader from '@components/terminal/TerminalHeader.astro';
 import ModulePending from '@components/terminal/ModulePending.astro';
-import { directives, profile, type Directive } from '@data/site';
+import { directives, type Directive } from '@data/site';
+import { PersonalService } from '@services/perfil';
 
 export function getStaticPaths() {
-  return directives.map((directive) => ({
-    params: { directiva: directive.slug },
-    props: { directive },
-  }));
+  return directives
+    .filter((directive) => !directive.implemented)
+    .map((directive) => ({
+      params: { directiva: directive.slug },
+      props: { directive },
+    }));
 }
 
 const { directive } = Astro.props as { directive: Directive };
+const personal = await PersonalService.getPersonal();
 ---
 
 <TerminalLayout
-  title={`${directive.label} · ${profile.name}`}
-  description={`${directive.label}: sección del portafolio de ${profile.name}.`}
+  title={`${directive.label} · ${personal.nombreCompleto}`}
+  description={`${directive.label}: sección del portafolio de ${personal.nombreCompleto}.`}
   statusMessage={`${directive.file} · PULSA [ESC] PARA VOLVER`}
   statusMessageMid={`${directive.file} · [ESC] VOLVER`}
   statusMessageShort="[ESC] VOLVER"

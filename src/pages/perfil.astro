@@ -1,0 +1,93 @@
+---
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import ProfileIdentity from '@components/perfil/ProfileIdentity.astro';
+import StrengthList from '@components/perfil/StrengthList.astro';
+import SkillMatrix from '@components/perfil/SkillMatrix.astro';
+import LogEntry from '@components/perfil/LogEntry.astro';
+import { PersonalService, HabilidadService, ExperienciaService, FormacionService } from '@services/perfil';
+import { formatearPeriodo } from '@lib/fechas';
+import { directives } from '@data/site';
+
+const directive = directives.find((item) => item.slug === 'perfil')!;
+
+const [personal, foto, fortalezas, habilidades, experiencia, formacion] = await Promise.all([
+  PersonalService.getPersonal(),
+  PersonalService.getFoto(),
+  PersonalService.getFortalezas(),
+  HabilidadService.getAgrupadasPorCategoria(),
+  ExperienciaService.getAll(),
+  FormacionService.getAll(),
+]);
+
+const sections = {
+  fortalezas: { id: 'fortalezas', sectionKey: 'A', title: 'FORTALEZAS', file: 'CORE_STRENGTHS.DAT' },
+  habilidades: { id: 'habilidades', sectionKey: 'B', title: 'HABILIDADES', file: 'SKILLS_MATRIX.DB' },
+  experiencia: { id: 'experiencia', sectionKey: 'C', title: 'EXPERIENCIA', file: 'WORK_HISTORY.LOG' },
+  formacion: { id: 'formacion', sectionKey: 'D', title: 'FORMACIÓN', file: 'EDUCATION.LOG' },
+};
+---
+
+<TerminalLayout
+  title={`${directive.label} · ${personal.nombreCompleto}`}
+  description={`${personal.nombreCompleto}, ${personal.titular}. ${personal.resumen}`}
+  statusMessage={`${directive.file} · PULSA [A]-[D] PARA NAVEGAR · [ESC] PARA VOLVER`}
+  statusMessageMid={`${directive.file} · [ESC] VOLVER`}
+  statusMessageShort="[ESC] VOLVER"
+>
+  <TerminalHeader showLog={false} />
+  <ProfileIdentity personal={personal} foto={foto} file={directive.file} />
+  <SectionIndex entries={Object.values(sections)} />
+
+  <DataSection {...sections.fortalezas}>
+    <StrengthList items={fortalezas} />
+  </DataSection>
+
+  <DataSection {...sections.habilidades}>
+    <SkillMatrix groups={habilidades} />
+  </DataSection>
+
+  <DataSection {...sections.experiencia}>
+    {
+      experiencia.map((item) => (
+        <LogEntry
+          period={formatearPeriodo(item.inicio, item.fin)}
+          title={item.cargo}
+          entity={item.empresa}
+          location={item.ubicacion}
+          current={ExperienciaService.esActual(item)}
+          currentLabel="ACTUAL"
+          description={item.descripcion}
+          tags={item.tecnologias}
+        />
+      ))
+    }
+  </DataSection>
+
+  <DataSection {...sections.formacion}>
+    {
+      formacion.map((item) => (
+        <LogEntry
+          period={formatearPeriodo(item.inicio, item.fin)}
+          title={item.titulo}
+          entity={item.institucion}
+          location={item.ubicacion}
+          current={FormacionService.estaEnCurso(item)}
+        />
+      ))
+    }
+  </DataSection>
+
+  <div class="actions">
+    <BackCommand />
+  </div>
+</TerminalLayout>
+
+<style>
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

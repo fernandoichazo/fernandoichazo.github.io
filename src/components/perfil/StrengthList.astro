@@ -1,0 +1,44 @@
+---
+// Fortalezas como líneas de terminal con marcador [+]; dos columnas si la pantalla es ancha.
+import type { Fortaleza } from '@interfaces/perfil';
+
+interface Props {
+  items: Fortaleza[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="wrap">
+  <ul class="list">
+    {
+      items.map((item) => (
+        <li class="item">
+          <span class="mark" aria-hidden="true">[+]</span>
+          <span>{item.nombre}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    padding-block: 0.2rem;
+    break-inside: avoid;
+  }
+  .mark {
+    color: var(--phosphor-soft);
+  }
+  @container (min-width: 48rem) {
+    .list {
+      columns: 2;
+      column-gap: 3rem;
+    }
+  }
+</style>

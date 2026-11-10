@@ -1,0 +1,32 @@
+[
+  {
+    "id": "runtime-service",
+    "cargo": "Desarrollador Backend",
+    "empresa": "Runtime Service",
+    "ubicacion": "Tarija",
+    "inicio": "2024-03",
+    "fin": "2025-02",
+    "descripcion": "Diseño e implementación de sistema de gestión del Agua EPSA utilizando Node.js y TypeScript. Aplicación de Arquitectura Limpia para servicios robustos, administración de usuarios, facturación, control de medidores y gestión de roles.",
+    "tecnologias": ["Node.js", "TypeScript", "Clean Architecture"]
+  },
+  {
+    "id": "ferreteria-ferrogut",
+    "cargo": "Desarrollador Backend",
+    "empresa": "Ferretería Ferrogut",
+    "ubicacion": "Tarija",
+    "inicio": "2023-10",
+    "fin": "2024-02",
+    "descripcion": "Implementación de sistema de inventarios con módulos de gestión de productos, control de entradas/salidas y reportes de ventas. Optimización de procesos de reposición y soporte a la toma de decisiones.",
+    "tecnologias": ["Backend", "Inventarios", "Reportes de Ventas"]
+  },
+  {
+    "id": "farmacia-virgo",
+    "cargo": "Desarrollador Backend - Frontend",
+    "empresa": "Farmacia Virgo",
+    "ubicacion": "Tarija",
+    "inicio": "2023-04",
+    "fin": "2023-06",
+    "descripcion": "Desarrollo de sistema de gestión de inventarios con control de lotes y vencimientos. Diseño de base de datos SQL y dashboards de stock crítico, reduciendo pérdidas por vencimiento.",
+    "tecnologias": ["SQL", "Frontend", "Backend", "Dashboards"]
+  }
+]

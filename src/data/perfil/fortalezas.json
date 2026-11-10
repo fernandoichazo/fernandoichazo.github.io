@@ -1,0 +1,8 @@
+[
+  { "id": "trabajo-en-equipo", "nombre": "Trabajo en equipo" },
+  { "id": "backend-js-ts", "nombre": "Desarrollo backend en JavaScript y TypeScript" },
+  { "id": "backend-spring", "nombre": "Desarrollo backend con Spring Boot" },
+  { "id": "frontend-react", "nombre": "Desarrollo frontend con React" },
+  { "id": "reactivas", "nombre": "Tecnologías reactivas" },
+  { "id": "arquitectura-limpia", "nombre": "Arquitectura Limpia" }
+]

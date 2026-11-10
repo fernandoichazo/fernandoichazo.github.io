@@ -1,0 +1,14 @@
+{
+  "nombreCompleto": "Fernando Ichazo Cisneros",
+  "titular": "Desarrollador Full Stack",
+  "resumen": "Desarrollador Full Stack centrado principalmente en el desarrollo de aplicaciones del lado del servidor, con experiencia en el diseño e implementación de arquitecturas limpias, gestión de inventarios y sistemas empresariales.",
+  "ubicacion": {
+    "ciudad": "Tarija",
+    "pais": "Bolivia"
+  },
+  "contacto": {
+    "linkedin": "https://linkedin.com/in/fernando-ichazo-cisneros",
+    "linkedinUsuario": "fernando-ichazo-cisneros"
+  },
+  "foto": null
+}

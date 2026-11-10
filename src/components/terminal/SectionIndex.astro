@@ -1,0 +1,88 @@
+---
+// Índice de subdirectorios de un módulo. Teclado: la letra de cada entrada salta a su sección.
+export interface IndexEntry {
+  id: string;
+  sectionKey: string;
+  title: string;
+}
+
+interface Props {
+  entries: IndexEntry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<nav class="index" aria-labelledby="index-prompt">
+  <p id="index-prompt" class="prompt">SUBDIRECTORIOS DEL ARCHIVO:</p>
+  <ul class="list">
+    {
+      entries.map((entry) => (
+        <li>
+          <a
+            class="entry"
+            href={`#${entry.id}`}
+            data-section-key={entry.sectionKey.toLowerCase()}
+            aria-keyshortcuts={entry.sectionKey}
+          >
+            <span class="key">[{entry.sectionKey}]</span> {entry.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .index {
+    margin-top: clamp(1.25rem, var(--screen-h) * 0.04, 2rem);
+  }
+  .prompt {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin-top: 0.4rem;
+    margin-left: -0.5rem;
+  }
+  .entry {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.5rem;
+  }
+  .key {
+    color: var(--phosphor-soft);
+  }
+  .entry:hover,
+  .entry:focus-visible {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+  .entry:hover .key,
+  .entry:focus-visible .key {
+    color: var(--void);
+  }
+</style>
+
+<script>
+  import { beep } from '@lib/terminal';
+
+  const entries = [...document.querySelectorAll<HTMLAnchorElement>('[data-section-key]')];
+
+  document.addEventListener('keydown', (event) => {
+    if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+    const target = event.target as HTMLElement;
+    if (target.closest('input, textarea, select, [contenteditable]')) return;
+
+    const entry = entries.find((item) => item.dataset.sectionKey === event.key.toLowerCase());
+    if (!entry) return;
+    event.preventDefault();
+    beep();
+    entry.click();
+  });
+</script>
