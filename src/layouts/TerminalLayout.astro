@@ -2,6 +2,7 @@
 // Layout base Pip-OS: documento, preferencias CRT antes de pintar, intro del Pip-Boy,
 // tubo, marco y barra de estado.
 import '@styles/global.css';
+import '@styles/transitions.css';
 import CRTScreen from '@components/crt/CRTScreen.astro';
 import PipBoyFrame from '@components/pipboy/PipBoyFrame.astro';
 import PipBoyIntro from '@components/pipboy/PipBoyIntro.astro';
@@ -53,6 +54,14 @@ const { title, description, boot = false, statusMessage, statusMessageMid, statu
           var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           root.dataset.boot = booted || still ? 'off' : 'run';
         }
+        // Cambio de pantalla entre páginas (src/styles/transitions.css): volver al menú
+        // principal rueda la imagen; entrar a un apartado colapsa y reabre el tubo.
+        window.addEventListener('pagereveal', function (event) {
+          var transition = event.viewTransition;
+          if (!transition || !transition.types) return;
+          var path = location.pathname.replace(/index\.html$/, '');
+          transition.types.add(path === '/' || path === '' ? 'pipos-back' : 'pipos-forward');
+        });
       })();
     </script>
   </head>
