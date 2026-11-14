@@ -1,5 +1,5 @@
 ---
-// Índice de subdirectorios de un módulo. Teclado: la letra de cada entrada salta a su sección.
+// Índice de subdirectorios de un módulo. Teclado: [A]/[D] anterior/siguiente; la tecla de cada entrada salta a su sección.
 export interface IndexEntry {
   id: string;
   sectionKey: string;
@@ -72,17 +72,81 @@ const { entries } = Astro.props;
 <script>
   import { beep } from '@lib/terminal';
 
+  // Teclado: [A] sección anterior, [D] sección siguiente; la tecla de cada entrada salta a ella.
   const entries = [...document.querySelectorAll<HTMLAnchorElement>('[data-section-key]')];
+  const sections = entries
+    .map((entry) => document.getElementById(entry.hash.slice(1)))
+    .filter((section): section is HTMLElement => section !== null);
+  const scroller = sections[0]?.closest<HTMLElement>('.crt__content') ?? document.scrollingElement;
+
+  // Aire sobre cada sección al alinearla: la regla "=" se ve entera y el título no queda pegado al borde.
+  const gap = () => parseFloat(getComputedStyle(document.documentElement).fontSize) * 0.75;
+
+  // Sección en pantalla: la última que ya alcanzó la línea de alineado (borde superior + aire).
+  // Se mide contra esa misma línea para que una sección corta no haga contar ya a la siguiente.
+  // Si el tubo llegó al final, es la última (puede no alcanzar a subir hasta arriba).
+  const currentIndex = () => {
+    if (!scroller) return -1;
+    if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) return sections.length - 1;
+    const limit = scroller.getBoundingClientRect().top + gap() + 8;
+    let index = -1;
+    sections.forEach((section, i) => {
+      if (section.getBoundingClientRect().top <= limit) index = i;
+    });
+    return index;
+  };
+
+  // Destino de un desplazamiento en curso: si se vuelve a pulsar [D]/[A] mientras el tubo
+  // aún baja, se avanza desde ahí y no desde la posición intermedia.
+  let pending: number | null = null;
+  let pendingTimer = 0;
+  const clearPending = () => {
+    pending = null;
+    window.clearTimeout(pendingTimer);
+  };
+  scroller?.addEventListener('scrollend', clearPending);
+
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Desplaza el tubo con animación hasta dejar el título de la sección cerca del borde superior.
+  const goTo = (index: number) => {
+    const entry = entries[index];
+    const section = sections[index];
+    if (!entry || !section || !scroller) return;
+    // Se alinea la sección entera (regla "=" + título), con aire encima.
+    const top = scroller.scrollTop + section.getBoundingClientRect().top - scroller.getBoundingClientRect().top - gap();
+    beep();
+    pending = index;
+    window.clearTimeout(pendingTimer);
+    pendingTimer = window.setTimeout(clearPending, 1200); // por si el navegador no emite scrollend
+    scroller.scrollTo({ top, behavior: still.matches ? 'auto' : 'smooth' });
+    history.replaceState(null, '', entry.hash);
+  };
+
+  entries.forEach((entry, index) => {
+    entry.addEventListener('click', (event) => {
+      event.preventDefault();
+      goTo(index);
+    });
+  });
 
   document.addEventListener('keydown', (event) => {
     if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
     const target = event.target as HTMLElement;
     if (target.closest('input, textarea, select, [contenteditable]')) return;
 
-    const entry = entries.find((item) => item.dataset.sectionKey === event.key.toLowerCase());
-    if (!entry) return;
+    const key = event.key.toLowerCase();
+    if (key === 'a' || key === 'd') {
+      event.preventDefault();
+      const current = pending ?? currentIndex();
+      const next = key === 'd' ? current + 1 : current - 1;
+      if (next >= 0 && next < sections.length) goTo(next);
+      return;
+    }
+
+    const index = entries.findIndex((item) => item.dataset.sectionKey === key);
+    if (index === -1) return;
     event.preventDefault();
-    beep();
-    entry.click();
+    goTo(index);
   });
 </script>

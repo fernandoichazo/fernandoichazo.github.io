@@ -41,10 +41,10 @@
 
 /* ── Entrar a un apartado (por defecto, también si el navegador no soporta tipos) ── */
 ::view-transition-old(pipos-screen) {
-  animation: pipos-collapse 300ms cubic-bezier(0.7, 0, 0.84, 0) both;
+  animation: pipos-collapse 250ms cubic-bezier(0.7, 0, 0.84, 0) both;
 }
 ::view-transition-new(pipos-screen) {
-  animation: pipos-expand 420ms var(--ease-out) 280ms both;
+  animation: pipos-expand 400ms var(--ease-out) 230ms both;
 }
 
 @keyframes pipos-collapse {
@@ -98,10 +98,10 @@
 
 /* ── Volver al menú principal: rodado vertical del tubo ── */
 html:active-view-transition-type(pipos-back)::view-transition-old(pipos-screen) {
-  animation: pipos-roll-out 340ms steps(9, end) both;
+  animation: pipos-roll-out 290ms steps(8, end) both;
 }
 html:active-view-transition-type(pipos-back)::view-transition-new(pipos-screen) {
-  animation: pipos-roll-in 460ms cubic-bezier(0.2, 0.8, 0.3, 1) 180ms both;
+  animation: pipos-roll-in 440ms cubic-bezier(0.2, 0.8, 0.3, 1) 150ms both;
 }
 
 @keyframes pipos-roll-out {

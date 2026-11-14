@@ -1,5 +1,5 @@
 ---
-// Botón de comando para volver al menú principal; también responde a [ESC].
+// Botón de comando para volver al menú principal. [ESC] lo maneja TerminalLayout (script inline del head).
 ---
 
 <a class="back" href="/" data-back>[ESC] VOLVER AL MENÚ PRINCIPAL</a>
@@ -22,9 +22,3 @@
     box-shadow: inset 0 0 0 2px var(--phosphor);
   }
 </style>
-
-<script>
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') document.querySelector<HTMLAnchorElement>('[data-back]')?.click();
-  });
-</script>

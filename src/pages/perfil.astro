@@ -24,17 +24,17 @@ const [personal, foto, fortalezas, habilidades, experiencia, formacion] = await 
 ]);
 
 const sections = {
-  fortalezas: { id: 'fortalezas', sectionKey: 'A', title: 'FORTALEZAS', file: 'CORE_STRENGTHS.DAT' },
-  habilidades: { id: 'habilidades', sectionKey: 'B', title: 'HABILIDADES', file: 'SKILLS_MATRIX.DB' },
-  experiencia: { id: 'experiencia', sectionKey: 'C', title: 'EXPERIENCIA', file: 'WORK_HISTORY.LOG' },
-  formacion: { id: 'formacion', sectionKey: 'D', title: 'FORMACIÓN', file: 'EDUCATION.LOG' },
+  fortalezas: { id: 'fortalezas', sectionKey: '1', title: 'FORTALEZAS', file: 'CORE_STRENGTHS.DAT' },
+  habilidades: { id: 'habilidades', sectionKey: '2', title: 'HABILIDADES', file: 'SKILLS_MATRIX.DB' },
+  experiencia: { id: 'experiencia', sectionKey: '3', title: 'EXPERIENCIA', file: 'WORK_HISTORY.LOG' },
+  formacion: { id: 'formacion', sectionKey: '4', title: 'FORMACIÓN', file: 'EDUCATION.LOG' },
 };
 ---
 
 <TerminalLayout
   title={`${directive.label} · ${personal.nombreCompleto}`}
   description={`${personal.nombreCompleto}, ${personal.titular}. ${personal.resumen}`}
-  statusMessage={`${directive.file} · PULSA [A]-[D] PARA NAVEGAR · [ESC] PARA VOLVER`}
+  statusMessage={`${directive.file} · [A] ANTERIOR · [D] SIGUIENTE · [1]-[4] SECCIÓN · [ESC] VOLVER`}
   statusMessageMid={`${directive.file} · [ESC] VOLVER`}
   statusMessageShort="[ESC] VOLVER"
 >
