@@ -21,3 +21,14 @@ export function compararFechasDesc(a: string | null, b: string | null): number {
   if (b === null) return 1;
   return b.localeCompare(a);
 }
+
+/** Mes actual como "AAAA-MM" (se evalúa al compilar el sitio). */
+export function mesActual(): string {
+  return new Date().toISOString().slice(0, 7);
+}
+
+/** ¿La fecha ("AAAA" o "AAAA-MM") ya pasó respecto a `hoy`? Un año suelto vence al terminar ese año. */
+export function fechaVencida(fecha: string, hoy: string = mesActual()): boolean {
+  const limite = fecha.length === 4 ? `${fecha}-12` : fecha;
+  return limite < hoy;
+}

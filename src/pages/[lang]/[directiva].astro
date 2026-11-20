@@ -3,6 +3,7 @@
 // Cada directiva con contenido propio tiene su pantalla; el resto muestra "módulo en preparación".
 import ProfileScreen from '@components/perfil/ProfileScreen.astro';
 import AboutScreen from '@components/acerca-de-mi/AboutScreen.astro';
+import CertificationsScreen from '@components/certificaciones/CertificationsScreen.astro';
 import PendingScreen from '@components/terminal/PendingScreen.astro';
 import { directives, type Directive } from '@data/site';
 import { IDIOMAS } from '@i18n';
@@ -22,6 +23,8 @@ const { directive } = Astro.props as { directive: Directive };
 {
   directive.id === 'perfil' ? (
     <ProfileScreen directive={directive} />
+  ) : directive.id === 'certificaciones' ? (
+    <CertificationsScreen directive={directive} />
   ) : directive.id === 'acerca-de-mi' ? (
     <AboutScreen directive={directive} />
   ) : (

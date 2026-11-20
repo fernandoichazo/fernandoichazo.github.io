@@ -1,6 +1,7 @@
 // Textos de interfaz en inglés. Este diccionario define las claves: los demás idiomas se
 // declaran con el tipo Diccionario, así que una traducción faltante no pasa `astro check`.
 import type { DirectivaId } from '@data/site';
+import type { EstadoCredencial } from '@interfaces/certificaciones';
 
 export const en = {
   meta: {
@@ -97,9 +98,45 @@ export const en = {
       datosCuriosos: 'FUN FACTS',
     },
   },
-  logros: {
+  certificaciones: {
+    titulo: 'VERIFIED CREDENTIALS',
+    intro:
+      'Certifications, competitions and complementary training. Every credential with a link can be verified on the issuer’s platform.',
+    resumen: {
+      etiqueta: 'Credentials summary',
+      credenciales: 'CREDENTIALS',
+      verificadas: 'VERIFIED',
+      competencias: 'COMPETITIONS',
+      cursos: 'COURSES',
+      horas: (horas: number) => `${horas} H`,
+      enProgreso: 'IN PROGRESS',
+      ultima: 'LAST UPDATE',
+    },
+    estados: {
+      verificada: 'VERIFIED',
+      'sin-enlace': 'NO LINK',
+      expirada: 'EXPIRED',
+      'en-progreso': 'IN PROGRESS',
+    } satisfies Record<EstadoCredencial, string>,
+    emitida: 'ISSUED',
+    expira: 'EXPIRES',
+    expiro: 'EXPIRED',
+    credencialId: 'ID',
+    resultado: 'RESULT',
+    habilidades: 'Backed skills',
+    horas: (horas: number) => `${horas} h`,
+    objetivo: 'TARGET',
+    progreso: (porcentaje: number) => `Progress: ${porcentaje}%`,
+    destacada: 'FEATURED',
     verificar: '[VERIFY]',
     sinFecha: 'N/D',
+    secciones: {
+      certificaciones: 'TECHNICAL CERTIFICATIONS',
+      competencias: 'COMPETITIONS & AWARDS',
+      cursos: 'COURSES & TRAINING',
+      idiomas: 'LANGUAGES',
+      enProgreso: 'IN PROGRESS',
+    },
   },
   fechas: {
     meses: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],

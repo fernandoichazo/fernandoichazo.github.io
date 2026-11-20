@@ -1,0 +1,250 @@
+[
+  {
+    "id": "meta-front-end-developer",
+    "titulo": "Meta Front-End Developer",
+    "emisor": "Meta · Coursera",
+    "categoria": "certificacion",
+    "emision": "2024-11",
+    "expiracion": null,
+    "credencialId": "MFED-DEMO-7Q2K",
+    "url": "https://www.coursera.org/",
+    "resultado": null,
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "react",
+      "javascript"
+    ],
+    "imagen": null,
+    "destacado": true
+  },
+  {
+    "id": "aws-cloud-practitioner",
+    "titulo": "AWS Certified Cloud Practitioner",
+    "emisor": "Amazon Web Services",
+    "categoria": "certificacion",
+    "emision": "2025-08",
+    "expiracion": "2028-08",
+    "credencialId": "AWS-CCP-DEMO-0042",
+    "url": "https://www.credly.com/",
+    "resultado": null,
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "nodejs"
+    ],
+    "imagen": null,
+    "destacado": true
+  },
+  {
+    "id": "nestjs-fundamentals",
+    "titulo": "NestJS Fundamentals",
+    "emisor": "Trilon",
+    "categoria": "certificacion",
+    "emision": "2025-02",
+    "expiracion": null,
+    "credencialId": "NEST-DEMO-1138",
+    "url": null,
+    "resultado": null,
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "nestjs",
+      "typescript"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "certificacion-machine-learning",
+    "titulo": "Especialización en Machine Learning",
+    "emisor": "DeepLearning.AI · Stanford Online",
+    "categoria": "certificacion",
+    "emision": "2023-06",
+    "expiracion": null,
+    "credencialId": "ML-DEMO-5521",
+    "url": "https://www.coursera.org/",
+    "resultado": null,
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "python"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "oracle-sql-associate",
+    "titulo": "Oracle Database SQL Certified Associate",
+    "emisor": "Oracle",
+    "categoria": "certificacion",
+    "emision": "2021-05",
+    "expiracion": "2024-05",
+    "credencialId": "OCA-DEMO-2077",
+    "url": "https://education.oracle.com/",
+    "resultado": null,
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "sql",
+      "diseno-bd-sql"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "icpc-south-finals-2022",
+    "titulo": "ICPC South America/South Finals",
+    "emisor": "ICPC Foundation",
+    "categoria": "competencia",
+    "emision": "2022-11",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": "Puesto 34 de 61 equipos",
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "python"
+    ],
+    "imagen": null,
+    "destacado": true
+  },
+  {
+    "id": "icpc-bolivia-2021",
+    "titulo": "ICPC Bolivia Preliminary Contest",
+    "emisor": "ICPC Bolivia",
+    "categoria": "competencia",
+    "emision": "2021-10",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": "3.er puesto nacional · clasificado a la regional",
+    "horas": null,
+    "progreso": null,
+    "habilidades": [],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "hackathon-ucb-2023",
+    "titulo": "Hackathon UCB Tarija",
+    "emisor": "Universidad Católica Boliviana",
+    "categoria": "competencia",
+    "emision": "2023-09",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": "1.er lugar",
+    "horas": null,
+    "progreso": null,
+    "habilidades": [
+      "react",
+      "nestjs"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "curso-arquitectura-limpia",
+    "titulo": "Arquitectura Limpia en la práctica",
+    "emisor": "Udemy",
+    "categoria": "curso",
+    "emision": "2024-03",
+    "expiracion": null,
+    "credencialId": null,
+    "url": "https://www.udemy.com/",
+    "resultado": null,
+    "horas": 22,
+    "progreso": null,
+    "habilidades": [
+      "arquitectura-limpia"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "curso-ddd",
+    "titulo": "Domain-Driven Design desde cero",
+    "emisor": "Udemy",
+    "categoria": "curso",
+    "emision": "2025-06",
+    "expiracion": null,
+    "credencialId": null,
+    "url": "https://www.udemy.com/",
+    "resultado": null,
+    "horas": 14,
+    "progreso": null,
+    "habilidades": [
+      "arquitectura-limpia"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "curso-docker",
+    "titulo": "Docker y contenedores",
+    "emisor": "Platzi",
+    "categoria": "curso",
+    "emision": "2023-09",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": null,
+    "horas": 18,
+    "progreso": null,
+    "habilidades": [],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "ef-set-english",
+    "titulo": "EF SET English Certificate",
+    "emisor": "EF Education First",
+    "categoria": "idioma",
+    "emision": "2024-01",
+    "expiracion": null,
+    "credencialId": "EFSET-DEMO-68",
+    "url": "https://www.efset.org/",
+    "resultado": "C1 Avanzado (68/100)",
+    "horas": null,
+    "progreso": null,
+    "habilidades": [],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "aws-developer-associate",
+    "titulo": "AWS Certified Developer – Associate",
+    "emisor": "Amazon Web Services",
+    "categoria": "en-progreso",
+    "emision": "2027-03",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": null,
+    "horas": null,
+    "progreso": 60,
+    "habilidades": [
+      "nodejs"
+    ],
+    "imagen": null,
+    "destacado": false
+  },
+  {
+    "id": "ckad",
+    "titulo": "Certified Kubernetes Application Developer",
+    "emisor": "The Linux Foundation",
+    "categoria": "en-progreso",
+    "emision": "2027-06",
+    "expiracion": null,
+    "credencialId": null,
+    "url": null,
+    "resultado": null,
+    "horas": null,
+    "progreso": 25,
+    "habilidades": [],
+    "imagen": null,
+    "destacado": false
+  }
+]

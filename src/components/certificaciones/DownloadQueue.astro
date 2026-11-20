@@ -1,0 +1,107 @@
+---
+// Certificaciones en preparación como cola de descarga: barra de progreso ASCII y fecha objetivo.
+import type { CredencialDetalle } from '@interfaces/certificaciones';
+import { formatearFecha } from '@lib/fechas';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  items: CredencialDetalle[];
+}
+
+const { items } = Astro.props;
+const idioma = idiomaDe(Astro);
+const c = traducir(idioma).certificaciones;
+const SEGMENTOS = 20;
+
+const barra = (porcentaje: number) => {
+  const llenos = Math.round((porcentaje / 100) * SEGMENTOS);
+  return '█'.repeat(llenos) + '░'.repeat(SEGMENTOS - llenos);
+};
+---
+
+<div class="wrap">
+  <ul class="list">
+    {
+      items.map((item) => {
+        const progreso = Math.min(100, Math.max(0, item.progreso ?? 0));
+        return (
+          <li class="item">
+            <p class="title">{item.titulo}</p>
+            <p class="issuer">
+              <span aria-hidden="true">@ </span>
+              {item.emisor}
+              {item.emision && ` · ${c.objetivo}: ${formatearFecha(item.emision, idioma)}`}
+            </p>
+            <p
+              class="progress"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow={progreso}
+              aria-label={`${item.titulo}. ${c.progreso(progreso)}`}
+            >
+              <span class="bar" aria-hidden="true">[{barra(progreso)}]</span>
+              <span class="pct" aria-hidden="true">{progreso}%</span>
+            </p>
+            {item.nombresHabilidades.length > 0 && (
+              <ul class="tags" aria-label={c.habilidades}>
+                {item.nombresHabilidades.map((nombre) => (
+                  <li>[{nombre}]</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .list {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+  }
+  .issuer {
+    margin-top: 0.15rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .progress {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.75em;
+    margin-top: 0.4rem;
+  }
+  .bar {
+    letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .pct {
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  :global(:root[data-crt='off']) .pct {
+    text-shadow: none;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1em;
+    margin-top: 0.35rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+</style>

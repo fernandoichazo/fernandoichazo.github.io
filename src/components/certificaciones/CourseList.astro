@@ -1,14 +1,15 @@
 ---
-// Certificaciones y reconocimientos: año, título, tipo y enlace de verificación si existe.
-import type { Logro } from '@interfaces/perfil';
+// Cursos y formación complementaria: lista compacta con año, título, emisor, horas y enlace.
+import type { CredencialDetalle } from '@interfaces/certificaciones';
 import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
-  items: Logro[];
+  items: CredencialDetalle[];
 }
 
 const { items } = Astro.props;
 const t = traducir(idiomaDe(Astro));
+const c = t.certificaciones;
 ---
 
 <div class="wrap">
@@ -16,14 +17,21 @@ const t = traducir(idiomaDe(Astro));
     {
       items.map((item) => (
         <li class="row">
-          <span class="year">[{item.anio ?? t.logros.sinFecha}]</span>
+          <span class="year">[{item.emision?.slice(0, 4) ?? c.sinFecha}]</span>
           <span class="info">
             <span class="title">{item.titulo}</span>
-            <span class="type">{item.tipo}</span>
+            <span class="type">
+              {item.emisor}
+              {item.horas !== null && ` · ${c.horas(item.horas)}`}
+            </span>
           </span>
           {item.url && (
             <a class="verify" href={item.url} target="_blank" rel="noopener noreferrer">
-              {t.logros.verificar}<span class="sr-only"> {item.titulo} {t.comun.pestanaNueva}</span>
+              {c.verificar}
+              <span class="sr-only">
+                {' '}
+                {item.titulo} {t.comun.pestanaNueva}
+              </span>
             </a>
           )}
         </li>

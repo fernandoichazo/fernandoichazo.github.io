@@ -1,0 +1,84 @@
+---
+// Pantalla de la directiva [3] MIS CERTIFICACIONES. La monta src/pages/[lang]/[directiva].astro en cada idioma.
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import CredentialSummary from '@components/certificaciones/CredentialSummary.astro';
+import CredentialEntry from '@components/certificaciones/CredentialEntry.astro';
+import CourseList from '@components/certificaciones/CourseList.astro';
+import DownloadQueue from '@components/certificaciones/DownloadQueue.astro';
+import { CredencialService } from '@services/certificaciones';
+import { PersonalService } from '@services/perfil';
+import { idiomaDe, traducir } from '@i18n';
+import type { Directive } from '@data/site';
+
+interface Props {
+  directive: Directive;
+}
+
+const { directive } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
+const label = t.directivas[directive.id];
+
+const [personal, resumen, certificaciones, competencias, cursos, idiomas, enProgreso] = await Promise.all([
+  PersonalService.getPersonal(idioma),
+  CredencialService.getResumen(idioma),
+  CredencialService.getByCategoria(idioma, 'certificacion'),
+  CredencialService.getByCategoria(idioma, 'competencia'),
+  CredencialService.getByCategoria(idioma, 'curso'),
+  CredencialService.getByCategoria(idioma, 'idioma'),
+  CredencialService.getByCategoria(idioma, 'en-progreso'),
+]);
+
+// Solo se muestran las secciones con contenido; la tecla de cada una se numera en orden.
+const titulos = t.certificaciones.secciones;
+const sections = [
+  { id: 'certificaciones', title: titulos.certificaciones, file: 'CERTS.LOG', items: certificaciones },
+  { id: 'competencias', title: titulos.competencias, file: 'COMPETITIONS.LOG', items: competencias },
+  { id: 'cursos', title: titulos.cursos, file: 'TRAINING.DAT', items: cursos },
+  { id: 'idiomas', title: titulos.idiomas, file: 'LANG_CERTS.DAT', items: idiomas },
+  { id: 'en-progreso', title: titulos.enProgreso, file: 'DOWNLOAD_QUEUE.TMP', items: enProgreso },
+]
+  .filter((section) => section.items.length > 0)
+  .map((section, index) => ({ ...section, sectionKey: String(index + 1) }));
+---
+
+<TerminalLayout
+  title={`${label} · ${personal.nombreCompleto}`}
+  description={`${t.certificaciones.titulo} · ${personal.nombreCompleto}. ${t.certificaciones.intro}`}
+  pagina={directive.id}
+  statusMessage={t.estado.modulo(directive.file, sections.length)}
+  statusMessageMid={t.estado.moduloMedio(directive.file)}
+  statusMessageShort={t.estado.volver}
+>
+  <TerminalHeader showLog={false} />
+  <CredentialSummary file={directive.file} resumen={resumen} />
+  <SectionIndex entries={sections} />
+
+  {
+    sections.map(({ items, ...section }) => (
+      <DataSection {...section}>
+        {section.id === 'cursos' ? (
+          <CourseList items={items} />
+        ) : section.id === 'en-progreso' ? (
+          <DownloadQueue items={items} />
+        ) : (
+          items.map((item) => <CredentialEntry item={item} />)
+        )}
+      </DataSection>
+    ))
+  }
+
+  <div class="actions">
+    <BackCommand />
+  </div>
+</TerminalLayout>
+
+<style>
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

@@ -1,0 +1,1 @@
+export { CredencialService } from './CredencialService';
