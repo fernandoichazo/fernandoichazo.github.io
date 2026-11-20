@@ -34,7 +34,7 @@ The site is bilingual (es/en) with manual i18n routing (Astro's `i18n` config is
 
 - `src/i18n/` — `config.ts` (supported languages, default `en`), UI dictionaries (`en.ts` defines the keys as `Diccionario`; other languages must match it), route helpers (`rutaDe`, `alternativasDe`) and data helpers (`PorIdioma`, `enIdioma`, `verificarIds`).
 - Content JSON lives in `src/data/<lang>/...` with identical shape per language; services take the language as their first argument and fall back to the default language. Build fails if ids differ between languages.
-- Routes: `src/pages/index.astro` only detects the language (saved choice in `localStorage` → `navigator.languages` → `en`) and redirects; real pages are `src/pages/[lang]/index.astro` and `src/pages/[lang]/[directiva].astro` (translated slugs from `directives[].slugs` in `src/data/site.ts`; it dispatches to `*Screen.astro` components).
+- Routes: `src/pages/index.astro` only detects the language (saved choice in `localStorage` → `navigator.languages` → `en`) and redirects; real pages are `src/pages/[lang]/index.astro` and `src/pages/[lang]/[directiva].astro` (translated slugs from `directives[].slugs` in `src/data/site.ts`; it dispatches to `*Screen.astro` components). Project detail pages live in `src/pages/[lang]/[directiva]/[proyecto].astro` (`/es/proyectos/<id>`, `/en/projects/<id>`); their `Pagina` is `proyecto:<id>` (see `paginaProyecto` in `src/i18n/rutas.ts`).
 - Components read the current language with `idiomaDe(Astro)` (from the `[lang]` param) and texts with `traducir(idioma)`.
 - `about.astro` and `contact.astro` are leftover starter pages.
 

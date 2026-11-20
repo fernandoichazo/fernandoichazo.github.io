@@ -1,0 +1,78 @@
+---
+// Pantalla de la directiva [2] MIS PROYECTOS. La monta src/pages/[lang]/[directiva].astro en cada idioma.
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import ProjectsIntro from '@components/proyectos/ProjectsIntro.astro';
+import ProjectList from '@components/proyectos/ProjectList.astro';
+import ProjectsClosing from '@components/proyectos/ProjectsClosing.astro';
+import { ProyectoService } from '@services/proyectos';
+import { PersonalService } from '@services/perfil';
+import { idiomaDe, traducir } from '@i18n';
+import type { Directive } from '@data/site';
+
+interface Props {
+  directive: Directive;
+}
+
+const { directive } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
+const label = t.directivas[directive.id];
+
+const [personal, resumen, destacados, archivo] = await Promise.all([
+  PersonalService.getPersonal(idioma),
+  ProyectoService.getResumen(idioma),
+  ProyectoService.getDestacados(idioma),
+  ProyectoService.getArchivo(idioma),
+]);
+const categorias = await ProyectoService.getCategorias(idioma, archivo);
+
+// Solo se muestran las secciones con contenido; la tecla de cada una se numera en orden.
+const titulos = t.proyectos.secciones;
+const sections = [
+  { id: 'destacados', title: titulos.destacados, file: 'FEATURED.DAT', count: destacados.length },
+  { id: 'archivo', title: titulos.archivo, file: 'ARCHIVE.IDX', count: archivo.length },
+]
+  .filter((section) => section.count > 0)
+  .map(({ count: _, ...section }, index) => ({ ...section, sectionKey: String(index + 1) }));
+---
+
+<TerminalLayout
+  title={`${label} · ${personal.nombreCompleto}`}
+  description={`${t.proyectos.titulo} · ${personal.nombreCompleto}. ${t.proyectos.intro}`}
+  pagina={directive.id}
+  statusMessage={t.estado.modulo(directive.file, sections.length)}
+  statusMessageMid={t.estado.moduloMedio(directive.file)}
+  statusMessageShort={t.estado.volver}
+>
+  <TerminalHeader showLog={false} />
+  <ProjectsIntro file={directive.file} resumen={resumen} />
+  <SectionIndex entries={sections} />
+
+  {
+    sections.map((section) => (
+      <DataSection {...section}>
+        {section.id === 'destacados' ? (
+          <ProjectList items={destacados} />
+        ) : (
+          <ProjectList items={archivo} categorias={categorias} />
+        )}
+      </DataSection>
+    ))
+  }
+
+  <ProjectsClosing linkedin={personal.contacto.linkedin} />
+
+  <div class="actions">
+    <BackCommand />
+  </div>
+</TerminalLayout>
+
+<style>
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

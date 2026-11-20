@@ -1,11 +1,20 @@
 ---
-// Botón de comando para volver al menú principal. [ESC] lo maneja TerminalLayout (script inline del head).
+// Botón de comando para volver (por defecto, al menú principal). [ESC] lo maneja TerminalLayout
+// (script inline del head), que sigue el href de este botón.
 import { idiomaDe, rutaDe, traducir } from '@i18n';
 
+interface Props {
+  /** Destino; por defecto, el menú principal. */
+  href?: string;
+  /** Texto del botón; por defecto, "[ESC] VOLVER AL MENÚ PRINCIPAL". */
+  label?: string;
+}
+
 const idioma = idiomaDe(Astro);
+const { href = rutaDe(idioma, 'inicio'), label = traducir(idioma).comun.volverMenu } = Astro.props;
 ---
 
-<a class="back" href={rutaDe(idioma, 'inicio')} data-back>{traducir(idioma).comun.volverMenu}</a>
+<a class="back" href={href} data-back>{label}</a>
 
 <style>
   .back {

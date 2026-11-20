@@ -1,0 +1,72 @@
+---
+// Tags de un proyecto: tecnologías como [React] y arquitecturas como etiqueta con borde punteado.
+// Lo usan la tarjeta del listado y la vista de detalle. Sin tags, no pinta nada.
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  stack: string[];
+  arquitecturas: string[];
+  /** "compact" para la tarjeta; "full" separa los dos grupos con su título (detalle). */
+  variant?: 'compact' | 'full';
+}
+
+const { stack, arquitecturas, variant = 'compact' } = Astro.props;
+const p = traducir(idiomaDe(Astro)).proyectos;
+const grupos = [
+  { tipo: 'tech', etiqueta: p.tecnologias, items: stack },
+  { tipo: 'arch', etiqueta: p.arquitecturas, items: arquitecturas },
+].filter((grupo) => grupo.items.length > 0);
+---
+
+{
+  grupos.length > 0 && (
+    <div class:list={['tags', `is-${variant}`]}>
+      {grupos.map((grupo) => (
+        <div class="group">
+          {variant === 'full' && <p class="group-title">&gt; {grupo.etiqueta}</p>}
+          <ul class:list={['list', `is-${grupo.tipo}`]} aria-label={grupo.etiqueta}>
+            {grupo.items.map((item) => (
+              <li class="tag">{grupo.tipo === 'tech' ? `[${item}]` : item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .tags.is-full {
+    gap: 1.25rem;
+  }
+  .group-title {
+    margin-bottom: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.9em;
+  }
+  .is-compact .list {
+    font-size: var(--step--1);
+  }
+  .is-compact .is-tech {
+    color: var(--phosphor-soft);
+  }
+  .is-arch {
+    gap: 0.4rem;
+  }
+  .is-arch .tag {
+    padding: 0.05rem 0.5rem;
+    border: 1px dashed var(--phosphor-dim);
+    color: var(--phosphor);
+  }
+</style>

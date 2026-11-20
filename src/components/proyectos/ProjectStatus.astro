@@ -1,0 +1,34 @@
+---
+// Etiqueta de estado de sistema de un proyecto: [ONLINE], [EN DESARROLLO], [ARCHIVADO].
+import type { EstadoProyecto } from '@interfaces/proyectos';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  estado: EstadoProyecto;
+}
+
+const { estado } = Astro.props;
+const d = traducir(idiomaDe(Astro)).proyectos.detalle;
+---
+
+<span class:list={['status', `is-${estado}`]}>[{d.estados[estado]}]</span>
+
+<style>
+  .status {
+    white-space: nowrap;
+  }
+  .is-online {
+    color: var(--phosphor);
+    text-shadow: var(--glow);
+  }
+  .is-desarrollo {
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  .is-archivado {
+    color: var(--phosphor-soft);
+  }
+  :global(:root[data-crt='off']) .status {
+    text-shadow: none;
+  }
+</style>

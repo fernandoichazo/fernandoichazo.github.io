@@ -2,6 +2,7 @@
 // declaran con el tipo Diccionario, así que una traducción faltante no pasa `astro check`.
 import type { DirectivaId } from '@data/site';
 import type { EstadoCredencial } from '@interfaces/certificaciones';
+import type { EstadoProyecto } from '@interfaces/proyectos';
 
 export const en = {
   meta: {
@@ -126,6 +127,53 @@ export const en = {
       competencias: 'COMPETITIONS & AWARDS',
       cursos: 'COURSES & TRAINING',
       idiomas: 'LANGUAGES',
+    },
+  },
+  proyectos: {
+    titulo: 'PROJECTS ARCHIVE',
+    intro: 'Selected work. Open any record with [SEE MORE] to read the problem it solved, how it is used and the stack behind it.',
+    registros: (total: number) => `${total} RECORDS FOUND`,
+    enProduccion: (total: number) => `${total} IN PRODUCTION`,
+    ultimaActualizacion: (fecha: string) => `LAST UPDATE ${fecha}`,
+    verMas: '[SEE MORE]',
+    tecnologias: 'Technologies',
+    arquitecturas: 'Architecture',
+    filtros: 'Filter by category',
+    todos: 'ALL',
+    mostrando: 'SHOWING',
+    de: 'OF',
+    sinResultados: 'NO RECORDS MATCH THIS FILTER.',
+    cierre: {
+      mensaje: 'GOT A PROJECT IN MIND?',
+      transmision: 'START TRANSMISSION (LINKEDIN)',
+      perfil: 'SEE MY PROFILE',
+    },
+    secciones: {
+      destacados: 'FEATURED PROJECTS',
+      archivo: 'FULL ARCHIVE',
+    },
+    detalle: {
+      abriendo: 'OPENING RECORD',
+      estados: {
+        online: 'ONLINE',
+        desarrollo: 'IN DEVELOPMENT',
+        archivado: 'ARCHIVED',
+      } satisfies Record<EstadoProyecto, string>,
+      rol: 'ROLE',
+      problema: 'PROBLEM',
+      solucion: 'SOLUTION',
+      resultado: 'RESULT',
+      enlaces: 'Project links',
+      github: '[VIEW ON GITHUB]',
+      demo: '[LIVE DEMO]',
+      captura: (nombre: string, numero: number) => `Screenshot ${numero} of ${nombre}`,
+      volver: '[ESC] BACK TO PROJECTS',
+      secciones: {
+        resolvio: 'WHAT IT SOLVED',
+        uso: 'HOW IT IS USED',
+        tecnologias: 'TECHNOLOGIES & ARCHITECTURE',
+        galeria: 'GALLERY',
+      },
     },
   },
   fechas: {

@@ -1,0 +1,173 @@
+[
+  {
+    "id": "sistema-facturacion-inventarios",
+    "nombre": "Sistema de Facturación e Inventarios",
+    "descripcion": "Plataforma de gestión comercial con control de inventario multialmacén y emisión de facturas.",
+    "tagline": "ERP ligero para pymes: ventas, stock y facturación electrónica en un solo lugar.",
+    "problema": "El cliente llevaba ventas e inventario en hojas de cálculo separadas: descuadres de stock cada mes y facturas emitidas a mano.",
+    "solucion": "API en Spring Boot con arquitectura limpia, movimientos de inventario transaccionales y módulo de facturación integrado; panel web en React.",
+    "uso": "Lo usan a diario el personal de ventas y almacén: registran ventas desde el panel web, el stock se descuenta al instante y la factura se genera al confirmar la venta.",
+    "resultado": "Cierre mensual de 3 días a 2 horas y descuadres de stock prácticamente eliminados.",
+    "rol": "Backend líder · equipo de 3",
+    "stack": [
+      "Spring Boot",
+      "PostgreSQL",
+      "React",
+      "Docker"
+    ],
+    "arquitecturas": [
+      "Arquitectura Limpia",
+      "API REST"
+    ],
+    "categoriaId": "backend",
+    "fecha": "2024-05",
+    "estado": "online",
+    "destacado": true,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "plataforma-roles-permisos",
+    "nombre": "Plataforma de Roles y Permisos",
+    "descripcion": "Control de acceso basado en roles con permisos granulares, auditoría y SSO.",
+    "tagline": "Servicio de autenticación y autorización reutilizable para aplicaciones internas.",
+    "problema": "Cada sistema interno implementaba su propio login y permisos, con reglas duplicadas e inconsistentes.",
+    "solucion": "Servicio central en NestJS con RBAC, tokens JWT y una consola de administración en React para gestionar roles.",
+    "uso": "Las aplicaciones internas delegan el login en el servicio central; los administradores asignan roles y permisos desde la consola sin tocar código.",
+    "resultado": "4 aplicaciones migradas al servicio central y altas de usuario de 1 día a minutos.",
+    "rol": "Desarrollador full stack",
+    "stack": [
+      "NestJS",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "Redis"
+    ],
+    "arquitecturas": [
+      "Arquitectura Limpia",
+      "RBAC"
+    ],
+    "categoriaId": "backend",
+    "fecha": "2025-02",
+    "estado": "desarrollo",
+    "destacado": true,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "portafolio-robco",
+    "nombre": "Portafolio RobCo",
+    "descripcion": "Sitio estático bilingüe con efectos CRT, datos tipados y cero JavaScript innecesario.",
+    "tagline": "Este mismo sitio: un portafolio con estética de terminal retro y navegación por teclado.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Proyecto individual",
+    "stack": [
+      "Astro",
+      "TypeScript",
+      "CSS"
+    ],
+    "arquitecturas": [
+      "Sitio estático (SSG)"
+    ],
+    "categoriaId": "web",
+    "fecha": "2026-09",
+    "estado": "online",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "app-hackathon-ucb",
+    "nombre": "EcoRuta",
+    "descripcion": "Prototipo que calcula rutas de recolección de residuos y avisa a los vecinos en tiempo real.",
+    "tagline": "App ganadora del Hackathon UCB Tarija para optimizar rutas de recolección.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Backend · equipo de 4",
+    "stack": [
+      "React",
+      "NestJS",
+      "WebSockets"
+    ],
+    "arquitecturas": [
+      "Orientada a eventos"
+    ],
+    "categoriaId": "web",
+    "fecha": "2023-09",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "clasificador-reclamos",
+    "nombre": "Clasificador de Reclamos",
+    "descripcion": "Pipeline de entrenamiento y API de inferencia para clasificar texto en español.",
+    "tagline": "Modelo de NLP que clasifica reclamos de clientes por área y urgencia.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Proyecto individual",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "FastAPI"
+    ],
+    "arquitecturas": [
+      "Pipeline de ML",
+      "API REST"
+    ],
+    "categoriaId": "ia-datos",
+    "fecha": "2023-06",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "algoritmos-icpc",
+    "nombre": "Biblioteca de Algoritmos ICPC",
+    "descripcion": "Estructuras de datos, grafos y programación dinámica, con pruebas y explicaciones.",
+    "tagline": "Plantillas y soluciones de programación competitiva usadas en ICPC.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Proyecto individual",
+    "stack": [
+      "Python",
+      "C++"
+    ],
+    "arquitecturas": [],
+    "categoriaId": "academico",
+    "fecha": "2021-08",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  }
+]

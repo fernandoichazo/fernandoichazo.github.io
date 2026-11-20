@@ -1,0 +1,107 @@
+---
+// Vista de detalle de un proyecto: qué resolvió, cómo se usa, tecnologías y galería.
+// La monta src/pages/[lang]/[directiva]/[proyecto].astro. Las secciones sin datos no se muestran.
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import ProjectDetailIntro from '@components/proyectos/ProjectDetailIntro.astro';
+import ProjectGallery from '@components/proyectos/ProjectGallery.astro';
+import ProjectTags from '@components/proyectos/ProjectTags.astro';
+import { ProyectoService } from '@services/proyectos';
+import { PersonalService } from '@services/perfil';
+import { idiomaDe, paginaProyecto, rutaDe, traducir } from '@i18n';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
+const d = t.proyectos.detalle;
+
+const [personal, item] = await Promise.all([PersonalService.getPersonal(idioma), ProyectoService.getById(idioma, id)]);
+const imagenes = await ProyectoService.getImagenes(item);
+const file = `${item.id.toUpperCase().replaceAll('-', '_')}.DAT`;
+
+const resolvio = [
+  { etiqueta: d.problema, texto: item.problema },
+  { etiqueta: d.solucion, texto: item.solucion },
+  { etiqueta: d.resultado, texto: item.resultado },
+].filter((paso): paso is { etiqueta: string; texto: string } => paso.texto !== null);
+
+// Solo se muestran las secciones con contenido; la tecla de cada una se numera en orden.
+const titulos = d.secciones;
+const sections = [
+  { id: 'resolvio', title: titulos.resolvio, file: 'PROBLEM.LOG', visible: resolvio.length > 0 },
+  { id: 'uso', title: titulos.uso, file: 'USAGE.TXT', visible: item.uso !== null },
+  { id: 'tecnologias', title: titulos.tecnologias, file: 'STACK.DAT', visible: item.stack.length + item.arquitecturas.length > 0 },
+  { id: 'galeria', title: titulos.galeria, file: 'CAPTURES.IMG', visible: imagenes.length > 0 },
+]
+  .filter((section) => section.visible)
+  .map(({ visible: _, ...section }, index) => ({ ...section, sectionKey: String(index + 1) }));
+---
+
+<TerminalLayout
+  title={`${item.nombre} · ${t.directivas.proyectos} · ${personal.nombreCompleto}`}
+  description={`${item.nombre}: ${item.tagline}`}
+  pagina={paginaProyecto(item.id)}
+  statusMessage={t.estado.modulo(file, sections.length)}
+  statusMessageMid={t.estado.moduloMedio(file)}
+  statusMessageShort={t.estado.volver}
+>
+  <TerminalHeader showLog={false} />
+  <ProjectDetailIntro item={item} file={file} />
+  {sections.length > 0 && <SectionIndex entries={sections} />}
+
+  {
+    sections.map((section) => (
+      <DataSection {...section}>
+        {section.id === 'resolvio' ? (
+          <dl class="story">
+            {resolvio.map((paso) => (
+              <div class="step">
+                <dt class="label">&gt; {paso.etiqueta}</dt>
+                <dd>{paso.texto}</dd>
+              </div>
+            ))}
+          </dl>
+        ) : section.id === 'uso' ? (
+          <p class="text">{item.uso}</p>
+        ) : section.id === 'tecnologias' ? (
+          <ProjectTags stack={item.stack} arquitecturas={item.arquitecturas} variant="full" />
+        ) : (
+          <ProjectGallery imagenes={imagenes} nombre={item.nombre} />
+        )}
+      </DataSection>
+    ))
+  }
+
+  <div class="actions">
+    <BackCommand href={rutaDe(idioma, 'proyectos')} label={d.volver} />
+  </div>
+</TerminalLayout>
+
+<style>
+  .story {
+    display: grid;
+    gap: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--phosphor-dim);
+  }
+  .label {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .step dd,
+  .text {
+    margin-top: 0.15rem;
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

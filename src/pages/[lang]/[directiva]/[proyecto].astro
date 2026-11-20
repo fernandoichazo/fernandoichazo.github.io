@@ -1,0 +1,20 @@
+---
+// Detalle de cada proyecto en cada idioma: /es/proyectos/<id>, /en/projects/<id>.
+import ProjectDetailScreen from '@components/proyectos/ProjectDetailScreen.astro';
+import { directives } from '@data/site';
+import { ProyectoService } from '@services/proyectos';
+import { IDIOMAS } from '@i18n';
+
+export function getStaticPaths() {
+  const proyectos = directives.find((directive) => directive.id === 'proyectos')!;
+  return IDIOMAS.flatMap((lang) =>
+    ProyectoService.getIds().map((proyecto) => ({
+      params: { lang, directiva: proyectos.slugs[lang], proyecto },
+    })),
+  );
+}
+
+const { proyecto } = Astro.params as { proyecto: string };
+---
+
+<ProjectDetailScreen id={proyecto} />

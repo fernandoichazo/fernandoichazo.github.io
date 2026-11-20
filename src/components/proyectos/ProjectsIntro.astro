@@ -1,0 +1,61 @@
+---
+// Cabecera de MIS PROYECTOS: línea de carga, título, introducción y línea de estado del archivo.
+import PhosphorText from '@components/crt/PhosphorText.astro';
+import type { ResumenProyectos } from '@interfaces/proyectos';
+import { formatearFecha } from '@lib/fechas';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  file: string;
+  resumen: ResumenProyectos;
+}
+
+const { file, resumen } = Astro.props;
+const idioma = idiomaDe(Astro);
+const p = traducir(idioma).proyectos;
+const t = traducir(idioma);
+
+const estado = [
+  p.registros(resumen.total),
+  p.enProduccion(resumen.online),
+  resumen.ultimaActualizacion && p.ultimaActualizacion(formatearFecha(resumen.ultimaActualizacion, idioma)),
+].filter(Boolean);
+---
+
+<section class="intro" aria-labelledby="projects-title">
+  <p class="log">&gt; {t.comun.cargando} {file}... <span class="ok">[OK]</span></p>
+  <PhosphorText as="h1" id="projects-title" size="display" glow="strong" class="title">
+    {p.titulo}
+  </PhosphorText>
+  <p class="lead">{p.intro}</p>
+
+  <p class="readout">&gt; {estado.join(' · ')}</p>
+</section>
+
+<style>
+  .intro {
+    margin-top: clamp(1.25rem, var(--screen-h) * 0.04, 2.5rem);
+    width: 100%;
+  }
+  .log {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .ok {
+    color: var(--phosphor);
+  }
+  .intro :global(.title) {
+    margin-top: 0.75rem;
+  }
+  .lead {
+    margin-top: 1rem;
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+
+  .readout {
+    margin-top: 1.25rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+</style>

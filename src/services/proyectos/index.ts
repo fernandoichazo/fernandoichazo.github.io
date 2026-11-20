@@ -1,0 +1,1 @@
+export { ProyectoService } from './ProyectoService';

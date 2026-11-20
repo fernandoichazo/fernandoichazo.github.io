@@ -1,0 +1,173 @@
+[
+  {
+    "id": "sistema-facturacion-inventarios",
+    "nombre": "Billing & Inventory System",
+    "descripcion": "Business management platform with multi-warehouse inventory control and invoicing.",
+    "tagline": "A lightweight ERP for small businesses: sales, stock and e-invoicing in one place.",
+    "problema": "The client tracked sales and inventory in separate spreadsheets: monthly stock mismatches and hand-written invoices.",
+    "solucion": "Spring Boot API with clean architecture, transactional inventory movements and an integrated invoicing module; React web dashboard.",
+    "uso": "Sales and warehouse staff use it daily: they record sales from the web dashboard, stock is deducted instantly and the invoice is generated when the sale is confirmed.",
+    "resultado": "Monthly closing went from 3 days to 2 hours and stock mismatches were virtually eliminated.",
+    "rol": "Backend lead · team of 3",
+    "stack": [
+      "Spring Boot",
+      "PostgreSQL",
+      "React",
+      "Docker"
+    ],
+    "arquitecturas": [
+      "Clean Architecture",
+      "REST API"
+    ],
+    "categoriaId": "backend",
+    "fecha": "2024-05",
+    "estado": "online",
+    "destacado": true,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "plataforma-roles-permisos",
+    "nombre": "Roles & Permissions Platform",
+    "descripcion": "Role-based access control with fine-grained permissions, auditing and SSO.",
+    "tagline": "A reusable authentication and authorization service for internal applications.",
+    "problema": "Every internal system implemented its own login and permissions, with duplicated and inconsistent rules.",
+    "solucion": "Central NestJS service with RBAC, JWT tokens and a React admin console to manage roles.",
+    "uso": "Internal applications delegate login to the central service; administrators assign roles and permissions from the console without touching code.",
+    "resultado": "4 applications migrated to the central service and user onboarding cut from 1 day to minutes.",
+    "rol": "Full stack developer",
+    "stack": [
+      "NestJS",
+      "TypeScript",
+      "React",
+      "PostgreSQL",
+      "Redis"
+    ],
+    "arquitecturas": [
+      "Clean Architecture",
+      "RBAC"
+    ],
+    "categoriaId": "backend",
+    "fecha": "2025-02",
+    "estado": "desarrollo",
+    "destacado": true,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "portafolio-robco",
+    "nombre": "RobCo Portfolio",
+    "descripcion": "Bilingual static site with CRT effects, typed data and zero unnecessary JavaScript.",
+    "tagline": "This very site: a portfolio with a retro terminal look and keyboard navigation.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Solo project",
+    "stack": [
+      "Astro",
+      "TypeScript",
+      "CSS"
+    ],
+    "arquitecturas": [
+      "Static site (SSG)"
+    ],
+    "categoriaId": "web",
+    "fecha": "2026-09",
+    "estado": "online",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "app-hackathon-ucb",
+    "nombre": "EcoRuta",
+    "descripcion": "Prototype that computes waste collection routes and notifies neighbors in real time.",
+    "tagline": "Winning app of the UCB Tarija Hackathon to optimize waste collection routes.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Backend · team of 4",
+    "stack": [
+      "React",
+      "NestJS",
+      "WebSockets"
+    ],
+    "arquitecturas": [
+      "Event-driven"
+    ],
+    "categoriaId": "web",
+    "fecha": "2023-09",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "clasificador-reclamos",
+    "nombre": "Complaint Classifier",
+    "descripcion": "Training pipeline and inference API to classify Spanish-language text.",
+    "tagline": "NLP model that classifies customer complaints by department and urgency.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Solo project",
+    "stack": [
+      "Python",
+      "scikit-learn",
+      "FastAPI"
+    ],
+    "arquitecturas": [
+      "ML pipeline",
+      "REST API"
+    ],
+    "categoriaId": "ia-datos",
+    "fecha": "2023-06",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  },
+  {
+    "id": "algoritmos-icpc",
+    "nombre": "ICPC Algorithms Library",
+    "descripcion": "Data structures, graphs and dynamic programming, with tests and explanations.",
+    "tagline": "Competitive programming templates and solutions used at ICPC.",
+    "problema": null,
+    "solucion": null,
+    "uso": null,
+    "resultado": null,
+    "rol": "Solo project",
+    "stack": [
+      "Python",
+      "C++"
+    ],
+    "arquitecturas": [],
+    "categoriaId": "academico",
+    "fecha": "2021-08",
+    "estado": "archivado",
+    "destacado": false,
+    "imagenes": null,
+    "enlaces": {
+      "github": null,
+      "demo": null
+    }
+  }
+]

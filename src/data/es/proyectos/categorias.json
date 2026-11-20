@@ -1,0 +1,7 @@
+[
+  { "id": "backend", "nombre": "BACKEND" },
+  { "id": "web", "nombre": "WEB" },
+  { "id": "movil", "nombre": "MÓVIL" },
+  { "id": "ia-datos", "nombre": "IA / DATOS" },
+  { "id": "academico", "nombre": "ACADÉMICO" }
+]

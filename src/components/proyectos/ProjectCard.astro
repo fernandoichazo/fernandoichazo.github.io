@@ -1,0 +1,67 @@
+---
+// Un proyecto en el listado de MIS PROYECTOS: nombre, descripción, tags de tecnologías y
+// arquitecturas, y [VER MÁS] hacia su vista de detalle.
+import ProjectTags from '@components/proyectos/ProjectTags.astro';
+import type { Proyecto } from '@interfaces/proyectos';
+import { idiomaDe, paginaProyecto, rutaDe, traducir } from '@i18n';
+
+interface Props {
+  item: Proyecto;
+}
+
+const { item } = Astro.props;
+const idioma = idiomaDe(Astro);
+const p = traducir(idioma).proyectos;
+---
+
+<article class="card" aria-labelledby={`proyecto-${item.id}`}>
+  <h3 class="title" id={`proyecto-${item.id}`}>{item.nombre}</h3>
+  <p class="desc">{item.descripcion}</p>
+  <div class="tags">
+    <ProjectTags stack={item.stack} arquitecturas={item.arquitecturas} />
+  </div>
+  <a class="more" href={rutaDe(idioma, paginaProyecto(item.id))}>
+    {p.verMas}<span class="sr-only">: {item.nombre}</span>
+  </a>
+</article>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--phosphor-dim);
+    background: var(--surface-lift);
+  }
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+  }
+  .desc {
+    margin: 0.5rem 0 0.75rem;
+    line-height: 1.5;
+    color: var(--phosphor-soft);
+  }
+  .tags:not(:empty) {
+    margin-bottom: 0.75rem;
+  }
+  .more {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: auto;
+    margin-left: -0.5rem;
+    padding: 0 0.5rem;
+  }
+  .more:hover,
+  .more:focus-visible {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+</style>

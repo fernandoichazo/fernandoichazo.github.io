@@ -1,0 +1,141 @@
+---
+// Cuadrícula de proyectos (nombre, descripción y [VER MÁS]).
+// Con más de una categoría muestra filtros; son mejora progresiva: sin JavaScript
+// se ven todos los proyectos y los botones permanecen ocultos.
+import ProjectCard from '@components/proyectos/ProjectCard.astro';
+import type { CategoriaProyecto, Proyecto } from '@interfaces/proyectos';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  items: Proyecto[];
+  /** Categorías para filtrar; con menos de dos no se muestran filtros. */
+  categorias?: CategoriaProyecto[];
+}
+
+const { items, categorias = [] } = Astro.props;
+const p = traducir(idiomaDe(Astro)).proyectos;
+const conFiltros = categorias.length > 1;
+---
+
+<div class="project-list" data-project-list>
+  {
+    conFiltros && (
+      <>
+        <div class="filters" role="group" aria-label={p.filtros} data-filters hidden>
+          <button type="button" class="filter" data-filter="*" aria-pressed="true">
+            [{p.todos}]
+          </button>
+          {categorias.map((categoria) => (
+            <button type="button" class="filter" data-filter={categoria.id} aria-pressed="false">
+              [{categoria.nombre}]
+            </button>
+          ))}
+        </div>
+        <p class="count" aria-live="polite">
+          {p.mostrando} <span data-visible>{items.length}</span> {p.de} {items.length}
+        </p>
+      </>
+    )
+  }
+
+  <ul class="grid">
+    {
+      items.map((item) => (
+        <li data-categoria={item.categoriaId}>
+          <ProjectCard item={item} />
+        </li>
+      ))
+    }
+  </ul>
+
+  {conFiltros && <p class="empty" data-empty hidden>&gt; {p.sinResultados}</p>}
+</div>
+
+<script>
+  for (const list of document.querySelectorAll<HTMLElement>('[data-project-list]')) {
+    const filters = list.querySelector<HTMLElement>('[data-filters]');
+    if (!filters) continue;
+
+    const buttons = [...filters.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+    const items = [...list.querySelectorAll<HTMLElement>('[data-categoria]')];
+    const count = list.querySelector<HTMLElement>('[data-visible]')!;
+    const empty = list.querySelector<HTMLElement>('[data-empty]')!;
+
+    filters.hidden = false;
+
+    filters.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+      if (!button) return;
+      const filtro = button.dataset.filter;
+
+      for (const item of buttons) item.setAttribute('aria-pressed', String(item === button));
+
+      let visibles = 0;
+      for (const item of items) {
+        const visible = filtro === '*' || item.dataset.categoria === filtro;
+        item.hidden = !visible;
+        if (visible) visibles++;
+      }
+
+      count.textContent = String(visibles);
+      empty.hidden = visibles > 0;
+    });
+  }
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin-left: -0.5rem;
+  }
+  .filters[hidden] {
+    display: none;
+  }
+  .filter {
+    min-height: 44px;
+    padding: 0 0.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--phosphor-soft);
+    font: inherit;
+    font-size: var(--step--1);
+    letter-spacing: inherit;
+    cursor: pointer;
+  }
+  .filter:hover,
+  .filter:focus-visible {
+    color: var(--phosphor);
+  }
+  .filter[aria-pressed='true'] {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+
+  .count {
+    margin: 0.5rem 0 1rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+
+  /* Columnas de al menos 20rem y como máximo 3: el mínimo de cada columna nunca baja de un tercio del ancho. */
+  .grid {
+    --gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, max(20rem, (100% - 2 * var(--gap)) / 3)), 1fr)
+    );
+    gap: var(--gap);
+  }
+  .grid > [hidden] {
+    display: none;
+  }
+
+  .empty {
+    margin-top: 1rem;
+    color: var(--phosphor-soft);
+  }
+</style>

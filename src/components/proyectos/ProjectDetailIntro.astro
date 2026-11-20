@@ -1,0 +1,78 @@
+---
+// Cabecera del detalle de un proyecto: línea de carga, nombre, tagline, estado/fecha/categoría, rol y enlaces.
+import PhosphorText from '@components/crt/PhosphorText.astro';
+import ProjectStatus from '@components/proyectos/ProjectStatus.astro';
+import ProjectLinks from '@components/proyectos/ProjectLinks.astro';
+import type { ProyectoDetalle } from '@interfaces/proyectos';
+import { formatearFecha } from '@lib/fechas';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  item: ProyectoDetalle;
+  file: string;
+}
+
+const { item, file } = Astro.props;
+const idioma = idiomaDe(Astro);
+const d = traducir(idioma).proyectos.detalle;
+---
+
+<section class="intro" aria-labelledby="project-title">
+  <p class="log">&gt; {d.abriendo} {file}... <span class="ok">[OK]</span></p>
+  <PhosphorText as="h1" id="project-title" size="display" glow="strong" class="title">
+    {item.nombre}
+  </PhosphorText>
+  <p class="lead">{item.tagline}</p>
+
+  <p class="meta">
+    <ProjectStatus estado={item.estado} />
+    <span>[{formatearFecha(item.fecha, idioma)}]</span>
+    <span>{item.nombreCategoria}</span>
+  </p>
+  <p class="role"><span class="label">{d.rol}:</span> {item.rol}</p>
+
+  <div class="links">
+    <ProjectLinks enlaces={item.enlaces} nombre={item.nombre} />
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-top: clamp(1.25rem, var(--screen-h) * 0.04, 2.5rem);
+    width: 100%;
+  }
+  .log {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .ok {
+    color: var(--phosphor);
+  }
+  .intro :global(.title) {
+    margin-top: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+  .lead {
+    margin-top: 1rem;
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.75em;
+    margin-top: 1.25rem;
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .role {
+    margin-top: 0.25rem;
+    font-size: var(--step--1);
+  }
+  .label {
+    color: var(--phosphor-soft);
+  }
+  .links:not(:empty) {
+    margin-top: 1rem;
+  }
+</style>

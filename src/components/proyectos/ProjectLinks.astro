@@ -1,0 +1,58 @@
+---
+// Enlaces de un proyecto ([VER EN GITHUB] [DEMO EN VIVO]); solo los que existen. Si no hay ninguno, no pinta nada.
+import type { EnlacesProyecto } from '@interfaces/proyectos';
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  enlaces: EnlacesProyecto;
+  /** Nombre del proyecto, para que el enlace tenga sentido fuera de contexto (lectores de pantalla). */
+  nombre: string;
+}
+
+const { enlaces, nombre } = Astro.props;
+const t = traducir(idiomaDe(Astro));
+const d = t.proyectos.detalle;
+const items = (['github', 'demo'] as const)
+  .map((tipo) => ({ tipo, href: enlaces[tipo], texto: d[tipo] }))
+  .filter((item): item is typeof item & { href: string } => item.href !== null);
+---
+
+{
+  items.length > 0 && (
+    <ul class="links" aria-label={d.enlaces}>
+      {items.map((item) => (
+        <li>
+          <a class="link" href={item.href} target="_blank" rel="noopener noreferrer">
+            {item.texto}
+            <span class="sr-only">
+              {' '}
+              {nombre} {t.comun.pestanaNueva}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  .link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    box-shadow: inset 0 0 0 1px var(--phosphor-dim);
+  }
+  .link:hover,
+  .link:focus-visible {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+    box-shadow: none;
+  }
+</style>
