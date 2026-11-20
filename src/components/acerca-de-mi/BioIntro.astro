@@ -1,0 +1,80 @@
+---
+// Cabecera de ACERCA DE MÍ: quién soy (presentación) y la directiva principal como cita.
+import PhosphorText from '@components/crt/PhosphorText.astro';
+
+interface Props {
+  file: string;
+  nombre: string;
+  presentacion: string;
+  directiva: string;
+}
+
+const { file, nombre, presentacion, directiva } = Astro.props;
+---
+
+<section class="intro" aria-labelledby="bio-title">
+  <p class="log">&gt; CARGANDO {file}... <span class="ok">[OK]</span></p>
+  <PhosphorText as="h1" id="bio-title" size="display" glow="strong" class="title">QUIÉN SOY</PhosphorText>
+  <p class="subject"><span aria-hidden="true">@ </span>{nombre}</p>
+  <p class="presentation">{presentacion}</p>
+
+  <figure class="directive">
+    <figcaption class="directive-label">[ DIRECTIVA PRINCIPAL ]</figcaption>
+    <blockquote class="directive-text">
+      <p>“{directiva}”</p>
+    </blockquote>
+  </figure>
+</section>
+
+<style>
+  .intro {
+    margin-top: clamp(1.25rem, var(--screen-h) * 0.04, 2.5rem);
+    width: min(70rem, 100%);
+  }
+  .log {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .ok {
+    color: var(--phosphor);
+  }
+  .intro :global(.title) {
+    margin-top: 0.75rem;
+  }
+  .subject {
+    margin-top: 0.25rem;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    letter-spacing: 0.06em;
+    color: var(--phosphor-soft);
+  }
+  .presentation {
+    max-width: 68ch;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .directive {
+    max-width: 60ch;
+    margin: 1.75rem 0 0;
+    padding: 1rem 1.25rem;
+    border: 2px solid var(--phosphor-dim);
+    background: var(--surface-lift);
+  }
+  .directive-label {
+    font-size: var(--step--1);
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  :global(:root[data-crt='off']) .directive-label {
+    text-shadow: none;
+  }
+  .directive-text {
+    margin: 0.5rem 0 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+</style>

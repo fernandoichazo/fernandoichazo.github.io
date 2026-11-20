@@ -1,0 +1,32 @@
+[
+  {
+    "id": "curiosidad",
+    "nombre": "Curiosidad",
+    "valor": 9,
+    "descripcion": "Pregunto \"¿por qué?\" hasta entender el fondo del problema."
+  },
+  {
+    "id": "calma",
+    "nombre": "Calma",
+    "valor": 8,
+    "descripcion": "Bajo presión priorizo, no entro en pánico."
+  },
+  {
+    "id": "colaboracion",
+    "nombre": "Colaboración",
+    "valor": 8,
+    "descripcion": "Prefiero pensar en voz alta con el equipo antes que encerrarme."
+  },
+  {
+    "id": "constancia",
+    "nombre": "Constancia",
+    "valor": 7,
+    "descripcion": "Avanzo un poco cada día antes que mucho de golpe."
+  },
+  {
+    "id": "humor",
+    "nombre": "Humor",
+    "valor": 9,
+    "descripcion": "Un buen meme salva un mal sprint."
+  }
+]

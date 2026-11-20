@@ -1,0 +1,22 @@
+[
+  {
+    "id": "arquitectura",
+    "titulo": "Arquitectura de software",
+    "descripcion": "Diseñar sistemas que aguanten el paso del tiempo y los cambios de requisitos sin volverse un laberinto."
+  },
+  {
+    "id": "ensenar",
+    "titulo": "Enseñar y compartir",
+    "descripcion": "Explicar conceptos complejos de forma sencilla a compañeros que recién empiezan."
+  },
+  {
+    "id": "automatizar",
+    "titulo": "Automatizar lo aburrido",
+    "descripcion": "Si una tarea se repite tres veces, merece un script."
+  },
+  {
+    "id": "impacto-local",
+    "titulo": "Tecnología con impacto local",
+    "descripcion": "Crear software que ayude a negocios y servicios de mi región a trabajar mejor."
+  }
+]

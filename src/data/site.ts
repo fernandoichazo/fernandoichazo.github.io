@@ -33,7 +33,7 @@ export const directives: Directive[] = [
   { key: '1', slug: 'perfil', label: 'PERFIL', file: 'PROFILE_DATA.EXE', implemented: true },
   { key: '2', slug: 'proyectos', label: 'MIS PROYECTOS', file: 'PROJECTS_ARCHIVE.DAT', recommended: true },
   { key: '3', slug: 'certificaciones', label: 'MIS CERTIFICACIONES', file: 'VERIFIED_CREDS.LOG' },
-  { key: '4', slug: 'acerca-de-mi', label: 'ACERCA DE MÍ', file: 'BIOGRAPHY_STREAM.TXT' },
+  { key: '4', slug: 'acerca-de-mi', label: 'ACERCA DE MÍ', file: 'BIOGRAPHY_STREAM.TXT', implemented: true },
 ];
 
 export const guide = {

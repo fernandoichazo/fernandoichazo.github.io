@@ -1,0 +1,71 @@
+---
+// Tiempo libre como inventario del Pip-Boy: nombre, descripción y frecuencia.
+import type { Pasatiempo } from '@interfaces/acerca-de-mi';
+
+interface Props {
+  items: Pasatiempo[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="wrap">
+  <p class="status">&gt; MODO DESCANSO ACTIVADO <span class="count">// {items.length} OBJETOS EN INVENTARIO</span></p>
+  <ul class="inventory">
+    {
+      items.map((item) => (
+        <li class="row">
+          <div class="info">
+            <h3 class="name">{item.nombre}</h3>
+            <p class="description">{item.descripcion}</p>
+          </div>
+          <p class="frequency">
+            <span class="sr-only">Frecuencia: </span>[{item.frecuencia}]
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .status {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+  }
+  .inventory {
+    margin-top: 0.75rem;
+    border-top: 1px dashed var(--phosphor-dim);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 0.25rem 2rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px dashed var(--phosphor-dim);
+  }
+  .name {
+    font-size: var(--step-1);
+    font-weight: 400;
+  }
+  .description {
+    max-width: 60ch;
+    margin-top: 0.15rem;
+    color: var(--phosphor-soft);
+    line-height: 1.5;
+  }
+  .frequency {
+    font-size: var(--step--1);
+    color: var(--warning);
+    white-space: nowrap;
+  }
+  @container (max-width: 34rem) {
+    .row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+// "Actualmente...": barra de estado con lo que hago hoy (etiqueta: valor).
+import type { EstadoActual } from '@interfaces/acerca-de-mi';
+
+interface Props {
+  items: EstadoActual[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="wrap">
+  <dl class="readout">
+    {
+      items.map((item) => (
+        <div class="row">
+          <dt class="label">{item.etiqueta}:</dt>
+          <dd class="value">{item.valor}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 14rem) 1fr;
+    gap: 1.5rem;
+    padding-block: 0.4rem;
+  }
+  .label {
+    font-size: var(--step--1);
+    color: var(--phosphor-soft);
+    padding-top: 0.15em;
+  }
+  .value::before {
+    content: '▶ ';
+    color: var(--phosphor-dim);
+  }
+  @container (max-width: 34rem) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+// Protocolo de comportamiento: atributos de personalidad con barra de nivel estilo S.P.E.C.I.A.L.
+import type { Atributo } from '@interfaces/acerca-de-mi';
+
+interface Props {
+  items: Atributo[];
+}
+
+const { items } = Astro.props;
+const MAX = 10;
+const barra = (valor: number) => '■'.repeat(valor) + '□'.repeat(MAX - valor);
+---
+
+<div class="wrap">
+  <ul class="stats">
+    {
+      items.map((item) => (
+        <li class="stat">
+          <div class="line">
+            <h3 class="name">
+              <span class="initial" aria-hidden="true">{item.nombre.charAt(0)}</span>
+              {item.nombre}
+            </h3>
+            <p class="level" role="img" aria-label={`Nivel ${item.valor} de ${MAX}`}>
+              <span class="bar" aria-hidden="true">{barra(item.valor)}</span>
+              <span class="value" aria-hidden="true">{String(item.valor).padStart(2, '0')}</span>
+            </p>
+          </div>
+          <p class="description">{item.descripcion}</p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .stats {
+    display: grid;
+    gap: 1rem;
+  }
+  .line {
+    display: grid;
+    grid-template-columns: minmax(12rem, 16rem) auto;
+    justify-content: start;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+  .name {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+  }
+  .initial {
+    display: inline-grid;
+    place-items: center;
+    width: 1.4em;
+    height: 1.4em;
+    font-size: 0.8em;
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+  .level {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .bar {
+    letter-spacing: 0.1em;
+  }
+  .value {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--warning);
+  }
+  .description {
+    max-width: 60ch;
+    margin-top: 0.15rem;
+    color: var(--phosphor-soft);
+  }
+  @container (max-width: 34rem) {
+    .line {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+  }
+</style>

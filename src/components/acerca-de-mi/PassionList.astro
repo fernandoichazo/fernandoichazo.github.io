@@ -1,0 +1,60 @@
+---
+// Pasiones: título destacado y una línea de explicación; dos columnas si la pantalla es ancha.
+import type { Pasion } from '@interfaces/acerca-de-mi';
+
+interface Props {
+  items: Pasion[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="wrap">
+  <ul class="grid">
+    {
+      items.map((item) => (
+        <li class="item">
+          <h3 class="title">
+            <span class="mark" aria-hidden="true">&gt; </span>
+            {item.titulo}
+          </h3>
+          <p class="description">{item.descripcion}</p>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .wrap {
+    container-type: inline-size;
+  }
+  .grid {
+    display: grid;
+    gap: 1.25rem 3rem;
+  }
+  .item {
+    padding-left: 1rem;
+    border-left: 2px solid var(--phosphor-dim);
+  }
+  .title {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    line-height: 1.15;
+  }
+  .mark {
+    color: var(--phosphor-soft);
+  }
+  .description {
+    max-width: 60ch;
+    margin-top: 0.25rem;
+    line-height: 1.6;
+  }
+  @container (min-width: 48rem) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

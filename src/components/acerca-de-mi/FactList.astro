@@ -1,0 +1,34 @@
+---
+// Datos curiosos numerados como entradas de registro [01], [02]...
+import type { DatoCurioso } from '@interfaces/acerca-de-mi';
+
+interface Props {
+  items: DatoCurioso[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="facts">
+  {
+    items.map((item, index) => (
+      <li class="fact">
+        <span class="number" aria-hidden="true">[{String(index + 1).padStart(2, '0')}]</span>
+        <span>{item.texto}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .fact {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    max-width: 70ch;
+    padding-block: 0.3rem;
+    line-height: 1.5;
+  }
+  .number {
+    color: var(--phosphor-soft);
+  }
+</style>

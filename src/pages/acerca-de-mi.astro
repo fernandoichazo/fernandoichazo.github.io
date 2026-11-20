@@ -1,0 +1,87 @@
+---
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import BioIntro from '@components/acerca-de-mi/BioIntro.astro';
+import PassionList from '@components/acerca-de-mi/PassionList.astro';
+import HobbyInventory from '@components/acerca-de-mi/HobbyInventory.astro';
+import AttributeStats from '@components/acerca-de-mi/AttributeStats.astro';
+import StatusReadout from '@components/acerca-de-mi/StatusReadout.astro';
+import FactList from '@components/acerca-de-mi/FactList.astro';
+import ClosingPrompt from '@components/acerca-de-mi/ClosingPrompt.astro';
+import { BiografiaService } from '@services/acerca-de-mi';
+import { PersonalService } from '@services/perfil';
+import { directives } from '@data/site';
+
+const directive = directives.find((item) => item.slug === 'acerca-de-mi')!;
+const proyectos = directives.find((item) => item.slug === 'proyectos')!;
+
+const [personal, biografia, pasiones, tiempoLibre, atributos, actualmente, datosCuriosos] = await Promise.all([
+  PersonalService.getPersonal(),
+  BiografiaService.getBiografia(),
+  BiografiaService.getPasiones(),
+  BiografiaService.getTiempoLibre(),
+  BiografiaService.getAtributos(),
+  BiografiaService.getActualmente(),
+  BiografiaService.getDatosCuriosos(),
+]);
+
+const sections = {
+  pasiones: { id: 'pasiones', sectionKey: '1', title: 'PASIONES', file: 'PASSIONS.DAT' },
+  tiempoLibre: { id: 'tiempo-libre', sectionKey: '2', title: 'TIEMPO LIBRE', file: 'OFF_DUTY.INV' },
+  comportamiento: { id: 'comportamiento', sectionKey: '3', title: 'COMPORTAMIENTO', file: 'BEHAVIOR_PROTOCOL.SYS' },
+  actualmente: { id: 'actualmente', sectionKey: '4', title: 'ACTUALMENTE', file: 'CURRENT_STATUS.LOG' },
+  datosCuriosos: { id: 'datos-curiosos', sectionKey: '5', title: 'DATOS CURIOSOS', file: 'TRIVIA.TXT' },
+};
+---
+
+<TerminalLayout
+  title={`${directive.label} · ${personal.nombreCompleto}`}
+  description={`${personal.nombreCompleto}: ${biografia.presentacion}`}
+  statusMessage={`${directive.file} · [A] ANTERIOR · [D] SIGUIENTE · [1]-[5] SECCIÓN · [ESC] VOLVER`}
+  statusMessageMid={`${directive.file} · [ESC] VOLVER`}
+  statusMessageShort="[ESC] VOLVER"
+>
+  <TerminalHeader showLog={false} />
+  <BioIntro
+    file={directive.file}
+    nombre={personal.nombreCompleto}
+    presentacion={biografia.presentacion}
+    directiva={biografia.directiva}
+  />
+  <SectionIndex entries={Object.values(sections)} />
+
+  <DataSection {...sections.pasiones}>
+    <PassionList items={pasiones} />
+  </DataSection>
+
+  <DataSection {...sections.tiempoLibre}>
+    <HobbyInventory items={tiempoLibre} />
+  </DataSection>
+
+  <DataSection {...sections.comportamiento}>
+    <AttributeStats items={atributos} />
+  </DataSection>
+
+  <DataSection {...sections.actualmente}>
+    <StatusReadout items={actualmente} />
+  </DataSection>
+
+  <DataSection {...sections.datosCuriosos}>
+    <FactList items={datosCuriosos} />
+  </DataSection>
+
+  <ClosingPrompt mensaje={biografia.cierre} proyectosHref={`/${proyectos.slug}`} linkedin={personal.contacto.linkedin} />
+
+  <div class="actions">
+    <BackCommand />
+  </div>
+</TerminalLayout>
+
+<style>
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

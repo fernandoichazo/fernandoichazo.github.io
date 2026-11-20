@@ -1,0 +1,32 @@
+[
+  {
+    "id": "videojuegos",
+    "nombre": "Videojuegos RPG y de mundo abierto",
+    "descripcion": "Horas explorando yermos y tomando decisiones difíciles.",
+    "frecuencia": "SEMANAL"
+  },
+  {
+    "id": "lectura",
+    "nombre": "Lectura",
+    "descripcion": "Ciencia ficción y libros sobre hábitos y productividad.",
+    "frecuencia": "DIARIA"
+  },
+  {
+    "id": "ciclismo",
+    "nombre": "Ciclismo de fin de semana",
+    "descripcion": "Rutas por el valle tarijeño para despejar la mente.",
+    "frecuencia": "FINES DE SEMANA"
+  },
+  {
+    "id": "cafe",
+    "nombre": "Café de especialidad",
+    "descripcion": "Experimentar con métodos de preparación y granos de distintas regiones.",
+    "frecuencia": "DIARIA"
+  },
+  {
+    "id": "guitarra",
+    "nombre": "Guitarra",
+    "descripcion": "Sin pretensiones, solo para desconectar.",
+    "frecuencia": "OCASIONAL"
+  }
+]

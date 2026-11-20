@@ -1,0 +1,6 @@
+[
+  { "id": "aprendiendo", "etiqueta": "APRENDIENDO", "valor": "Patrones de microservicios y programación reactiva" },
+  { "id": "leyendo", "etiqueta": "LEYENDO", "valor": "Clean Architecture, de Robert C. Martin" },
+  { "id": "jugando", "etiqueta": "JUGANDO", "valor": "Algún RPG postapocalíptico (claro)" },
+  { "id": "objetivo", "etiqueta": "OBJETIVO", "valor": "Terminar la maestría y lanzar este portafolio" }
+]
