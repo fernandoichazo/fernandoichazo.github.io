@@ -1,24 +1,5 @@
 [
   {
-    "id": "meta-front-end-developer",
-    "titulo": "Meta Front-End Developer",
-    "emisor": "Meta · Coursera",
-    "categoria": "certificacion",
-    "emision": "2024-11",
-    "expiracion": null,
-    "credencialId": "MFED-DEMO-7Q2K",
-    "url": "https://www.coursera.org/",
-    "resultado": null,
-    "horas": null,
-    "progreso": null,
-    "habilidades": [
-      "react",
-      "javascript"
-    ],
-    "imagen": null,
-    "destacado": true
-  },
-  {
     "id": "aws-cloud-practitioner",
     "titulo": "AWS Certified Cloud Practitioner",
     "emisor": "Amazon Web Services",
@@ -29,31 +10,12 @@
     "url": "https://www.credly.com/",
     "resultado": null,
     "horas": null,
-    "progreso": null,
+    "progreso": 100,
     "habilidades": [
       "nodejs"
     ],
     "imagen": null,
     "destacado": true
-  },
-  {
-    "id": "nestjs-fundamentals",
-    "titulo": "NestJS Fundamentals",
-    "emisor": "Trilon",
-    "categoria": "certificacion",
-    "emision": "2025-02",
-    "expiracion": null,
-    "credencialId": "NEST-DEMO-1138",
-    "url": null,
-    "resultado": null,
-    "horas": null,
-    "progreso": null,
-    "habilidades": [
-      "nestjs",
-      "typescript"
-    ],
-    "imagen": null,
-    "destacado": false
   },
   {
     "id": "certificacion-machine-learning",
@@ -66,28 +28,9 @@
     "url": "https://www.coursera.org/",
     "resultado": null,
     "horas": null,
-    "progreso": null,
+    "progreso": 100,
     "habilidades": [
       "python"
-    ],
-    "imagen": null,
-    "destacado": false
-  },
-  {
-    "id": "oracle-sql-associate",
-    "titulo": "Oracle Database SQL Certified Associate",
-    "emisor": "Oracle",
-    "categoria": "certificacion",
-    "emision": "2021-05",
-    "expiracion": "2024-05",
-    "credencialId": "OCA-DEMO-2077",
-    "url": "https://education.oracle.com/",
-    "resultado": null,
-    "horas": null,
-    "progreso": null,
-    "habilidades": [
-      "sql",
-      "diseno-bd-sql"
     ],
     "imagen": null,
     "destacado": false
@@ -217,11 +160,11 @@
     "id": "aws-developer-associate",
     "titulo": "AWS Certified Developer – Associate",
     "emisor": "Amazon Web Services",
-    "categoria": "en-progreso",
+    "categoria": "certificacion",
     "emision": "2027-03",
     "expiracion": null,
     "credencialId": null,
-    "url": null,
+    "url": "https://www.credly.com/",
     "resultado": null,
     "horas": null,
     "progreso": 60,
@@ -235,7 +178,7 @@
     "id": "ckad",
     "titulo": "Certified Kubernetes Application Developer",
     "emisor": "The Linux Foundation",
-    "categoria": "en-progreso",
+    "categoria": "certificacion",
     "emision": "2027-06",
     "expiracion": null,
     "credencialId": null,

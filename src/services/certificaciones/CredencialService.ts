@@ -6,10 +6,9 @@ import type {
   Credencial,
   CredencialDetalle,
   EstadoCredencial,
-  ResumenCredenciales,
 } from '@interfaces/certificaciones';
 import { HabilidadService } from '@services/perfil';
-import { enIdioma, verificarIds, type Idioma, type PorIdioma } from '@i18n';
+import { cadaIdioma, enIdioma, verificarIds, type Idioma, type PorIdioma } from '@i18n';
 import { fechaVencida } from '@lib/fechas';
 import { resolverImagen } from '@lib/imagenes';
 import credencialesEs from '@data/es/certificaciones/credenciales.json';
@@ -23,8 +22,26 @@ const credenciales: PorIdioma<Credencial[]> = {
 
 verificarIds('certificaciones/credenciales.json', credenciales);
 
-/** Destacadas primero; después la más reciente; sin fecha al final. */
+// Toda certificación necesita su progreso (100 si está terminada) y debe estar entre 0 y 100.
+for (const [idioma, lista] of cadaIdioma(credenciales)) {
+  for (const credencial of lista) {
+    const { progreso } = credencial;
+    if (credencial.categoria === 'certificacion' && progreso === null) {
+      throw new Error(`${idioma}/certificaciones/credenciales.json: "${credencial.id}" es una certificación sin "progreso".`);
+    }
+    if (progreso !== null && (progreso < 0 || progreso > 100)) {
+      throw new Error(`${idioma}/certificaciones/credenciales.json: "${credencial.id}" tiene progreso ${progreso} (0-100).`);
+    }
+  }
+}
+
+/** ¿Sigue en curso? (progreso definido y menor a 100). */
+const enCurso = (credencial: Credencial) => credencial.progreso !== null && credencial.progreso < 100;
+
+/** Terminadas antes que en curso; destacadas primero; después la más reciente; sin fecha al final. */
 const porRelevancia = (a: Credencial, b: Credencial) => {
+  if (enCurso(a) !== enCurso(b)) return enCurso(a) ? 1 : -1;
+  if (enCurso(a) && enCurso(b)) return (b.progreso ?? 0) - (a.progreso ?? 0);
   if (a.destacado !== b.destacado) return a.destacado ? -1 : 1;
   if (a.emision === b.emision) return 0;
   if (a.emision === null) return 1;
@@ -33,7 +50,7 @@ const porRelevancia = (a: Credencial, b: Credencial) => {
 };
 
 function estadoDe(credencial: Credencial): EstadoCredencial {
-  if (credencial.categoria === 'en-progreso') return 'en-progreso';
+  if (enCurso(credencial)) return 'en-progreso';
   if (credencial.expiracion && fechaVencida(credencial.expiracion)) return 'expirada';
   return credencial.url ? 'verificada' : 'sin-enlace';
 }
@@ -67,25 +84,6 @@ export const CredencialService = {
     return detallar(idioma, lista.sort(porRelevancia));
   },
 
-  async getResumen(idioma: Idioma): Promise<ResumenCredenciales> {
-    const todas = await this.getAll(idioma);
-    const de = (...categorias: CategoriaCredencial[]) => todas.filter((c) => categorias.includes(c.categoria));
-    const credenciales = de('certificacion', 'idioma');
-    const cursos = de('curso');
-    const fechas = todas
-      .filter((c) => c.categoria !== 'en-progreso' && c.emision !== null)
-      .map((c) => c.emision as string)
-      .sort();
-    return {
-      credenciales: credenciales.length,
-      verificadas: credenciales.filter((c) => c.estado === 'verificada').length,
-      competencias: de('competencia').length,
-      cursos: cursos.length,
-      horasCursos: cursos.reduce((total, c) => total + (c.horas ?? 0), 0),
-      enProgreso: de('en-progreso').length,
-      ultima: fechas.at(-1) ?? null,
-    };
-  },
 
   /** Imagen de la credencial desde src/images/certificaciones/, o null si no tiene. */
   async getImagen(credencial: Credencial): Promise<ImageMetadata | null> {

@@ -1,5 +1,5 @@
 // Una credencial de src/data/<idioma>/certificaciones/credenciales.json.
-export type CategoriaCredencial = 'certificacion' | 'competencia' | 'curso' | 'idioma' | 'en-progreso';
+export type CategoriaCredencial = 'certificacion' | 'competencia' | 'curso' | 'idioma';
 
 /** Estado calculado al compilar; no se guarda en el JSON. */
 export type EstadoCredencial = 'verificada' | 'sin-enlace' | 'expirada' | 'en-progreso';
@@ -10,7 +10,7 @@ export interface Credencial {
   /** Organización que la otorga (o plataforma/sede en competencias). */
   emisor: string;
   categoria: CategoriaCredencial;
-  /** "AAAA" o "AAAA-MM". En `en-progreso` es la fecha objetivo. */
+  /** "AAAA" o "AAAA-MM". Si el progreso es menor a 100, es la fecha objetivo. */
   emision: string | null;
   /** "AAAA" o "AAAA-MM"; null si no vence. */
   expiracion: string | null;
@@ -21,7 +21,10 @@ export interface Credencial {
   resultado: string | null;
   /** Duración de cursos. */
   horas: number | null;
-  /** 0-100, solo en `en-progreso`. */
+  /**
+   * 0-100. Las certificaciones siempre lo llevan (100 = terminada); con menos de 100 se
+   * muestran en curso y su enlace de verificación queda bloqueado. null si no aplica.
+   */
   progreso: number | null;
   /** Ids de src/data/<idioma>/perfil/habilidades.json que respalda. */
   habilidades: string[];
@@ -34,15 +37,4 @@ export interface Credencial {
 export interface CredencialDetalle extends Credencial {
   estado: EstadoCredencial;
   nombresHabilidades: string[];
-}
-
-export interface ResumenCredenciales {
-  credenciales: number;
-  verificadas: number;
-  competencias: number;
-  cursos: number;
-  horasCursos: number;
-  enProgreso: number;
-  /** Emisión más reciente (sin contar lo que está en progreso). */
-  ultima: string | null;
 }

@@ -1,0 +1,57 @@
+---
+// Barra de progreso ASCII ([████░░░░] 60%). Ámbar mientras está en curso; fósforo al 100%.
+import { idiomaDe, traducir } from '@i18n';
+
+interface Props {
+  /** 0-100. */
+  value: number;
+  /** Qué se está midiendo, para lectores de pantalla. */
+  label: string;
+}
+
+const SEGMENTOS = 20;
+const { label } = Astro.props;
+const value = Math.min(100, Math.max(0, Math.round(Astro.props.value)));
+const c = traducir(idiomaDe(Astro)).certificaciones;
+const llenos = Math.round((value / 100) * SEGMENTOS);
+const barra = '█'.repeat(llenos) + '░'.repeat(SEGMENTOS - llenos);
+---
+
+<p
+  class:list={['progress', { done: value === 100 }]}
+  role="progressbar"
+  aria-valuemin="0"
+  aria-valuemax="100"
+  aria-valuenow={value}
+  aria-label={`${label}. ${c.progreso(value)}`}
+>
+  <span class="bar" aria-hidden="true">[{barra}]</span>
+  <span class="pct" aria-hidden="true">{value}%</span>
+</p>
+
+<style>
+  .progress {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.75em;
+    margin-top: 0.4rem;
+  }
+  .bar {
+    letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  .pct {
+    color: var(--warning);
+    text-shadow: 0 0 6px var(--warning-glow);
+  }
+  .done .pct {
+    color: var(--phosphor);
+    text-shadow: var(--glow);
+  }
+  :global(:root[data-crt='off']) .pct {
+    text-shadow: none;
+  }
+</style>

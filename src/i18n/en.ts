@@ -102,16 +102,6 @@ export const en = {
     titulo: 'VERIFIED CREDENTIALS',
     intro:
       'Certifications, competitions and complementary training. Every credential with a link can be verified on the issuer’s platform.',
-    resumen: {
-      etiqueta: 'Credentials summary',
-      credenciales: 'CREDENTIALS',
-      verificadas: 'VERIFIED',
-      competencias: 'COMPETITIONS',
-      cursos: 'COURSES',
-      horas: (horas: number) => `${horas} H`,
-      enProgreso: 'IN PROGRESS',
-      ultima: 'LAST UPDATE',
-    },
     estados: {
       verificada: 'VERIFIED',
       'sin-enlace': 'NO LINK',
@@ -129,13 +119,13 @@ export const en = {
     progreso: (porcentaje: number) => `Progress: ${porcentaje}%`,
     destacada: 'FEATURED',
     verificar: '[VERIFY]',
+    verificarBloqueado: 'Available once the certification is completed',
     sinFecha: 'N/D',
     secciones: {
       certificaciones: 'TECHNICAL CERTIFICATIONS',
       competencias: 'COMPETITIONS & AWARDS',
       cursos: 'COURSES & TRAINING',
       idiomas: 'LANGUAGES',
-      enProgreso: 'IN PROGRESS',
     },
   },
   fechas: {

@@ -3,5 +3,4 @@ export type {
   CategoriaCredencial,
   EstadoCredencial,
   CredencialDetalle,
-  ResumenCredenciales,
 } from './Credencial';

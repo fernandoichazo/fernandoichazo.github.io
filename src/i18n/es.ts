@@ -99,16 +99,6 @@ export const es: Diccionario = {
     titulo: 'CREDENCIALES VERIFICADAS',
     intro:
       'Certificaciones, competencias y formación complementaria. Cada credencial con enlace puede verificarse en la plataforma del emisor.',
-    resumen: {
-      etiqueta: 'Resumen de credenciales',
-      credenciales: 'CREDENCIALES',
-      verificadas: 'VERIFICADAS',
-      competencias: 'COMPETENCIAS',
-      cursos: 'CURSOS',
-      horas: (horas) => `${horas} H`,
-      enProgreso: 'EN CURSO',
-      ultima: 'ÚLTIMA ACTUALIZACIÓN',
-    },
     estados: {
       verificada: 'VERIFICADA',
       'sin-enlace': 'SIN ENLACE',
@@ -126,13 +116,13 @@ export const es: Diccionario = {
     progreso: (porcentaje) => `Progreso: ${porcentaje}%`,
     destacada: 'DESTACADA',
     verificar: '[VERIFICAR]',
+    verificarBloqueado: 'Disponible al completar la certificación',
     sinFecha: 'S/F',
     secciones: {
       certificaciones: 'CERTIFICACIONES TÉCNICAS',
       competencias: 'COMPETENCIAS Y RECONOCIMIENTOS',
       cursos: 'CURSOS Y FORMACIÓN',
       idiomas: 'IDIOMAS',
-      enProgreso: 'EN PROGRESO',
     },
   },
   fechas: {
