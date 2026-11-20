@@ -29,7 +29,7 @@ const { file, nombre, presentacion, directiva } = Astro.props;
 <style>
   .intro {
     margin-top: clamp(1.25rem, var(--screen-h) * 0.04, 2.5rem);
-    width: min(70rem, 100%);
+    width: 100%;
   }
   .log {
     font-size: var(--step--1);
@@ -49,13 +49,11 @@ const { file, nombre, presentacion, directiva } = Astro.props;
     color: var(--phosphor-soft);
   }
   .presentation {
-    max-width: 68ch;
     margin-top: 1rem;
     line-height: 1.6;
   }
 
   .directive {
-    max-width: 60ch;
     margin: 1.75rem 0 0;
     padding: 1rem 1.25rem;
     border: 2px solid var(--phosphor-dim);

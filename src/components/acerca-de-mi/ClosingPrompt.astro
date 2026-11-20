@@ -10,7 +10,7 @@ const { mensaje, proyectosHref, linkedin } = Astro.props;
 ---
 
 <section class="closing" aria-labelledby="closing-title">
-  <p class="rule" aria-hidden="true">{'='.repeat(120)}</p>
+  <p class="rule" aria-hidden="true">{'='.repeat(240)}</p>
   <h2 id="closing-title" class="message">{mensaje}</h2>
   <ul class="options">
     <li>
@@ -28,7 +28,7 @@ const { mensaje, proyectosHref, linkedin } = Astro.props;
 <style>
   .closing {
     margin-top: clamp(1.75rem, var(--screen-h) * 0.05, 3rem);
-    width: min(70rem, 100%);
+    width: 100%;
   }
   .rule {
     font-family: var(--font-display);

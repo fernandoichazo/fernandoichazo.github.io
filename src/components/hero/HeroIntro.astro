@@ -11,7 +11,7 @@ interface Props {
 
 const { personal } = Astro.props;
 
-const rule = '='.repeat(120);
+const rule = '='.repeat(240);
 ---
 
 <section class="hero" aria-labelledby="welcome">
@@ -40,8 +40,7 @@ const rule = '='.repeat(120);
     color: var(--phosphor-dim);
     white-space: nowrap;
     overflow: hidden;
-    width: min(70rem, 100%);
-    max-width: 100%;
+    width: 100%;
   }
 
   .welcome {
