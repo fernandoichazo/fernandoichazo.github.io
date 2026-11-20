@@ -1,0 +1,60 @@
+---
+// Envuelve cualquier imagen (vía <slot />) y le superpone capas que la hacen verse
+// como un monitor de fósforo verde. La imagen en sí no recibe ningún filtro:
+// todo el efecto lo producen las capas de encima mezclándose con ella.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['phosphor-image', className]}>
+  <slot />
+  <span class="layer desaturate" aria-hidden="true"></span>
+  <span class="layer tint" aria-hidden="true"></span>
+  <span class="layer scan" aria-hidden="true"></span>
+</div>
+
+<style>
+  .phosphor-image {
+    position: relative;
+    overflow: hidden;
+    background: var(--void);
+    box-shadow: 0 0 12px var(--phosphor-glow);
+    /* Las mezclas solo afectan a lo que hay dentro de este contenedor. */
+    isolation: isolate;
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* 1. Quita el color: un negro en modo "saturation" deja solo la luminosidad de lo que hay debajo. */
+  .desaturate {
+    background: #000;
+    mix-blend-mode: saturation;
+  }
+
+  /* 2. Tiñe: en "multiply" los blancos pasan a verde fósforo y los negros se quedan negros. */
+  .tint {
+    background: var(--phosphor);
+    mix-blend-mode: multiply;
+  }
+
+  /* 3. Líneas de barrido y viñeta del tubo. */
+  .scan {
+    background:
+      repeating-linear-gradient(to bottom, transparent 0 2px, rgb(0 0 0 / 0.35) 2px 3px),
+      radial-gradient(ellipse at center, transparent 55%, rgb(0 0 0 / 0.55) 100%);
+  }
+
+  :global(:root[data-crt='off']) .phosphor-image {
+    box-shadow: none;
+  }
+  :global(:root[data-crt='off']) .scan {
+    display: none;
+  }
+</style>
