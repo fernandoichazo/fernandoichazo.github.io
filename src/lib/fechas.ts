@@ -1,15 +1,17 @@
 // Fechas del portafolio: se guardan como "AAAA" o "AAAA-MM" y null significa "presente".
+import { traducir, type Idioma } from '@i18n';
 
-const MESES = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
-
-export function formatearFecha(fecha: string | null): string {
-  if (fecha === null) return 'PRESENTE';
+export function formatearFecha(fecha: string | null, idioma: Idioma): string {
+  const { meses, presente } = traducir(idioma).fechas;
+  if (fecha === null) return presente;
   const [anio, mes] = fecha.split('-');
-  return mes ? `${MESES[Number(mes) - 1]} ${anio}` : anio;
+  return mes ? `${meses[Number(mes) - 1]} ${anio}` : anio;
 }
 
-export function formatearPeriodo(inicio: string | null, fin: string | null): string {
-  return inicio ? `${formatearFecha(inicio)} - ${formatearFecha(fin)}` : formatearFecha(fin);
+export function formatearPeriodo(inicio: string | null, fin: string | null, idioma: Idioma): string {
+  return inicio
+    ? `${formatearFecha(inicio, idioma)} - ${formatearFecha(fin, idioma)}`
+    : formatearFecha(fin, idioma);
 }
 
 /** Orden descendente: lo vigente (null) primero, luego lo más reciente. */

@@ -4,6 +4,9 @@
 // Solo corre cuando TerminalLayout marca data-boot="run" (primera visita de la sesión,
 // sin reducción de movimiento). Se omite con clic, espacio, Enter o Esc.
 import PipBoyScene from '@components/pipboy/PipBoyScene.astro';
+import { idiomaDe, traducir } from '@i18n';
+
+const t = traducir(idiomaDe(Astro)).arranque;
 ---
 
 <div class="intro" aria-hidden="true">
@@ -11,7 +14,7 @@ import PipBoyScene from '@components/pipboy/PipBoyScene.astro';
     <PipBoyScene />
   </div>
   <span class="intro__target"></span>
-  <p class="intro__skip">[ESPACIO] O CLIC PARA OMITIR</p>
+  <p class="intro__skip">{t.omitir}</p>
 </div>
 
 <style>

@@ -1,12 +1,14 @@
 ---
 // Protocolo de comportamiento: atributos de personalidad con barra de nivel estilo S.P.E.C.I.A.L.
 import type { Atributo } from '@interfaces/acerca-de-mi';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   items: Atributo[];
 }
 
 const { items } = Astro.props;
+const t = traducir(idiomaDe(Astro)).acercaDeMi;
 const MAX = 10;
 const barra = (valor: number) => '■'.repeat(valor) + '□'.repeat(MAX - valor);
 ---
@@ -21,7 +23,7 @@ const barra = (valor: number) => '■'.repeat(valor) + '□'.repeat(MAX - valor)
               <span class="initial" aria-hidden="true">{item.nombre.charAt(0)}</span>
               {item.nombre}
             </h3>
-            <p class="level" role="img" aria-label={`Nivel ${item.valor} de ${MAX}`}>
+            <p class="level" role="img" aria-label={t.nivel(item.valor, MAX)}>
               <span class="bar" aria-hidden="true">{barra(item.valor)}</span>
               <span class="value" aria-hidden="true">{String(item.valor).padStart(2, '0')}</span>
             </p>

@@ -1,18 +1,22 @@
-// Formación académica. Única puerta de acceso a formacion.json.
+// Formación académica. Única puerta de acceso a src/data/<idioma>/perfil/formacion.json.
 import type { Formacion } from '@interfaces/perfil';
+import { enIdioma, verificarIds, type Idioma, type PorIdioma } from '@i18n';
 import { compararFechasDesc } from '@lib/fechas';
-import formacionJson from '@data/perfil/formacion.json';
+import formacionEs from '@data/es/perfil/formacion.json';
+import formacionEn from '@data/en/perfil/formacion.json';
 
-const formacion: Formacion[] = formacionJson;
+const formacion: PorIdioma<Formacion[]> = { es: formacionEs, en: formacionEn };
+
+verificarIds('perfil/formacion.json', formacion);
 
 export const FormacionService = {
   /** De lo vigente a lo más antiguo. */
-  async getAll(): Promise<Formacion[]> {
-    return [...formacion].sort((a, b) => compararFechasDesc(a.fin, b.fin));
+  async getAll(idioma: Idioma): Promise<Formacion[]> {
+    return [...enIdioma(formacion, idioma)].sort((a, b) => compararFechasDesc(a.fin, b.fin));
   },
 
-  async getEnCurso(): Promise<Formacion[]> {
-    return formacion.filter((item) => item.fin === null);
+  async getEnCurso(idioma: Idioma): Promise<Formacion[]> {
+    return enIdioma(formacion, idioma).filter((item) => item.fin === null);
   },
 
   estaEnCurso(item: Formacion): boolean {

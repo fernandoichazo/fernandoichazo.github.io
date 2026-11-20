@@ -4,13 +4,18 @@ import TerminalHeader from '@components/terminal/TerminalHeader.astro';
 import HeroIntro from '@components/hero/HeroIntro.astro';
 import NavTabs from '@components/terminal/NavTabs.astro';
 import { PersonalService } from '@services/perfil';
+import { idiomaDe, rutasPorIdioma, traducir } from '@i18n';
 
-const personal = await PersonalService.getPersonal();
+export const getStaticPaths = rutasPorIdioma;
+
+const idioma = idiomaDe(Astro);
+const personal = await PersonalService.getPersonal(idioma);
 ---
 
 <TerminalLayout
   title={`${personal.nombreCompleto} · ${personal.titular}`}
-  description={`Portafolio de ${personal.nombreCompleto}, ${personal.titular}. Proyectos, certificaciones y perfil profesional.`}
+  description={traducir(idioma).meta.inicioDescripcion(personal.nombreCompleto, personal.titular)}
+  pagina="inicio"
   boot
 >
   <TerminalHeader />

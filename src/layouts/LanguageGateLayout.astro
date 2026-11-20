@@ -1,0 +1,72 @@
+---
+// Documento de la raíz "/": decide el idioma antes de pintar y redirige a /<idioma>/.
+// El sitio es estático (sin servidor que lea Accept-Language), así que se decide en el navegador:
+//   1. la elección guardada con el selector de idioma (localStorage),
+//   2. el primer idioma de navigator.languages que esté contemplado (es-BO -> es),
+//   3. el idioma por defecto.
+// location.replace evita que el botón "atrás" vuelva aquí y redirija otra vez.
+import { CLAVE_IDIOMA, IDIOMAS, IDIOMA_POR_DEFECTO, NOMBRES_NATIVOS, rutaDe } from '@i18n';
+import { PersonalService } from '@services/perfil';
+
+const personal = await PersonalService.getPersonal(IDIOMA_POR_DEFECTO);
+const destinos = Object.fromEntries(IDIOMAS.map((idioma) => [idioma, rutaDe(idioma, 'inicio')]));
+const absoluta = (ruta: string) => new URL(ruta, Astro.site).href;
+---
+
+<!doctype html>
+<html lang={IDIOMA_POR_DEFECTO}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{personal.nombreCompleto} · {personal.titular}</title>
+    <meta name="theme-color" content="#615f42" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    {IDIOMAS.map((idioma) => <link rel="alternate" hreflang={idioma} href={absoluta(destinos[idioma])} />)}
+    <link rel="alternate" hreflang="x-default" href={absoluta(destinos[IDIOMA_POR_DEFECTO])} />
+    <script is:inline define:vars={{ idiomas: IDIOMAS, porDefecto: IDIOMA_POR_DEFECTO, clave: CLAVE_IDIOMA, destinos }}>
+      var elegido = null;
+      try {
+        elegido = localStorage.getItem(clave);
+      } catch (e) {}
+      if (idiomas.indexOf(elegido) === -1) {
+        elegido = null;
+        var pedidos = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+        for (var i = 0; i < pedidos.length && !elegido; i++) {
+          var base = String(pedidos[i]).toLowerCase().split('-')[0];
+          if (idiomas.indexOf(base) !== -1) elegido = base;
+        }
+      }
+      location.replace(destinos[elegido || porDefecto] + location.search + location.hash);
+    </script>
+    <style>
+      html {
+        background: #020503;
+        color: #1bff80;
+        font-family: ui-monospace, monospace;
+      }
+      body {
+        margin: 0;
+        padding: 2rem 1rem;
+      }
+      a {
+        color: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <ul>
+        {
+          IDIOMAS.map((idioma) => (
+            <li>
+              <a href={destinos[idioma]} hreflang={idioma} lang={idioma}>
+                {NOMBRES_NATIVOS[idioma]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </noscript>
+  </body>
+</html>

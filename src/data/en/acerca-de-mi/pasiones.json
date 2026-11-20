@@ -1,0 +1,22 @@
+[
+  {
+    "id": "arquitectura",
+    "titulo": "Software architecture",
+    "descripcion": "Designing systems that withstand time and changing requirements without turning into a maze."
+  },
+  {
+    "id": "ensenar",
+    "titulo": "Teaching and sharing",
+    "descripcion": "Explaining complex concepts in simple terms to teammates who are just getting started."
+  },
+  {
+    "id": "automatizar",
+    "titulo": "Automating the boring stuff",
+    "descripcion": "If a task repeats three times, it deserves a script."
+  },
+  {
+    "id": "impacto-local",
+    "titulo": "Technology with local impact",
+    "descripcion": "Building software that helps businesses and services in my region work better."
+  }
+]

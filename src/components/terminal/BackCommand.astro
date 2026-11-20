@@ -1,8 +1,11 @@
 ---
 // Botón de comando para volver al menú principal. [ESC] lo maneja TerminalLayout (script inline del head).
+import { idiomaDe, rutaDe, traducir } from '@i18n';
+
+const idioma = idiomaDe(Astro);
 ---
 
-<a class="back" href="/" data-back>[ESC] VOLVER AL MENÚ PRINCIPAL</a>
+<a class="back" href={rutaDe(idioma, 'inicio')} data-back>{traducir(idioma).comun.volverMenu}</a>
 
 <style>
   .back {

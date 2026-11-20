@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ucb-san-pablo",
+    "cargo": "Software Developer",
+    "empresa": "Universidad Católica Boliviana \"San Pablo\"",
+    "ubicacion": "Tarija - Bolivia",
+    "inicio": "2026-05",
+    "fin": null,
+    "descripcion": "Development of the UCB Mobile app, the Communications System (SCD) and the Scholarship and Incentive Management System.",
+    "tecnologias": ["Flutter", "NestJS", "React", "Clean Architecture", "DDD"]
+  },
+  {
+    "id": "runtime-service",
+    "cargo": "Backend Developer",
+    "empresa": "Runtime Service",
+    "ubicacion": "Tarija - Bolivia",
+    "inicio": "2024-03",
+    "fin": "2025-02",
+    "descripcion": "Design and implementation of a water utility (EPSA) management system using Node.js and TypeScript. Applied Clean Architecture to build robust services for user administration, billing, meter control and role management.",
+    "tecnologias": ["Node.js", "TypeScript", "Clean Architecture"]
+  },
+  {
+    "id": "ferreteria-ferrogut",
+    "cargo": "Backend Developer",
+    "empresa": "Ferretería Ferrogut",
+    "ubicacion": "Tarija - Bolivia",
+    "inicio": "2023-10",
+    "fin": "2024-02",
+    "descripcion": "Implementation of an inventory system with modules for product management, stock in/out control and sales reports. Optimized restocking processes and supported decision-making.",
+    "tecnologias": ["Backend", "Inventory", "Sales Reports"]
+  },
+  {
+    "id": "farmacia-virgo",
+    "cargo": "Backend - Frontend Developer",
+    "empresa": "Farmacia Virgo",
+    "ubicacion": "Tarija - Bolivia",
+    "inicio": "2023-04",
+    "fin": "2023-06",
+    "descripcion": "Development of an inventory management system with batch and expiration tracking. Designed the SQL database and critical-stock dashboards, reducing losses from expired products.",
+    "tecnologias": ["SQL", "Frontend", "Backend", "Dashboards"]
+  }
+]

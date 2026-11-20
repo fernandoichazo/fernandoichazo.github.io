@@ -1,11 +1,15 @@
-// Certificaciones y reconocimientos. Única puerta de acceso a logros.json;
+// Certificaciones y reconocimientos. Única puerta de acceso a src/data/<idioma>/perfil/logros.json;
 // también lo reutilizará la directiva [3] MIS CERTIFICACIONES.
 import type { ImageMetadata } from 'astro';
 import type { Logro } from '@interfaces/perfil';
+import { enIdioma, verificarIds, type Idioma, type PorIdioma } from '@i18n';
 import { resolverImagen } from '@lib/imagenes';
-import logrosJson from '@data/perfil/logros.json';
+import logrosEs from '@data/es/perfil/logros.json';
+import logrosEn from '@data/en/perfil/logros.json';
 
-const logros: Logro[] = logrosJson;
+const logros: PorIdioma<Logro[]> = { es: logrosEs, en: logrosEn };
+
+verificarIds('perfil/logros.json', logros);
 
 /** Más reciente primero; los que no tienen año, al final. */
 const porAnioDesc = (a: Logro, b: Logro) => {
@@ -16,16 +20,18 @@ const porAnioDesc = (a: Logro, b: Logro) => {
 };
 
 export const LogroService = {
-  async getAll(): Promise<Logro[]> {
-    return [...logros].sort(porAnioDesc);
+  async getAll(idioma: Idioma): Promise<Logro[]> {
+    return [...enIdioma(logros, idioma)].sort(porAnioDesc);
   },
 
-  async getByTipo(tipo: string): Promise<Logro[]> {
-    return logros.filter((logro) => logro.tipo === tipo).sort(porAnioDesc);
+  async getByTipo(idioma: Idioma, tipo: string): Promise<Logro[]> {
+    return enIdioma(logros, idioma)
+      .filter((logro) => logro.tipo === tipo)
+      .sort(porAnioDesc);
   },
 
-  async getTipos(): Promise<string[]> {
-    return [...new Set(logros.map((logro) => logro.tipo))];
+  async getTipos(idioma: Idioma): Promise<string[]> {
+    return [...new Set(enIdioma(logros, idioma).map((logro) => logro.tipo))];
   },
 
   /** Imagen del logro desde src/images/logros/, o null si no tiene. */

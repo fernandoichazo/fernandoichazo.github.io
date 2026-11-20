@@ -1,16 +1,18 @@
 ---
 // Tiempo libre como inventario del Pip-Boy: nombre, descripción y frecuencia.
 import type { Pasatiempo } from '@interfaces/acerca-de-mi';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   items: Pasatiempo[];
 }
 
 const { items } = Astro.props;
+const t = traducir(idiomaDe(Astro)).acercaDeMi;
 ---
 
 <div class="wrap">
-  <p class="status">&gt; MODO DESCANSO ACTIVADO <span class="count">// {items.length} OBJETOS EN INVENTARIO</span></p>
+  <p class="status">&gt; {t.descanso} <span class="count">// {t.inventario(items.length)}</span></p>
   <ul class="inventory">
     {
       items.map((item) => (
@@ -20,7 +22,7 @@ const { items } = Astro.props;
             <p class="description">{item.descripcion}</p>
           </div>
           <p class="frequency">
-            <span class="sr-only">Frecuencia: </span>[{item.frecuencia}]
+            <span class="sr-only">{t.frecuencia}</span>[{item.frecuencia}]
           </p>
         </li>
       ))

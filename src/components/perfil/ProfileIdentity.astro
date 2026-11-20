@@ -4,6 +4,7 @@ import type { ImageMetadata } from 'astro';
 import PhosphorText from '@components/crt/PhosphorText.astro';
 import ProfilePortrait from '@components/perfil/ProfilePortrait.astro';
 import type { Personal } from '@interfaces/perfil';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   personal: Personal;
@@ -12,12 +13,13 @@ interface Props {
 }
 
 const { personal, foto, file } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <section class="identity" aria-labelledby="profile-name">
-  <p class="log">&gt; EJECUTANDO {file}... <span class="ok">[OK]</span></p>
+  <p class="log">&gt; {t.comun.ejecutando} {file}... <span class="ok">[OK]</span></p>
   <div class="dossier">
-    <ProfilePortrait foto={foto} alt={`Foto de ${personal.nombreCompleto}`} />
+    <ProfilePortrait foto={foto} alt={t.perfil.foto(personal.nombreCompleto)} />
     <div class="data">
       <PhosphorText as="h1" id="profile-name" size="display" glow="strong" class="name">
         {personal.nombreCompleto}
@@ -25,15 +27,15 @@ const { personal, foto, file } = Astro.props;
       <p class="headline">{personal.titular}</p>
       <dl class="fields">
         <div class="field">
-          <dt>UBICACIÓN:</dt>
+          <dt>{t.perfil.ubicacion}</dt>
           <dd>{personal.ubicacion.ciudad} <span class="sep" aria-hidden="true">//</span> {personal.ubicacion.pais}</dd>
         </div>
         <div class="field">
-          <dt>ENLACE:</dt>
+          <dt>{t.perfil.enlace}</dt>
           <dd>
             <a class="link" href={personal.contacto.linkedin} target="_blank" rel="noopener noreferrer">
               <span aria-hidden="true">[&gt;] </span>LINKEDIN <span class="handle">/{personal.contacto.linkedinUsuario}</span>
-              <span class="sr-only">(se abre en una pestaña nueva)</span>
+              <span class="sr-only">{t.comun.pestanaNueva}</span>
             </a>
           </dd>
         </div>

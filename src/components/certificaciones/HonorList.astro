@@ -1,12 +1,14 @@
 ---
 // Certificaciones y reconocimientos: año, título, tipo y enlace de verificación si existe.
 import type { Logro } from '@interfaces/perfil';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   items: Logro[];
 }
 
 const { items } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <div class="wrap">
@@ -14,14 +16,14 @@ const { items } = Astro.props;
     {
       items.map((item) => (
         <li class="row">
-          <span class="year">[{item.anio ?? 'S/F'}]</span>
+          <span class="year">[{item.anio ?? t.logros.sinFecha}]</span>
           <span class="info">
             <span class="title">{item.titulo}</span>
             <span class="type">{item.tipo}</span>
           </span>
           {item.url && (
             <a class="verify" href={item.url} target="_blank" rel="noopener noreferrer">
-              [VERIFICAR]<span class="sr-only"> {item.titulo} (se abre en una pestaña nueva)</span>
+              {t.logros.verificar}<span class="sr-only"> {item.titulo} {t.comun.pestanaNueva}</span>
             </a>
           )}
         </li>

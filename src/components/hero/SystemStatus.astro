@@ -1,19 +1,19 @@
 ---
-// Barra de estado al pie del terminal: mensaje para el reclutador y los interruptores CRT.
+// Barra de estado al pie del terminal: mensaje para el reclutador, selector de idioma e interruptores CRT.
 // El mensaje tiene tres longitudes para que la barra quepa siempre en una línea.
 import CRTControls from '@components/crt/CRTControls.astro';
+import LanguageSwitcher from '@components/crt/LanguageSwitcher.astro';
+import { idiomaDe, traducir, type Pagina } from '@i18n';
 
 interface Props {
   message?: string;
   messageMid?: string;
   messageShort?: string;
+  pagina: Pagina;
 }
 
-const {
-  message = 'LISTO PARA INSPECCIÓN DEL RECLUTADOR · PULSA [TAB] O CLIC EN UNA OPCIÓN',
-  messageMid = 'LISTO PARA INSPECCIÓN',
-  messageShort = 'LISTO',
-} = Astro.props;
+const t = traducir(idiomaDe(Astro)).estado;
+const { message = t.mensaje, messageMid = t.mensajeMedio, messageShort = t.mensajeCorto, pagina } = Astro.props;
 ---
 
 <footer class="status reveal" style="--i:8">
@@ -23,7 +23,10 @@ const {
     <span class="text text--mid">{messageMid}</span>
     <span class="text text--short">{messageShort}</span>
   </p>
-  <CRTControls />
+  <div class="prefs">
+    <LanguageSwitcher pagina={pagina} />
+    <CRTControls />
+  </div>
 </footer>
 
 <style>
@@ -41,6 +44,11 @@ const {
     background: #040805;
     font-size: var(--step--1);
     color: var(--phosphor-soft);
+  }
+  .prefs {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
   }
   .tag {
     margin-right: 0.6em;

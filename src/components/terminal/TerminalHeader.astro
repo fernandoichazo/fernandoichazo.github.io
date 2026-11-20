@@ -2,12 +2,14 @@
 // Cabecera diegética de RobCo y, opcionalmente, el log de arranque.
 import PhosphorText from '@components/crt/PhosphorText.astro';
 import { system } from '@data/site';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   showLog?: boolean;
 }
 
 const { showLog = true } = Astro.props;
+const t = traducir(idiomaDe(Astro)).arranque;
 
 // Cada palabra en una pieza: el salto de línea solo cae en los espacios, nunca en un guion.
 const words = (text: string) => text.split(' ');
@@ -23,8 +25,8 @@ const words = (text: string) => text.split(' ');
   </PhosphorText>
   {
     showLog && (
-      <ul class="log" aria-label="Diagnóstico del sistema">
-        {system.bootLog.map((line, i) => (
+      <ul class="log" aria-label={t.diagnostico}>
+        {t.log.map((line, i) => (
           <li class="reveal" style={`--i:${i + 1}`}>
             <span class="prefix" aria-hidden="true">[&gt;]</span> {line.text} <span class="ok">{line.result}</span>
           </li>

@@ -2,18 +2,22 @@
 // Menú de directivas estilo prompt RobCo. La fila resaltada es la recomendada hasta
 // que el cursor o el foco se mueven a otra; resaltar = invertir el fósforo.
 // Teclado: [1]-[4] abren la directiva, flechas/Inicio/Fin mueven la selección.
-import { directives, guide } from '@data/site';
+import { directives } from '@data/site';
+import { idiomaDe, rutaDe, traducir } from '@i18n';
+
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
 ---
 
 <nav class="nav reveal" style="--i:7" aria-labelledby="nav-prompt">
-  <p id="nav-prompt" class="prompt">SELECCIONE UNA DIRECTIVA DE NAVEGACIÓN CON EL TECLADO O EL CURSOR:</p>
+  <p id="nav-prompt" class="prompt">{t.nav.prompt}</p>
   <ol class="list">
     {
       directives.map((item) => (
         <li class:list={['item', { 'item--guided': item.recommended }]}>
           <a
             class:list={['row', { 'is-recommended': item.recommended }]}
-            href={`/${item.slug}`}
+            href={rutaDe(idioma, item.id)}
             data-key={item.key}
             data-file={item.file}
             aria-keyshortcuts={item.key}
@@ -22,15 +26,15 @@ import { directives, guide } from '@data/site';
             <span class="key">[{item.key}]</span>
             <span class="label">
               <span aria-hidden="true">&gt; </span>
-              {item.label}
+              {t.directivas[item.id]}
             </span>
             <span class="file">{item.file}</span>
           </a>
           {item.recommended && (
             <p id="vats-guide" class="vats">
-              {guide.title}
+              {t.nav.guiaTitulo}
               <br />
-              {guide.text}
+              {t.nav.guiaTexto}
             </p>
           )}
         </li>

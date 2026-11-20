@@ -30,7 +30,13 @@ There is no test suite or linter configured.
 
 ## Current state
 
-The project is early-stage: `src/pages/` has `index.astro`, `about.astro`, and `contact.astro`, each a standalone HTML document with no shared layout or components yet (the starter's assets/layouts were removed intentionally). `index.astro` demonstrates the server-vs-client rendering split: frontmatter values are computed at build time, while the `<script>` block runs in the browser.
+The site is bilingual (es/en) with manual i18n routing (Astro's `i18n` config is not used):
+
+- `src/i18n/` — `config.ts` (supported languages, default `en`), UI dictionaries (`en.ts` defines the keys as `Diccionario`; other languages must match it), route helpers (`rutaDe`, `alternativasDe`) and data helpers (`PorIdioma`, `enIdioma`, `verificarIds`).
+- Content JSON lives in `src/data/<lang>/...` with identical shape per language; services take the language as their first argument and fall back to the default language. Build fails if ids differ between languages.
+- Routes: `src/pages/index.astro` only detects the language (saved choice in `localStorage` → `navigator.languages` → `en`) and redirects; real pages are `src/pages/[lang]/index.astro` and `src/pages/[lang]/[directiva].astro` (translated slugs from `directives[].slugs` in `src/data/site.ts`; it dispatches to `*Screen.astro` components).
+- Components read the current language with `idiomaDe(Astro)` (from the `[lang]` param) and texts with `traducir(idioma)`.
+- `about.astro` and `contact.astro` are leftover starter pages.
 
 ## Repo notes
 

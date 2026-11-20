@@ -1,0 +1,6 @@
+[
+  { "id": "aprendiendo", "etiqueta": "LEARNING", "valor": "Microservice patterns and reactive programming" },
+  { "id": "leyendo", "etiqueta": "READING", "valor": "Clean Architecture, by Robert C. Martin" },
+  { "id": "jugando", "etiqueta": "PLAYING", "valor": "Some post-apocalyptic RPG (of course)" },
+  { "id": "objetivo", "etiqueta": "GOAL", "valor": "Finish my master's degree and launch this portfolio" }
+]

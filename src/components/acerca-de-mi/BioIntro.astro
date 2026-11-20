@@ -1,6 +1,7 @@
 ---
 // Cabecera de ACERCA DE MÍ: quién soy (presentación) y la directiva principal como cita.
 import PhosphorText from '@components/crt/PhosphorText.astro';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   file: string;
@@ -10,16 +11,17 @@ interface Props {
 }
 
 const { file, nombre, presentacion, directiva } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <section class="intro" aria-labelledby="bio-title">
-  <p class="log">&gt; CARGANDO {file}... <span class="ok">[OK]</span></p>
-  <PhosphorText as="h1" id="bio-title" size="display" glow="strong" class="title">QUIÉN SOY</PhosphorText>
+  <p class="log">&gt; {t.comun.cargando} {file}... <span class="ok">[OK]</span></p>
+  <PhosphorText as="h1" id="bio-title" size="display" glow="strong" class="title">{t.acercaDeMi.quienSoy}</PhosphorText>
   <p class="subject"><span aria-hidden="true">@ </span>{nombre}</p>
   <p class="presentation">{presentacion}</p>
 
   <figure class="directive">
-    <figcaption class="directive-label">[ DIRECTIVA PRINCIPAL ]</figcaption>
+    <figcaption class="directive-label">{t.acercaDeMi.directivaPrincipal}</figcaption>
     <blockquote class="directive-text">
       <p>“{directiva}”</p>
     </blockquote>

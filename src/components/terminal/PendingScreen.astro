@@ -1,0 +1,31 @@
+---
+// Pantalla de una directiva que aún no tiene contenido propio (ModulePending).
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import ModulePending from '@components/terminal/ModulePending.astro';
+import { PersonalService } from '@services/perfil';
+import { idiomaDe, traducir } from '@i18n';
+import type { Directive } from '@data/site';
+
+interface Props {
+  directive: Directive;
+}
+
+const { directive } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
+const label = t.directivas[directive.id];
+const personal = await PersonalService.getPersonal(idioma);
+---
+
+<TerminalLayout
+  title={`${label} · ${personal.nombreCompleto}`}
+  description={t.meta.directivaDescripcion(label, personal.nombreCompleto)}
+  pagina={directive.id}
+  statusMessage={t.estado.moduloPendiente(directive.file)}
+  statusMessageMid={t.estado.moduloMedio(directive.file)}
+  statusMessageShort={t.estado.volver}
+>
+  <TerminalHeader showLog={false} />
+  <ModulePending directive={directive} />
+</TerminalLayout>

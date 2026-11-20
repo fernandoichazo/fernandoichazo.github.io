@@ -1,0 +1,20 @@
+[
+  {
+    "id": "Videojuegos",
+    "nombre": "RPG and open-world video games",
+    "descripcion": "I generally enjoy both open-world games and first-person shooters that keep me alert and work as an extra mental break alongside learning and continuous improvement at work.",
+    "frecuencia": "WEEKENDS"
+  },
+  {
+    "id": "Concepto",
+    "nombre": "Proofs of concept",
+    "descripcion": "I like experimenting with new technologies and concepts that I discover through a variety of sources.",
+    "frecuencia": "NIGHTLY"
+  },
+  {
+    "id": "cafe",
+    "nombre": "Specialty coffee",
+    "descripcion": "Experimenting with brewing methods and beans from different regions.",
+    "frecuencia": "OCCASIONAL"
+  }
+]

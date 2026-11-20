@@ -1,5 +1,6 @@
 ---
 // Cierre de ACERCA DE MÍ: invita a ver los proyectos o a contactar.
+import { idiomaDe, traducir } from '@i18n';
 interface Props {
   mensaje: string;
   proyectosHref: string;
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const { mensaje, proyectosHref, linkedin } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <section class="closing" aria-labelledby="closing-title">
@@ -14,12 +16,12 @@ const { mensaje, proyectosHref, linkedin } = Astro.props;
   <h2 id="closing-title" class="message">{mensaje}</h2>
   <ul class="options">
     <li>
-      <a class="option" href={proyectosHref}><span class="key">[&gt;]</span> VER MIS PROYECTOS</a>
+      <a class="option" href={proyectosHref}><span class="key">[&gt;]</span> {t.acercaDeMi.verProyectos}</a>
     </li>
     <li>
       <a class="option" href={linkedin} target="_blank" rel="noopener noreferrer">
-        <span class="key">[&gt;]</span> HABLEMOS EN LINKEDIN
-        <span class="sr-only">(se abre en una pestaña nueva)</span>
+        <span class="key">[&gt;]</span> {t.acercaDeMi.linkedin}
+        <span class="sr-only">{t.comun.pestanaNueva}</span>
       </a>
     </li>
   </ul>

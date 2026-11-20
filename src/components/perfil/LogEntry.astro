@@ -1,5 +1,6 @@
 ---
 // Entrada de log para experiencia y formación: periodo, título @ entidad, descripción y etiquetas.
+import { idiomaDe, traducir } from '@i18n';
 interface Props {
   period: string;
   title: string;
@@ -11,7 +12,8 @@ interface Props {
   tags?: string[];
 }
 
-const { period, title, entity, location, current = false, currentLabel = 'EN CURSO', description, tags = [] } =
+const t = traducir(idiomaDe(Astro)).perfil;
+const { period, title, entity, location, current = false, currentLabel = t.enCurso, description, tags = [] } =
   Astro.props;
 ---
 
@@ -25,7 +27,7 @@ const { period, title, entity, location, current = false, currentLabel = 'EN CUR
   {description && <p class="description">{description}</p>}
   {
     tags.length > 0 && (
-      <ul class="tags" aria-label="Tecnologías">
+      <ul class="tags" aria-label={t.tecnologias}>
         {tags.map((tag) => (
           <li>[{tag}]</li>
         ))}

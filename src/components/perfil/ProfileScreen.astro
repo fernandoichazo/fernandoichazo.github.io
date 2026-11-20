@@ -1,0 +1,104 @@
+---
+// Pantalla de la directiva [1] PERFIL. La monta src/pages/[lang]/[directiva].astro en cada idioma.
+import TerminalLayout from '@layouts/TerminalLayout.astro';
+import TerminalHeader from '@components/terminal/TerminalHeader.astro';
+import SectionIndex from '@components/terminal/SectionIndex.astro';
+import DataSection from '@components/terminal/DataSection.astro';
+import BackCommand from '@components/terminal/BackCommand.astro';
+import ProfileIdentity from '@components/perfil/ProfileIdentity.astro';
+import StrengthList from '@components/perfil/StrengthList.astro';
+import SkillMatrix from '@components/perfil/SkillMatrix.astro';
+import LogEntry from '@components/perfil/LogEntry.astro';
+import { PersonalService, HabilidadService, ExperienciaService, FormacionService } from '@services/perfil';
+import { formatearPeriodo } from '@lib/fechas';
+import { idiomaDe, traducir } from '@i18n';
+import type { Directive } from '@data/site';
+
+interface Props {
+  directive: Directive;
+}
+
+const { directive } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma);
+const label = t.directivas[directive.id];
+
+const [personal, foto, fortalezas, habilidades, experiencia, formacion] = await Promise.all([
+  PersonalService.getPersonal(idioma),
+  PersonalService.getFoto(idioma),
+  PersonalService.getFortalezas(idioma),
+  HabilidadService.getAgrupadasPorCategoria(idioma),
+  ExperienciaService.getAll(idioma),
+  FormacionService.getAll(idioma),
+]);
+
+const titulos = t.perfil.secciones;
+const sections = {
+  experiencia: { id: 'experiencia', sectionKey: '1', title: titulos.experiencia, file: 'WORK_HISTORY.LOG' },
+  fortalezas: { id: 'fortalezas', sectionKey: '2', title: titulos.fortalezas, file: 'CORE_STRENGTHS.DAT' },
+  habilidades: { id: 'habilidades', sectionKey: '3', title: titulos.habilidades, file: 'SKILLS_MATRIX.DB' },
+  formacion: { id: 'formacion', sectionKey: '4', title: titulos.formacion, file: 'EDUCATION.LOG' },
+};
+---
+
+<TerminalLayout
+  title={`${label} · ${personal.nombreCompleto}`}
+  description={`${personal.nombreCompleto}, ${personal.titular}. ${personal.resumen}`}
+  pagina={directive.id}
+  statusMessage={t.estado.modulo(directive.file, Object.keys(sections).length)}
+  statusMessageMid={t.estado.moduloMedio(directive.file)}
+  statusMessageShort={t.estado.volver}
+>
+  <TerminalHeader showLog={false} />
+  <ProfileIdentity personal={personal} foto={foto} file={directive.file} />
+  <SectionIndex entries={Object.values(sections)} />
+
+  <DataSection {...sections.experiencia}>
+    {
+      experiencia.map((item) => (
+        <LogEntry
+          period={formatearPeriodo(item.inicio, item.fin, idioma)}
+          title={item.cargo}
+          entity={item.empresa}
+          location={item.ubicacion}
+          current={ExperienciaService.esActual(item)}
+          currentLabel={t.perfil.actual}
+          description={item.descripcion}
+          tags={item.tecnologias}
+        />
+      ))
+    }
+  </DataSection>
+
+  <DataSection {...sections.fortalezas}>
+    <StrengthList items={fortalezas} />
+  </DataSection>
+
+  <DataSection {...sections.habilidades}>
+    <SkillMatrix groups={habilidades} />
+  </DataSection>
+
+  <DataSection {...sections.formacion}>
+    {
+      formacion.map((item) => (
+        <LogEntry
+          period={formatearPeriodo(item.inicio, item.fin, idioma)}
+          title={item.titulo}
+          entity={item.institucion}
+          location={item.ubicacion}
+          current={FormacionService.estaEnCurso(item)}
+        />
+      ))
+    }
+  </DataSection>
+
+  <div class="actions">
+    <BackCommand />
+  </div>
+</TerminalLayout>
+
+<style>
+  .actions {
+    margin: clamp(2rem, var(--screen-h) * 0.06, 3.5rem) 0;
+  }
+</style>

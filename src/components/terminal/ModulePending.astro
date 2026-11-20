@@ -3,21 +3,23 @@
 import PhosphorText from '@components/crt/PhosphorText.astro';
 import BackCommand from '@components/terminal/BackCommand.astro';
 import type { Directive } from '@data/site';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   directive: Directive;
 }
 
 const { directive } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <section class="module" aria-labelledby="module-title">
-  <p class="log">&gt; EJECUTANDO {directive.file}... <span class="warn">MÓDULO EN PREPARACIÓN</span></p>
+  <p class="log">&gt; {t.comun.ejecutando} {directive.file}... <span class="warn">{t.modulo.preparando}</span></p>
   <PhosphorText as="h1" id="module-title" size="display" glow="strong" class="title">
-    [{directive.key}] {directive.label}
+    [{directive.key}] {t.directivas[directive.id]}
   </PhosphorText>
   <p class="body">
-    ESTE ARCHIVO SE ESTÁ COMPILANDO Y ESTARÁ DISPONIBLE EN LA PRÓXIMA ACTUALIZACIÓN DEL SISTEMA.
+    {t.modulo.cuerpo}
   </p>
   <div class="actions"><BackCommand /></div>
 </section>

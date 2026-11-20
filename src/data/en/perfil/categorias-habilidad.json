@@ -1,0 +1,5 @@
+[
+  { "id": "lenguajes", "nombre": "Languages" },
+  { "id": "frameworks", "nombre": "Frameworks" },
+  { "id": "metodologias", "nombre": "Methodologies and concepts" }
+]

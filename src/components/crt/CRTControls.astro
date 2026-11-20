@@ -1,14 +1,17 @@
 ---
 // Interruptores diegéticos: efectos CRT (scanlines, flicker, halo) y sonido.
 // El estado inicial lo fija el script en línea de TerminalLayout antes de pintar.
+import { idiomaDe, traducir } from '@i18n';
+
+const t = traducir(idiomaDe(Astro)).controles;
 ---
 
-<div class="controls" role="group" aria-label="Preferencias de pantalla">
+<div class="controls" role="group" aria-label={t.grupo}>
   <button type="button" class="toggle" data-pref="crt" aria-pressed="true">
-    CRT: <span class="state" data-for="crt"></span>
+    {t.crt}: <span class="state" data-for="crt"></span>
   </button>
   <button type="button" class="toggle" data-pref="sound" aria-pressed="false">
-    SONIDO: <span class="state" data-for="sound"></span>
+    {t.sonido}: <span class="state" data-for="sound"></span>
   </button>
 </div>
 

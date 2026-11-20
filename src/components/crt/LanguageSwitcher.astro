@@ -1,0 +1,101 @@
+---
+// Selector de idioma de la barra de estado. Son enlaces reales a la misma pantalla en otro idioma:
+// funcionan sin JS y aprovechan el prefetch. Al elegir uno se recuerda la preferencia, que gana
+// sobre el idioma del navegador cuando se vuelve a entrar por la raíz (src/pages/index.astro).
+import { alternativasDe, idiomaDe, traducir, IDIOMAS, NOMBRES_NATIVOS, type Pagina } from '@i18n';
+
+interface Props {
+  pagina: Pagina;
+}
+
+const { pagina } = Astro.props;
+const idioma = idiomaDe(Astro);
+const t = traducir(idioma).idioma;
+const alternativas = alternativasDe(pagina);
+---
+
+<nav class="lang" aria-label={t.grupo}>
+  <span class="label" aria-hidden="true">{t.etiqueta}:</span>
+  <ul class="options">
+    {
+      IDIOMAS.map((lang) => (
+        <li>
+          <a
+            class="option"
+            href={alternativas[lang]}
+            hreflang={lang}
+            lang={lang}
+            data-lang={lang}
+            aria-current={lang === idioma ? 'true' : undefined}
+          >
+            <span aria-hidden="true">{lang.toUpperCase()}</span>
+            <span class="sr-only">{NOMBRES_NATIVOS[lang]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .lang {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+    color: var(--phosphor-soft);
+  }
+  .options {
+    display: flex;
+  }
+  .option {
+    display: inline-flex;
+    align-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    padding: 0 0.375rem;
+    color: var(--phosphor-soft);
+    text-decoration: none;
+  }
+  .option[aria-current='true'] {
+    color: var(--phosphor);
+  }
+  .option[aria-current='true']::before {
+    content: '[';
+  }
+  .option[aria-current='true']::after {
+    content: ']';
+  }
+  .option:hover,
+  .option:focus-visible {
+    background: var(--phosphor);
+    color: var(--void);
+    text-shadow: none;
+  }
+
+  /* En el teléfono la barra es estrecha: basta con los códigos. */
+  @media (max-width: 640px) {
+    .label {
+      display: none;
+    }
+    .lang {
+      margin-right: 0;
+    }
+  }
+</style>
+
+<script>
+  import { beep } from '@lib/terminal';
+  import { CLAVE_IDIOMA } from '@i18n/config';
+
+  document.querySelectorAll<HTMLAnchorElement>('.lang .option[data-lang]').forEach((option) => {
+    option.addEventListener('click', () => {
+      try {
+        localStorage.setItem(CLAVE_IDIOMA, option.dataset.lang ?? '');
+      } catch {
+        // Almacenamiento bloqueado: la elección vale solo para esta navegación.
+      }
+      beep(880, 0.05);
+    });
+  });
+</script>

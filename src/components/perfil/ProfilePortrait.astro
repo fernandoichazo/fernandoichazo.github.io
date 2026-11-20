@@ -3,6 +3,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import PhosphorImage from '@components/crt/PhosphorImage.astro';
+import { idiomaDe, traducir } from '@i18n';
 
 interface Props {
   foto: ImageMetadata | null;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const { foto, alt } = Astro.props;
+const t = traducir(idiomaDe(Astro)).perfil;
 ---
 
 <figure class="portrait">
@@ -20,7 +22,7 @@ const { foto, alt } = Astro.props;
           <Image src={foto} alt={alt} widths={[288, 576]} sizes="18rem" class="photo" />
         </PhosphorImage>
       ) : (
-        <svg class="silhouette" viewBox="0 0 16 16" role="img" aria-label="Sin foto de perfil" shape-rendering="crispEdges">
+        <svg class="silhouette" viewBox="0 0 16 16" role="img" aria-label={t.sinFoto} shape-rendering="crispEdges">
           <rect x="6" y="2" width="4" height="1" />
           <rect x="5" y="3" width="6" height="4" />
           <rect x="6" y="7" width="4" height="1" />
@@ -33,7 +35,7 @@ const { foto, alt } = Astro.props;
   </div>
   <figcaption class="caption">
     <span class="line">IMG_SUJETO.RAW</span>
-    {!foto && <span class="line">SIN SEÑAL</span>}
+    {!foto && <span class="line">{t.sinSenal}</span>}
   </figcaption>
 </figure>
 

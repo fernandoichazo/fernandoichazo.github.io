@@ -1,0 +1,32 @@
+[
+  {
+    "id": "curiosidad",
+    "nombre": "Curiosity",
+    "valor": 9,
+    "descripcion": "I keep asking \"why?\" until I understand the root of the problem."
+  },
+  {
+    "id": "calma",
+    "nombre": "Composure",
+    "valor": 8,
+    "descripcion": "Under pressure I prioritize instead of panicking."
+  },
+  {
+    "id": "colaboracion",
+    "nombre": "Collaboration",
+    "valor": 8,
+    "descripcion": "I'd rather think out loud with the team than lock myself away."
+  },
+  {
+    "id": "constancia",
+    "nombre": "Consistency",
+    "valor": 7,
+    "descripcion": "I move forward a little every day rather than a lot all at once."
+  },
+  {
+    "id": "humor",
+    "nombre": "Humor",
+    "valor": 9,
+    "descripcion": "A good meme can save a bad sprint."
+  }
+]

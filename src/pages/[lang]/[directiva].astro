@@ -1,30 +1,30 @@
 ---
-import TerminalLayout from '@layouts/TerminalLayout.astro';
-import TerminalHeader from '@components/terminal/TerminalHeader.astro';
-import ModulePending from '@components/terminal/ModulePending.astro';
+// Las 4 directivas en cada idioma, con su slug traducido (/es/perfil, /en/profile...).
+// Cada directiva con contenido propio tiene su pantalla; el resto muestra "módulo en preparación".
+import ProfileScreen from '@components/perfil/ProfileScreen.astro';
+import AboutScreen from '@components/acerca-de-mi/AboutScreen.astro';
+import PendingScreen from '@components/terminal/PendingScreen.astro';
 import { directives, type Directive } from '@data/site';
-import { PersonalService } from '@services/perfil';
+import { IDIOMAS } from '@i18n';
 
 export function getStaticPaths() {
-  return directives
-    .filter((directive) => !directive.implemented)
-    .map((directive) => ({
-      params: { directiva: directive.slug },
+  return IDIOMAS.flatMap((lang) =>
+    directives.map((directive) => ({
+      params: { lang, directiva: directive.slugs[lang] },
       props: { directive },
-    }));
+    })),
+  );
 }
 
 const { directive } = Astro.props as { directive: Directive };
-const personal = await PersonalService.getPersonal();
 ---
 
-<TerminalLayout
-  title={`${directive.label} · ${personal.nombreCompleto}`}
-  description={`${directive.label}: sección del portafolio de ${personal.nombreCompleto}.`}
-  statusMessage={`${directive.file} · PULSA [ESC] PARA VOLVER`}
-  statusMessageMid={`${directive.file} · [ESC] VOLVER`}
-  statusMessageShort="[ESC] VOLVER"
->
-  <TerminalHeader showLog={false} />
-  <ModulePending directive={directive} />
-</TerminalLayout>
+{
+  directive.id === 'perfil' ? (
+    <ProfileScreen directive={directive} />
+  ) : directive.id === 'acerca-de-mi' ? (
+    <AboutScreen directive={directive} />
+  ) : (
+    <PendingScreen directive={directive} />
+  )
+}

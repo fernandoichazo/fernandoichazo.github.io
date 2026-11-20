@@ -1,5 +1,6 @@
 ---
 // Índice de subdirectorios de un módulo. Teclado: [A]/[D] anterior/siguiente; la tecla de cada entrada salta a su sección.
+import { idiomaDe, traducir } from '@i18n';
 export interface IndexEntry {
   id: string;
   sectionKey: string;
@@ -11,10 +12,11 @@ interface Props {
 }
 
 const { entries } = Astro.props;
+const t = traducir(idiomaDe(Astro));
 ---
 
 <nav class="index" aria-labelledby="index-prompt">
-  <p id="index-prompt" class="prompt">SUBDIRECTORIOS DEL ARCHIVO:</p>
+  <p id="index-prompt" class="prompt">{t.comun.subdirectorios}</p>
   <ul class="list">
     {
       entries.map((entry) => (
