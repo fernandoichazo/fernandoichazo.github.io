@@ -24,9 +24,9 @@ const [personal, foto, fortalezas, habilidades, experiencia, formacion] = await 
 ]);
 
 const sections = {
-  fortalezas: { id: 'fortalezas', sectionKey: '1', title: 'FORTALEZAS', file: 'CORE_STRENGTHS.DAT' },
-  habilidades: { id: 'habilidades', sectionKey: '2', title: 'HABILIDADES', file: 'SKILLS_MATRIX.DB' },
-  experiencia: { id: 'experiencia', sectionKey: '3', title: 'EXPERIENCIA', file: 'WORK_HISTORY.LOG' },
+  experiencia: { id: 'experiencia', sectionKey: '1', title: 'EXPERIENCIA', file: 'WORK_HISTORY.LOG' },
+  fortalezas: { id: 'fortalezas', sectionKey: '2', title: 'FORTALEZAS', file: 'CORE_STRENGTHS.DAT' },
+  habilidades: { id: 'habilidades', sectionKey: '3', title: 'HABILIDADES', file: 'SKILLS_MATRIX.DB' },
   formacion: { id: 'formacion', sectionKey: '4', title: 'FORMACIÓN', file: 'EDUCATION.LOG' },
 };
 ---
@@ -41,14 +41,6 @@ const sections = {
   <TerminalHeader showLog={false} />
   <ProfileIdentity personal={personal} foto={foto} file={directive.file} />
   <SectionIndex entries={Object.values(sections)} />
-
-  <DataSection {...sections.fortalezas}>
-    <StrengthList items={fortalezas} />
-  </DataSection>
-
-  <DataSection {...sections.habilidades}>
-    <SkillMatrix groups={habilidades} />
-  </DataSection>
 
   <DataSection {...sections.experiencia}>
     {
@@ -65,6 +57,14 @@ const sections = {
         />
       ))
     }
+  </DataSection>
+
+  <DataSection {...sections.fortalezas}>
+    <StrengthList items={fortalezas} />
+  </DataSection>
+
+  <DataSection {...sections.habilidades}>
+    <SkillMatrix groups={habilidades} />
   </DataSection>
 
   <DataSection {...sections.formacion}>
